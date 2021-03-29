@@ -1,6 +1,12 @@
 from cmd import Cmd
 import termcolor
+import atexit
+import os
+import readline
+import rlcompleter
+
 from listener import listener
+
 
 class Commands(Cmd):
 
@@ -36,11 +42,27 @@ class Commands(Cmd):
     #calliong class needed
     listenerC = listener()
 
+    #part responsible for command history and autoComplete
+    #work only on unix
+    storeCommandPath = os.path.expanduser("./history/k_Command_history")
+
+    if os.path.exists(storeCommandPath):
+        readline.read_history_file(storeCommandPath)
+    #save command history at close
+    def saveCommand(storeCommandPath=storeCommandPath):
+        readline.write_history_file(storeCommandPath)
+
+    atexit.register(saveCommand)
+    #link tab for auto complete
+    readline.parse_and_bind('tab: complete')
+
+
+
 
     #command part
 
     def do_listenerHTTP(self, inp):
-        listener.listenerhttp()
+        listenerC.listenerhttp()
 
     def do_exit(self, inp):
 

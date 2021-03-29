@@ -6,7 +6,7 @@ import time
 import logging
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
-#logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 class listener:
 
@@ -22,7 +22,7 @@ class listener:
 
     def listenerhttp(self):
         logging.debug("listenerhttp")
-        HOST = '127.0.0.1'
+        HOST = '192.168.0.10'
         PORT = 65432
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
