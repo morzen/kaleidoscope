@@ -38,7 +38,7 @@ class Commands(Cmd):
     intro = intro.replace('.', termcolor.colored('.', 'blue'))
 
     Datetime = datetime.datetime.now()
-    Datetime = Datetime.strftime('%d-%b-%Y_%I:%M%p')
+    Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
 
     prompt = Datetime+":kaleidoscope"+">>>"
