@@ -20,10 +20,15 @@ class listener:
     #     thread1.start()
     #     #thread2.start()
 
-    def listenerhttp(self):
-        logging.debug("listenerhttp")
-        HOST = '192.168.0.10'
-        PORT = 65432
+
+
+    #def listenerHTTP(self)
+
+
+    def Simplelistener(self, hostip, port):
+        logging.debug("listener")
+        HOST = hostip
+        PORT = port
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((HOST, PORT))

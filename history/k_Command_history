@@ -1,3 +1,15 @@
 yolo
 help
 exit
+help
+exit
+help
+simplelistener
+eixt
+exit
+simplelistener 192.168.0.10 8080
+simplelistener 192.168.0.10 
+simplelistener 192.168.0.10 8080
+exit
+ exit
+exit
