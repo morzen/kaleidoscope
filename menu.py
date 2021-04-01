@@ -7,8 +7,12 @@ import rlcompleter
 import datetime
 from termcolor import colored
 
-from listener import listener
+from backend.listener import listener
 
+
+ListenersDict = {}
+ConnectionsDict = {}
+threads = []
 
 class Commands(Cmd):
 
@@ -68,21 +72,56 @@ class Commands(Cmd):
     #command part
 
     def do_simplelistener(self, inp):
-        try:
-            listenerC = listener()
-            argList = []
-            argList = inp.split()
-            listenerC.Simplelistener(argList[0], int(argList[1]))
-        except:
-            print(colored("-error: did you corretly enter the argument?", "red"))
-            print(colored("example: simplelistener hostip port", "yellow"))
-            print(colored("example: simplelistener 127.0.0.1 8080", "yellow"))
+        #try:
+        listenerC = listener()
+        argList = []
+        argList = inp.split()
+        HOST = argList[0]
+        PORT = int(argList[1])
+        name = argList[2]
+        ListenersDict[name] = inp
+        for inp in threads:
+            t = threading.Thread(target=listenerC.Simplelistener, args=(HOST,PORT, name))
+            t.start()
+            #threads.append(t)
 
-    # def do_HTTPlistener(self, inp)
-    #     listenerC.listenerHTTP()
+
+        # except:
+        #     print(colored("-error: did you corretly enter the argument?", "red"))
+        #     print(colored("example: simplelistener hostip port", "yellow"))
+        #     print(colored("example: simplelistener 127.0.0.1 8080", "yellow"))
+
+    def do_HTTPlistener(self, inp):
+        listenerC = listener()
+        argList = []
+        argList = inp.split()
+
+        listenerC.listenerHTTP(argList[0], int(argList[1]))
+
+    def do_interact(self, inp):
+        listenerC = listener()
+        argList = []
+        argList = inp.split()
+        HOST = argList[0]
+        PORT = int(argList[1])
+        listenerC.interact(HOST, PORT)
+
+    def do_listListener(self, inp):
+        print(ListenersDict)
+
+    #def do_listConnections():
+
+    def do_close_listener(self, inp):
+        listenerC = listener()
+        argList = []
+        argList = inp.split()
+        listenerC.closeSimpleListener(argList[0], int(argList[1]))
+
+    def do_clear(self, inp):
+        clear = lambda: os.system('clear')
+        clear()
 
     def do_exit(self, inp):
-
         print("shut me down and i will become more \npowerfull than you can possibly imagine.")
         exit()
 
