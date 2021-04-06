@@ -155,3 +155,78 @@ listListener
 exit
 simplelistener 192.168.0.10 8080 listener1
 exit
+simplelistener 192.168.0.10 8080 listener1
+help
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8082 listener2
+simplelistener 192.168.0.10 8081 listener2
+close_listener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+close_listener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3

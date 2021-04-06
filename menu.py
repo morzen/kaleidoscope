@@ -1,10 +1,11 @@
-from cmd import Cmd
 import termcolor
 import atexit
 import os
 import readline
 import rlcompleter
 import datetime
+import threading
+from cmd import Cmd
 from termcolor import colored
 
 from backend.listener import listener
@@ -73,17 +74,22 @@ class Commands(Cmd):
 
     def do_simplelistener(self, inp):
         #try:
-        listenerC = listener()
+
         argList = []
         argList = inp.split()
         HOST = argList[0]
         PORT = int(argList[1])
         name = argList[2]
         ListenersDict[name] = inp
-        for inp in threads:
-            t = threading.Thread(target=listenerC.Simplelistener, args=(HOST,PORT, name))
-            t.start()
-            #threads.append(t)
+        ListenerCreation = listener(HOST, PORT, name)
+        #ListenerCreation.Simplelistener()
+        t = threading.Thread(target=ListenerCreation.Simplelistener, args=())
+        threads.append(t)
+        print(threads)
+        #t.setDaemon(True)
+        t.start()
+
+
 
 
         # except:
@@ -99,12 +105,13 @@ class Commands(Cmd):
         listenerC.listenerHTTP(argList[0], int(argList[1]))
 
     def do_interact(self, inp):
-        listenerC = listener()
         argList = []
         argList = inp.split()
         HOST = argList[0]
         PORT = int(argList[1])
-        listenerC.interact(HOST, PORT)
+        name = argList[2]
+        interacting = connection(HOST, PORT, name)
+        interacting.interact()
 
     def do_listListener(self, inp):
         print(ListenersDict)
@@ -112,10 +119,10 @@ class Commands(Cmd):
     #def do_listConnections():
 
     def do_close_listener(self, inp):
-        listenerC = listener()
         argList = []
         argList = inp.split()
-        listenerC.closeSimpleListener(argList[0], int(argList[1]))
+        ListenerClose = listener(argList[0], int(argList[1]), argList[2])
+        ListenerClose.closeSimpleListener()
 
     def do_clear(self, inp):
         clear = lambda: os.system('clear')

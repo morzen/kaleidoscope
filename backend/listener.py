@@ -21,30 +21,42 @@ Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p'
 
 class listener:
 
-    def checkPortNIPfree(self, hostip, port):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            try:
-                sock.bind((HOST, PORT))
-                return True
-            except:
-                return False
-            sock.close()
+    def __init__(self, hostip, port, name):
+        self.HOST = hostip
+        self.PORT = port
+        self.NAME = name
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    def Simplelistener(self, hostip, port, name):
-        logging.debug("listener")
+
+    def Simplelistener(self):
+        print("I am a Simple listener")
+        self.sock.bind((self.HOST, self.PORT))
+        self.sock.listen()
+        conn, addr = self.sock.accept()
+        with conn:
+            print('conn:', conn)
+
+        return print("test")
+
+    def closeSimpleListener(self):
+        self.sock.close()
+        print("closing listener")
+
+
+
+    def checkPortNIPfree(self, hostip, port):
         HOST = hostip
         PORT = port
-
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind((HOST, PORT))
-            s.listen()
-            conn, addr = s.accept()
-            connection = name + conn
-            with conn:
-                print('listner:'+name+' addr:', addr+ 'received connection')
-                print('conn:', conn)
-        return connection
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((HOST, PORT))
+        # try:
+        #     s.bind((HOST, PORT))
+        #     return True
+        # except:
+        #     return False
+        s.close()
 
     def listenerHTTP(self, hostip, port):
 
@@ -56,17 +68,6 @@ class listener:
         with socketserver.TCPServer((HOST, PORT), Handler) as httpd:
             print("host: "+HOST+" serving at port", PORT)
             httpd.serve_forever()
-
-    def closeSimpleListener(self, hostip, port):
-        HOST = hostip
-        PORT = port
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            s.bind((HOST, PORT))
-            print("closed")
-            s.close()
-
-
 
     #temporary function just for testing purposes
     def client():

@@ -14,25 +14,27 @@ from flask import Flask
 
 class connection:
 
-    def interact(self, hostip, port):
-        HOST = hostip
-        PORT = port
+    def __init__():
+        self.HOST = hostip
+        self.PORT = port
+        self.NAME = name
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind((self.HOST, self.PORT))
+
+    def interact(self):
+        HOST = self.HOST
+        PORT = self.PORT
 
         while True:
             cmd = input(Datetime+"_"+HOST+":"+str(PORT)+">> ")
 
             if cmd == "exit":
-                self.closeConnection(HOST, PORT)
+                self.sock.closeConnection(HOST, PORT)
 
 
 
-    def closeConnection(hostip, port):
-        HOST = hostip
-        PORT = port
-
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind((HOST, PORT))
-            s.listen()
-            conn, addr = s.accept()
-            conn.close()
-            s.close()
+    def closeConnection(self):
+        conn, addr = self.sock.accept()
+        conn.close()
+        self.sock.close()
