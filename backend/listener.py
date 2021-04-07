@@ -30,18 +30,18 @@ class listener:
 
 
     def Simplelistener(self):
-        print("I am a Simple listener")
+        #print("I am a Simple listener")
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
         conn, addr = self.sock.accept()
         with conn:
-            print('conn:', conn)
+            logging.debug('conn: %s', conn)
 
-        return print("test")
+
 
     def closeSimpleListener(self):
         self.sock.close()
-        print("closing listener")
+        logging.debug("closing listener")
 
 
 

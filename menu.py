@@ -5,6 +5,9 @@ import readline
 import rlcompleter
 import datetime
 import threading
+import multiprocessing
+import logging
+import sys
 from cmd import Cmd
 from termcolor import colored
 
@@ -13,7 +16,10 @@ from backend.listener import listener
 
 ListenersDict = {}
 ConnectionsDict = {}
-threads = []
+Processes = []
+
+#comment/uncomment the line underneath to have debug log displayed/not displayed
+logging.basicConfig(level=logging.DEBUG)
 
 class Commands(Cmd):
 
@@ -67,8 +73,8 @@ class Commands(Cmd):
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
-
-
+    def emptyline(self):
+        pass
 
     #command part
 
@@ -79,18 +85,15 @@ class Commands(Cmd):
         argList = inp.split()
         HOST = argList[0]
         PORT = int(argList[1])
-        name = argList[2]
-        ListenersDict[name] = inp
-        ListenerCreation = listener(HOST, PORT, name)
+        NAME = argList[2]
+        ListenersDict[NAME] = inp
+        ListenerCreation = listener(HOST, PORT, NAME)
         #ListenerCreation.Simplelistener()
-        t = threading.Thread(target=ListenerCreation.Simplelistener, args=())
-        threads.append(t)
-        print(threads)
-        #t.setDaemon(True)
-        t.start()
 
-
-
+        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=())
+        Processes.append(p)
+        print(Processes)
+        p.start()
 
         # except:
         #     print(colored("-error: did you corretly enter the argument?", "red"))
@@ -121,16 +124,34 @@ class Commands(Cmd):
     def do_close_listener(self, inp):
         argList = []
         argList = inp.split()
-        ListenerClose = listener(argList[0], int(argList[1]), argList[2])
-        ListenerClose.closeSimpleListener()
+        NAME = argList[0]
+        #ListenerClose = listener(argList[0], int(argList[1]), argList[2])
+        #ListenerClose.closeSimpleListener()
+        i = 0
+        print(NAME)
+        j = None
+        LenProcesses = len(Processes)
+        while i < LenProcesses:
+            if NAME in str(Processes[i]):
+                print(NAME+" is in "+str(Processes[i]))
+                j = str(i)
+            else:
+                print(NAME+" is not in "+str(Processes[i]))
+
+            i = i + 1
+        print("j="+j)
+        p = Processes[int(j)]
+        del Processes[int(j)]
+        p.terminate()
 
     def do_clear(self, inp):
         clear = lambda: os.system('clear')
         clear()
 
     def do_exit(self, inp):
-        print("shut me down and i will become more \npowerfull than you can possibly imagine.")
-        exit()
+        #exit()
+        sys.exit("shut me down and i will become more \npowerfull than you can possibly imagine.")
+        quit()
 
 
 Commands().cmdloop()

@@ -230,3 +230,60 @@ close_listener 192.168.0.10 8080 listener1
 simplelistener 192.168.0.10 8080 listener1
 simplelistener 192.168.0.10 8081 listener2
 simplelistener 192.168.0.10 8083 listener3
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8085 listener1
+simplelistener 192.168.0.10 8080 listener10
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener listener2
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener listener2
+simplelistener 192.168.0.10 8083 listener3
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener2
+simplelistener 192.168.0.10 8085 listener4
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener listener2
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener listener2
+simplelistener 192.168.0.10 8085 listener4
+exit
