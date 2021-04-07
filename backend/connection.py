@@ -14,7 +14,7 @@ from flask import Flask
 
 class connection:
 
-    def __init__():
+    def __init__(self, hostip, port, name):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
@@ -22,7 +22,7 @@ class connection:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.HOST, self.PORT))
 
-    def interact(self):
+    def interactWith(self):
         HOST = self.HOST
         PORT = self.PORT
 

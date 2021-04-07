@@ -287,3 +287,33 @@ simplelistener 192.168.0.10 8083 listener3
 close_listener listener2
 simplelistener 192.168.0.10 8085 listener4
 exit
+simplelistener 192.168.0.10 8083 listener3
+exit
+simplelistener 192.168.0.10 8083 listener3
+close_listener 192.168.0.10 8083 listener3
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+help
+listListener
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+help
+listListener
+close_listener listener2
+simplelistener 192.168.0.10 8081 listener2
+listListener
+close_listener listener2
+listListener
+exit
+simplelistener 192.168.0.10 8080 listener1
+simplelistener 192.168.0.10 8081 listener2
+simplelistener 192.168.0.10 8083 listener3
+close_listener listener2
+listListener
+simplelistener 192.168.0.10 8081 listener2
+listListener
+exit

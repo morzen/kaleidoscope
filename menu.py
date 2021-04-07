@@ -12,7 +12,7 @@ from cmd import Cmd
 from termcolor import colored
 
 from backend.listener import listener
-
+from backend.connection import connection
 
 ListenersDict = {}
 ConnectionsDict = {}
@@ -110,11 +110,10 @@ class Commands(Cmd):
     def do_interact(self, inp):
         argList = []
         argList = inp.split()
-        HOST = argList[0]
-        PORT = int(argList[1])
-        name = argList[2]
-        interacting = connection(HOST, PORT, name)
-        interacting.interact()
+        NAME= argList[0]
+
+        mydickonyourhead = connection(ListenersDict[NAME], int(ListenersDict[NAME][1], ListenersDict[NAME][2])
+        mydickonyourhead.interactWith()
 
     def do_listListener(self, inp):
         print(ListenersDict)
@@ -122,11 +121,15 @@ class Commands(Cmd):
     #def do_listConnections():
 
     def do_close_listener(self, inp):
+
         argList = []
         argList = inp.split()
         NAME = argList[0]
-        #ListenerClose = listener(argList[0], int(argList[1]), argList[2])
-        #ListenerClose.closeSimpleListener()
+
+        ListenerClose = listener(ListenersDict[NAME][0],
+        int(ListenersDict[NAME][1]), ListenersDict[NAME][2])
+
+        ListenerClose.closeSimpleListener()
         i = 0
         print(NAME)
         j = None
@@ -142,6 +145,7 @@ class Commands(Cmd):
         print("j="+j)
         p = Processes[int(j)]
         del Processes[int(j)]
+        ListenersDict.pop(NAME)
         p.terminate()
 
     def do_clear(self, inp):
