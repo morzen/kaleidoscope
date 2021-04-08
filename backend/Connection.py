@@ -3,12 +3,12 @@ import http.server
 import socketserver
 import logging
 import threading
-import threading
 import time
 import logging
 import subprocess
 import os
 import datetime
+
 from termcolor import colored
 from flask import Flask
 

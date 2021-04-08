@@ -1,319 +1,3693 @@
-yolo
-help
-exit
-help
-exit
-help
-simplelistener
-eixt
-exit
-simplelistener 192.168.0.10 8080
-simplelistener 192.168.0.10 
-simplelistener 192.168.0.10 8080
-exit
- exit
-exit
-help
-exit
-help
-HTTPlistener 192.168.0.10 8080
-help
-HTTPlistener 192.168.0.10 8080
-HTTPlistener 192.168.0.15 8080
-HTTPlistener 192.168.0.50 8080
-HTTPlistener 192.168.0.10 8081
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 64910
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 64970
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 65018
-clear
-ss
-clear
-exit
-clear
-yolo
- 
-clear
- 
-simplelistener
-clear
-exit
-clear
-simplelistener 192.168.0.10 8080
-exit
-clear
-exit
-clear
-cls
-clear
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 65256
-simplelistener 192.168.0.10 8080
-exit
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49245
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49548
-simplelistener 192.168.0.10 80
-interact 192.168.0.2 49577
-simplelistener 192.168.0.10 80
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49587
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49587
-ls
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49646
-ls
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49646
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49671
-simplelistener 192.168.0.10 8080
-simplelistener 192.168.0.10 49676
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49725
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49731
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49774
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49794
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 497899
-cd
-interact 192.168.0.2 497899
-cd
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49904
-f
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49909
-d
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 49989
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 50061
-exit
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 50118
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 51536
-cd
-quit
-exit
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 51556
-exit
-quit
-exit
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 51598
-exit
-simplelistener 192.168.0.10 8080
-interact 192.168.0.2 6257
-exit
-simplelistener 192.168.0.10 
-interact 192.168.0.2 62599
-exit
-help
-exit
-simplelistener 192.168.0.10 8080
-simplelistener 192.168.0.10
-simplelistener 19
-simplelistener 
-simplelistener 192.168.0.10 8080
-help
-exit
-simplelistener 192.168.0.10 8080
-help
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-simplelistener 192.168.0.10 8081
-exit
-simplelistener 192.168.0.10 8081
-close_listener 192.168.0.10 8081
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-close_listener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080
-simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8080 listener1
-help
-listListener
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-exit
-simplelistener 192.168.0.10 8080 listener1
-help
 close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
+close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8082 listener2
-simplelistener 192.168.0.10 8081 listener2
-close_listener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8081 listener2
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-close_listener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8085 listener1
-simplelistener 192.168.0.10 8080 listener10
+close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-close_listener
+close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener
+interact listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener
-simplelistener 192.168.0.10 8080 listener1
-close_listener
-simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener
-simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener
-simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener listener2
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener listener2
-simplelistener 192.168.0.10 8083 listener3
-simplelistener 192.168.0.10 8081 listener2
+close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
-close_listener listener2
-simplelistener 192.168.0.10 8085 listener4
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener listener2
+close_listener listener1
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener listener2
-simplelistener 192.168.0.10 8085 listener4
-exit
-simplelistener 192.168.0.10 8083 listener3
-exit
-simplelistener 192.168.0.10 8083 listener3
-close_listener 192.168.0.10 8083 listener3
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
 help
-listListener
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
 help
-listListener
-close_listener listener2
-simplelistener 192.168.0.10 8081 listener2
-listListener
-close_listener listener2
-listListener
+  
+  
 exit
 simplelistener 192.168.0.10 8080 listener1
-simplelistener 192.168.0.10 8081 listener2
-simplelistener 192.168.0.10 8083 listener3
-close_listener listener2
-listListener
-simplelistener 192.168.0.10 8081 listener2
-listListener
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
 exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+exit
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+deconnect
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+exit
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+help
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+  
+  
+exit
+simplelistener 192.168.0.10 8080 listener1
+close_listener listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1
+simplelistener 192.168.0.10 8080 listener1
+interact listener1

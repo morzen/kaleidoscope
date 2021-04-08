@@ -12,7 +12,8 @@ from cmd import Cmd
 from termcolor import colored
 
 from backend.listener import listener
-from backend.connection import connection
+from backend.Connection import connection
+from backend.Interact import interacting
 
 ListenersDict = {}
 ConnectionsDict = {}
@@ -110,10 +111,17 @@ class Commands(Cmd):
     def do_interact(self, inp):
         argList = []
         argList = inp.split()
-        NAME= argList[0]
+        name= argList[0]
 
-        mydickonyourhead = connection(ListenersDict[NAME], int(ListenersDict[NAME][1], ListenersDict[NAME][2])
-        mydickonyourhead.interactWith()
+        info = ListenersDict[name]
+        infoSplitList = info.split()
+        HOST = infoSplitList[0]
+        PORT = infoSplitList[1]
+        NAME = infoSplitList[2]
+
+        InteractWith = interacting(HOST, int(PORT), NAME)
+        while True:
+            InteractWith.Shell()
 
     def do_listListener(self, inp):
         print(ListenersDict)
@@ -124,10 +132,13 @@ class Commands(Cmd):
 
         argList = []
         argList = inp.split()
-        NAME = argList[0]
-
-        ListenerClose = listener(ListenersDict[NAME][0],
-        int(ListenersDict[NAME][1]), ListenersDict[NAME][2])
+        name = argList[0]
+        info = ListenersDict[name]
+        infoSplitList = info.split()
+        HOST = infoSplitList[0]
+        PORT = infoSplitList[1]
+        NAME = infoSplitList[2]
+        ListenerClose = listener(HOST,int(PORT), NAME)
 
         ListenerClose.closeSimpleListener()
         i = 0
