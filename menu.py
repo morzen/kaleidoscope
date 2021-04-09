@@ -121,7 +121,33 @@ class Commands(Cmd):
 
         InteractWith = interacting(HOST, int(PORT), NAME)
         while True:
-            InteractWith.Shell()
+            try1 = InteractWith.Shell()
+            if try1 == False:
+                break
+
+            elif try1 == "Close Connection":
+                i = 0
+                print(NAME)
+                j = None
+                LenProcesses = len(Processes)
+                while i < LenProcesses:
+                    if NAME in str(Processes[i]):
+                        print(NAME+" is in "+str(Processes[i]))
+                        j = str(i)
+                    else:
+                        print(NAME+" is not in "+str(Processes[i]))
+
+                    i = i + 1
+                print("j="+j)
+                p = Processes[int(j)]
+                del Processes[int(j)]
+                ListenersDict.pop(NAME)
+                p.terminate()
+
+                break
+
+            else:
+                continue
 
     def do_listListener(self, inp):
         print(ListenersDict)

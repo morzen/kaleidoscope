@@ -35,7 +35,7 @@ class listener:
         self.sock.listen()
         conn, addr = self.sock.accept()
         with conn:
-            logging.debug('conn: %s', conn)
+            logging.debug('\nconn: %s', conn)
 
 
 

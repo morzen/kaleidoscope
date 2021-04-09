@@ -73,7 +73,9 @@ class interacting(Cmd):
 
 
         elif command == "deconnect":
-            self.sock.closeConnection(HOST, PORT)
+            self.sock.close()
+            end = "Close Connection"
+            return end
 
 
         elif command == "exit":
