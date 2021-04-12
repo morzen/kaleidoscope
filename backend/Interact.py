@@ -38,7 +38,13 @@ class interacting(Cmd):
         self.sock.bind((self.HOST, self.PORT))
 
 
+
+
     def Shell(self):
+
+
+
+
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
@@ -82,4 +88,8 @@ class interacting(Cmd):
             return False
 
         else:
-            pass
+            self.sock.send(command.encode())
+            print("send "+command)
+
+        answer = self.sock.recv(1024).decode()
+        print(answer)

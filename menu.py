@@ -1,4 +1,7 @@
 import termcolor
+import socket
+import http.server
+import socketserver
 import atexit
 import os
 import readline
@@ -18,6 +21,7 @@ from backend.Interact import interacting
 ListenersDict = {}
 ConnectionsDict = {}
 Processes = []
+sockets = []
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
@@ -91,10 +95,13 @@ class Commands(Cmd):
         ListenerCreation = listener(HOST, PORT, NAME)
         #ListenerCreation.Simplelistener()
 
-        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=())
+
+        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=[TempS])
         Processes.append(p)
         print(Processes)
         p.start()
+
+
 
         # except:
         #     print(colored("-error: did you corretly enter the argument?", "red"))

@@ -18,7 +18,7 @@ class connection:
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = socket.socket()
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((self.HOST, self.PORT))
 
