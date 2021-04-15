@@ -6,12 +6,14 @@ import logging
 import threading
 import threading
 import time
+import multiprocessing
 import logging
 import subprocess
 import os
 import datetime
 from termcolor import colored
 from flask import Flask
+
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
@@ -28,16 +30,25 @@ class listener:
         self.PORT = port
         self.NAME = name
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.sock.setblocking(False)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 
-    def Simplelistener(self):
+
+
+    def Simplelistener(self, return_dict):
         #print("I am a Simple listener")
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
+        print("toto")
         conn, addr = self.sock.accept()
+        #SocketDict.add(1, self.sock)
+        #rint(SocketDict)
         with conn:
             logging.debug('\nconn: %s', conn)
+            return_dict["conn"]=conn
+            return_dict["addr"]=addr
+
 
 
     def closeSimpleListener(self):

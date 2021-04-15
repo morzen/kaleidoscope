@@ -22,6 +22,10 @@ ListenersDict = {}
 ConnectionsDict = {}
 Processes = []
 sockets = []
+global SocketDict
+SocketDict = {}
+manager = multiprocessing.Manager()
+return_dict = manager.dict()
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
@@ -96,10 +100,13 @@ class Commands(Cmd):
         #ListenerCreation.Simplelistener()
 
 
-        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=[TempS])
+
+        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=[return_dict])
         Processes.append(p)
         print(Processes)
         p.start()
+        #reader_process.join()
+
 
 
 
@@ -109,11 +116,15 @@ class Commands(Cmd):
         #     print(colored("example: simplelistener 127.0.0.1 8080", "yellow"))
 
     def do_HTTPlistener(self, inp):
-        listenerC = listener()
-        argList = []
-        argList = inp.split()
-
-        listenerC.listenerHTTP(argList[0], int(argList[1]))
+        print(return_dict)
+        conn = return_dict.get("conn")
+        msg = conn.recv(1024).decode()
+        print(msg)
+        # listenerC = listener()
+        # argList = []
+        # argList = inp.split()
+        #
+        # listenerC.listenerHTTP(argList[0], int(argList[1]))
 
     def do_interact(self, inp):
         argList = []

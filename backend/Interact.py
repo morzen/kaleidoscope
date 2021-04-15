@@ -42,9 +42,6 @@ class interacting(Cmd):
 
     def Shell(self):
 
-
-
-
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
