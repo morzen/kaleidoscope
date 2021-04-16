@@ -40,14 +40,19 @@ class listener:
         #print("I am a Simple listener")
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
-        print("toto")
         conn, addr = self.sock.accept()
         #SocketDict.add(1, self.sock)
         #rint(SocketDict)
         with conn:
             logging.debug('\nconn: %s', conn)
+            print(colored("\n"+self.NAME+"("+self.HOST+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
             return_dict["conn"]=conn
+            return_dict["name"]=self.NAME
+            return_dict["status"]="connected"
             return_dict["addr"]=addr
+            return_dict["host"]=self.HOST
+            return_dict["port"]=self.PORT
+
 
 
 

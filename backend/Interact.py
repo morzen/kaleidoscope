@@ -29,14 +29,12 @@ logging.basicConfig(level=logging.DEBUG)
 
 class interacting(Cmd):
 
-    def __init__(self, hostip, port, name):
+    def __init__(self, hostip, port, name, Conn):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind((self.HOST, self.PORT))
-
+        self.conn = Conn
+        print(self.conn)
 
 
 
@@ -76,7 +74,7 @@ class interacting(Cmd):
 
 
         elif command == "deconnect":
-            self.sock.close()
+            self.conn.close()
             end = "Close Connection"
             return end
 
@@ -85,8 +83,8 @@ class interacting(Cmd):
             return False
 
         else:
-            self.sock.send(command.encode())
+            self.conn.send(command.encode())
             print("send "+command)
 
-        answer = self.sock.recv(1024).decode()
+        answer = self.conn.recv(1024).decode()
         print(answer)
