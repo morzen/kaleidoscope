@@ -13,6 +13,8 @@ import os
 import datetime
 from termcolor import colored
 from flask import Flask
+from http.server import BaseHTTPRequestHandler,HTTPServer
+
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
@@ -21,9 +23,10 @@ logging.basicConfig(level=logging.DEBUG)
 Datetime = datetime.datetime.now()
 Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
+app = Flask(__name__)
 
 
-class listener:
+class tcplistener:
 
     def __init__(self, hostip, port, name):
         self.HOST = hostip
@@ -36,8 +39,8 @@ class listener:
 
 
 
-    def Simplelistener(self, return_dict):
-        #print("I am a Simple listener")
+    def listenertcp(self, return_dict):
+        #print("I am a tcp listener")
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
         conn, addr = self.sock.accept()
@@ -54,9 +57,7 @@ class listener:
             return_dict["port"]=self.PORT
 
 
-
-
-    def closeSimpleListener(self):
+    def closetcpListener(self):
         self.sock.close()
         logging.debug("closing listener")
 
@@ -75,16 +76,6 @@ class listener:
         #     return False
         s.close()
 
-    def listenerHTTP(self, hostip, port):
-
-        HOST = hostip
-        PORT = port
-
-        Handler = http.server.SimpleHTTPRequestHandler
-
-        with socketserver.TCPServer((HOST, PORT), Handler) as httpd:
-            print("host: "+HOST+" serving at port", PORT)
-            httpd.serve_forever()
 
     #temporary function just for testing purposes
     def client():

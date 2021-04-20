@@ -15,19 +15,22 @@ import sys
 from cmd import Cmd
 from termcolor import colored
 
-from backend.listener import listener
+from backend.TCPlistener import tcplistener
+from backend.HTTPlistener import httplistener
+
 from backend.Connection import connection
 from backend.Interact import interacting
 
-ListenersDict = {}
-ConnectionsDict = {}
+
+TCPListenersDict = {}
+TCPConnectionsDict = {}
 Processes = []
 #sockets = []
-#SocketDict = {}
+#TCPSocketDict = {}
 
 manager = multiprocessing.Manager()
-SocketDict = manager.dict()
-return_dict = manager.dict()
+TCPSocketDict = manager.dict()
+TCPreturn_dict = manager.dict()
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
@@ -86,24 +89,24 @@ class Commands(Cmd):
 
     def check4incoming():
         while True:
-            if len(return_dict) != 0 :
-                NAME = return_dict.get("name")
-                if  NAME in SocketDict:
+            if len(TCPreturn_dict) != 0 :
+                NAME = TCPreturn_dict.get("name")
+                if  NAME in TCPSocketDict:
                     continue
                 else:
-                    SocketDict[NAME]=return_dict.get("conn")
-                    ListenersDict[NAME][3] = str(return_dict.get("status"))
-                    ConnectionsDict.setdefault(NAME, []).append(return_dict.get("host"))
-                    ConnectionsDict.setdefault(NAME, []).append(return_dict.get("port"))
-                    ConnectionsDict.setdefault(NAME, []).append(return_dict.get("name"))
-                    addr = return_dict.get("addr")
-                    ConnectionsDict.setdefault(NAME, []).append(addr[0])
-                    ConnectionsDict.setdefault(NAME, []).append(addr[1])
+                    TCPSocketDict[NAME]=TCPreturn_dict.get("conn")
+                    TCPListenersDict[NAME][3] = str(TCPreturn_dict.get("status"))
+                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("host"))
+                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("port"))
+                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("name"))
+                    addr = TCPreturn_dict.get("addr")
+                    TCPConnectionsDict.setdefault(NAME, []).append(addr[0])
+                    TCPConnectionsDict.setdefault(NAME, []).append(addr[1])
 
-                    #ConnectionsDict(NAME, []).append(return_dict[])
-                    #ConnectionsDict(NAME, []).append(return_dict[])
-                    print("SocketDict: ")
-                    print(SocketDict)
+                    #TCPConnectionsDict(NAME, []).append(TCPreturn_dict[])
+                    #TCPConnectionsDict(NAME, []).append(TCPreturn_dict[])
+                    print("TCPSocketDict: ")
+                    print(TCPSocketDict)
     T = Thread(target = check4incoming, args=())
     T.setDaemon(True)
     T.start()
@@ -113,7 +116,7 @@ class Commands(Cmd):
 
     #command part
 
-    def do_simplelistener(self, inp):
+    def do_tcplistener(self, inp):
         #try:
 
         argList = []
@@ -122,13 +125,13 @@ class Commands(Cmd):
         PORT = int(argList[1])
         NAME = argList[2]
         STATUS = "listening"
-        ListenersDict.setdefault(NAME, []).append(HOST)
-        ListenersDict.setdefault(NAME, []).append(PORT)
-        ListenersDict.setdefault(NAME, []).append(NAME)
-        ListenersDict.setdefault(NAME, []).append(STATUS)
-        ListenerCreation = listener(HOST, PORT, NAME)
+        TCPListenersDict.setdefault(NAME, []).append(HOST)
+        TCPListenersDict.setdefault(NAME, []).append(PORT)
+        TCPListenersDict.setdefault(NAME, []).append(NAME)
+        TCPListenersDict.setdefault(NAME, []).append(STATUS)
+        ListenerCreation = tcplistener(HOST, PORT, NAME)
 
-        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.Simplelistener, args=[return_dict])
+        p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
         Processes.append(p)
         print(Processes)
         p.start()
@@ -136,28 +139,33 @@ class Commands(Cmd):
 
         # except:
         #     print(colored("-error: did you corretly enter the argument?", "red"))
-        #     print(colored("example: simplelistener hostip port", "yellow"))
-        #     print(colored("example: simplelistener 127.0.0.1 8080", "yellow"))
+        #     print(colored("example: tcplistener hostip port", "yellow"))
+        #     print(colored("example: tcplistener 127.0.0.1 8080", "yellow"))
 
     def do_HTTPlistener(self, inp):
-        listenerC = listener()
         argList = []
         argList = inp.split()
+        HOST = argList[0]
+        PORT = int(argList[1])
+        NAME = argList[2]
+        print("0")
+        HTTPListenerCreation = httplistener(HOST, PORT, NAME)
+        print("1")
+        HTTPListenerCreation.run()
 
-        listenerC.listenerHTTP(argList[0], int(argList[1]))
 
     def do_interact(self, inp):
         argList = []
         argList = inp.split()
         name = argList[0]
 
-        info = ConnectionsDict.get(name)
-        print(SocketDict)
+        info = TCPConnectionsDict.get(name)
+        print(TCPSocketDict)
 
         HOST = info[3]
         PORT = info[4]
         NAME = info[2]
-        Conn = SocketDict[NAME]
+        Conn = TCPSocketDict[NAME]
 
         InteractWith = interacting(HOST, int(PORT), NAME, Conn)
         while True:
@@ -181,7 +189,7 @@ class Commands(Cmd):
                 print("j="+j)
                 p = Processes[int(j)]
                 del Processes[int(j)]
-                ListenersDict.pop(NAME)
+                TCPListenersDict.pop(NAME)
                 p.terminate()
 
                 break
@@ -190,12 +198,12 @@ class Commands(Cmd):
                 continue
 
     def do_listListener(self, inp):
-        print(ListenersDict)
+        print(TCPListenersDict)
 
     def do_listConnections(self, inp):
-        print(ConnectionsDict)
-        print(return_dict)
-        # conn = return_dict.get("conn")
+        print(TCPConnectionsDict)
+        print(TCPreturn_dict)
+        # conn = TCPreturn_dict.get("conn")
         # msg = conn.recv(1024).decode()
         # print("\nmessage: "+msg)
 
@@ -204,14 +212,14 @@ class Commands(Cmd):
         argList = []
         argList = inp.split()
         name = argList[0]
-        info = ListenersDict[name]
+        info = TCPListenersDict[name]
         infoSplitList = info.split()
         HOST = infoSplitList[0]
         PORT = infoSplitList[1]
         NAME = infoSplitList[2]
         ListenerClose = listener(HOST,int(PORT), NAME)
 
-        ListenerClose.closeSimpleListener()
+        ListenerClose.closetcpListener()
         i = 0
         print(NAME)
         j = None
@@ -228,8 +236,8 @@ class Commands(Cmd):
         logging.debug("j= %s", j)
         p = Processes[int(j)]
         del Processes[int(j)]
-        ListenersDict.pop(NAME)
-        ConnectionsDict.pop(NAME)
+        TCPListenersDict.pop(NAME)
+        TCPConnectionsDict.pop(NAME)
         p.terminate()
 
     def do_clear(self, inp):
