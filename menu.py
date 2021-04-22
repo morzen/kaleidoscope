@@ -8,29 +8,41 @@ import readline
 import rlcompleter
 import datetime
 import threading
-from threading import Thread
 import multiprocessing
 import logging
 import sys
+import sqlite3
 from cmd import Cmd
 from termcolor import colored
+from threading import Thread
 
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 
-from backend.Connection import connection
 from backend.Interact import interacting
+from backend.HTTPshandler import http_sHandler
 
 
 TCPListenersDict = {}
 TCPConnectionsDict = {}
-Processes = []
+TCPprocesses = []
+
+HTTPListenersDict = {}
+HTTPConnectionsDict = {}
+HTTPprocesses = []
+
+
 #sockets = []
 #TCPSocketDict = {}
 
 manager = multiprocessing.Manager()
-TCPSocketDict = manager.dict()
+
 TCPreturn_dict = manager.dict()
+TCPSocketDict = manager.dict()
+
+HTTPreturn_dict = manager.dict()
+HTTPserverDict = manager.dict()
+
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
@@ -87,7 +99,30 @@ class Commands(Cmd):
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
-    def check4incoming():
+    #this if loop verify if the database already exist if it doesn't it create one
+    #as well as a table
+    if os.path.exists("database/HTTPlistener.db") == False:
+        conn = sqlite3.connect('database/HTTPlistener.db')
+        c = conn.cursor()
+        logging.debug("HTTPlistener.db has been created")
+
+        c.execute("""CREATE TABLE HTTPlistener (
+                    hostIP text,
+                    hostPORT text,
+                    name text,
+                    targetIP,
+                    targetPORT,
+                    targetHOSTNAME,
+                    ItemUniqueID
+                    )""")
+    #if it exist then it just connect to it and create a cursor
+    else:
+        logging.debug("HTTPlistener.db exist \n")
+        conn = sqlite3.connect('HTTPlistener.db')
+        c = conn.cursor()
+
+    # reguraly check if TCPlistener received a connection
+    def TCPcheck4incoming():
         while True:
             if len(TCPreturn_dict) != 0 :
                 NAME = TCPreturn_dict.get("name")
@@ -107,9 +142,12 @@ class Commands(Cmd):
                     #TCPConnectionsDict(NAME, []).append(TCPreturn_dict[])
                     print("TCPSocketDict: ")
                     print(TCPSocketDict)
-    T = Thread(target = check4incoming, args=())
+    T = Thread(target = TCPcheck4incoming, args=())
     T.setDaemon(True)
     T.start()
+
+
+
 
     def emptyline(self):
         pass
@@ -132,8 +170,8 @@ class Commands(Cmd):
         ListenerCreation = tcplistener(HOST, PORT, NAME)
 
         p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
-        Processes.append(p)
-        print(Processes)
+        TCPprocesses.append(p)
+        print(TCPprocesses)
         p.start()
 
 
@@ -148,10 +186,19 @@ class Commands(Cmd):
         HOST = argList[0]
         PORT = int(argList[1])
         NAME = argList[2]
-        print("0")
+        STATUS = "listening"
+        HTTPListenersDict.setdefault(NAME, []).append(HOST)
+        HTTPListenersDict.setdefault(NAME, []).append(PORT)
+        HTTPListenersDict.setdefault(NAME, []).append(NAME)
+        HTTPListenersDict.setdefault(NAME, []).append(STATUS)
+
         HTTPListenerCreation = httplistener(HOST, PORT, NAME)
-        print("1")
-        HTTPListenerCreation.run()
+
+        p = multiprocessing.Process(name=NAME ,target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
+        HTTPprocesses.append(p)
+        print(HTTPprocesses)
+        p.start()
+
 
 
     def do_interact(self, inp):
@@ -177,18 +224,18 @@ class Commands(Cmd):
                 i = 0
                 print(NAME)
                 j = None
-                LenProcesses = len(Processes)
-                while i < LenProcesses:
-                    if NAME in str(Processes[i]):
-                        print(NAME+" is in "+str(Processes[i]))
+                LenTCPprocesses = len(TCPprocesses)
+                while i < LenTCPprocesses:
+                    if NAME in str(TCPprocesses[i]):
+                        print(NAME+" is in "+str(TCPprocesses[i]))
                         j = str(i)
                     else:
-                        print(NAME+" is not in "+str(Processes[i]))
+                        print(NAME+" is not in "+str(TCPprocesses[i]))
 
                     i = i + 1
                 print("j="+j)
-                p = Processes[int(j)]
-                del Processes[int(j)]
+                p = TCPprocesses[int(j)]
+                del TCPprocesses[int(j)]
                 TCPListenersDict.pop(NAME)
                 p.terminate()
 
@@ -196,6 +243,9 @@ class Commands(Cmd):
 
             else:
                 continue
+
+    #def do_HTTPinteract(self, inp):
+
 
     def do_listListener(self, inp):
         print(TCPListenersDict)
@@ -223,19 +273,19 @@ class Commands(Cmd):
         i = 0
         print(NAME)
         j = None
-        LenProcesses = len(Processes)
-        while i < LenProcesses:
-            if NAME in str(Processes[i]):
-                #print(NAME+" is in "+str(Processes[i]))
-                logging.debug(NAME+" is in "+str(Processes[i]))
+        LenTCPprocesses = len(TCPprocesses)
+        while i < LenTCPprocesses:
+            if NAME in str(TCPprocesses[i]):
+                #print(NAME+" is in "+str(TCPprocesses[i]))
+                logging.debug(NAME+" is in "+str(TCPprocesses[i]))
                 j = str(i)
             else:
-                #print(NAME+" is not in "+str(Processes[i]))
-                logging.debug(NAME+" is not in "+str(Processes[i]))
+                #print(NAME+" is not in "+str(TCPprocesses[i]))
+                logging.debug(NAME+" is not in "+str(TCPprocesses[i]))
             i = i + 1
         logging.debug("j= %s", j)
-        p = Processes[int(j)]
-        del Processes[int(j)]
+        p = TCPprocesses[int(j)]
+        del TCPprocesses[int(j)]
         TCPListenersDict.pop(NAME)
         TCPConnectionsDict.pop(NAME)
         p.terminate()
@@ -246,7 +296,7 @@ class Commands(Cmd):
 
     def do_exit(self, inp):
         #exit()
-        T.close()
+        #T.close()
         sys.exit("shut me down and i will become more \npowerfull than you can possibly imagine.")
         quit()
 

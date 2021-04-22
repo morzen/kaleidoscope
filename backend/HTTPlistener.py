@@ -1,14 +1,13 @@
 import socket
 import socketserver
+import ctypes
+from http.server import HTTPServer
 from flask import Flask
 from flask import request
 from flask import render_template
 from flask_sockets import Sockets
 
-app = Flask(__name__)
-app.debug = True
-
-sockets = Sockets(app)
+from backend.HTTPshandler import http_sHandler
 
 class httplistener():
 
@@ -16,20 +15,19 @@ class httplistener():
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.sock.setblocking(False)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.Handler = http_sHandler
 
 
-    @app.route('/')
-    def startpage(self):
-        print("2")
-        print(self.HOST)
-        return render_template('index.html', rp=rp)
-        print("3")
-        # with socketserver.TCPServer((HOST, PORT), Handler) as httpd:
-        #     print("host: "+HOST+" serving at port", PORT)
-        #     httpd.serve_forever()
+    def listenerhttp(self, return_dict):
+        Hostaddress = (self.HOST, self.PORT)
+        httpd = HTTPServer(Hostaddress, self.Handler)
+        httpd.serve_forever()
 
-    def run(self):
-        app.run(host=self.HOST, port=self.PORT)
+        return_dict["httplistener"]=conn
+        return_dict["name"]=self.NAME
+        return_dict["status"]="connected"
+        return_dict["host"]=self.HOST
+        return_dict["port"]=self.PORT
+
+
+        #httpd.server_close()
