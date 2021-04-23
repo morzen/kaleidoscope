@@ -17,13 +17,19 @@ from termcolor import colored
 from cmd import Cmd
 import http.server
 
+from backend.Interact import HTTPinteracting
 
 
 
 class http_sHandler(http.server.BaseHTTPRequestHandler):
 
 
+
     def do_GET(s):
+        try:
+            UserCommandinput = eval(input("test>>"))
+        except:
+            UserCommandinput = ""
 
         command = bytes(UserCommandinput.encode())
         s.send_response(200)
@@ -38,4 +44,5 @@ class http_sHandler(http.server.BaseHTTPRequestHandler):
         s.end_headers()
         length = int(s.headers['Content-Length']) #
         postVar = s.rfile.read(length)
-        print(postVar)
+        if b'' in postVar == False:
+            print(postVar)

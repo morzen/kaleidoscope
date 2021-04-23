@@ -88,3 +88,50 @@ class interacting(Cmd):
 
         answer = self.conn.recv(1024).decode()
         print(answer)
+
+class HTTPinteracting(Cmd):
+
+    def __init__(self, hostip, port, name):
+        self.HOST = hostip
+        self.PORT = port
+        self.NAME = name
+
+
+
+
+    def Shell(self):
+
+        Datetime = datetime.datetime.now()
+        Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
+
+
+        prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
+        prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
+        prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
+        prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
+        command = input(prompt)
+        #part responsible for command history and autoComplete
+        #work only on unix
+        storeCommandPath = os.path.expanduser("./history/k_Command_history")
+
+        if os.path.exists(storeCommandPath):
+            readline.read_history_file(storeCommandPath)
+        #save command history at close
+        def saveCommand(storeCommandPath=storeCommandPath):
+            readline.write_history_file(storeCommandPath)
+
+        atexit.register(saveCommand)
+        #link tab for auto complete
+        readline.parse_and_bind('tab: complete')
+
+        #command part
+
+        if command == "":
+            pass
+
+        elif command == "clear":
+            clear = lambda: os.system('clear')
+            clear()
+
+        else:
+            return command

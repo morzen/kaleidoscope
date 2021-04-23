@@ -138,13 +138,28 @@ class Commands(Cmd):
                     TCPConnectionsDict.setdefault(NAME, []).append(addr[0])
                     TCPConnectionsDict.setdefault(NAME, []).append(addr[1])
 
-                    #TCPConnectionsDict(NAME, []).append(TCPreturn_dict[])
-                    #TCPConnectionsDict(NAME, []).append(TCPreturn_dict[])
-                    print("TCPSocketDict: ")
-                    print(TCPSocketDict)
     T = Thread(target = TCPcheck4incoming, args=())
     T.setDaemon(True)
     T.start()
+
+    # reguraly check if TCPlistener received a connection
+    def HTTPcheck4incoming():
+        while True:
+            if len(HTTPreturn_dict) != 0 :
+                NAME = HTTPreturn_dict.get("name")
+                if  NAME in HTTPserverDict:
+                    continue
+                else:
+                    HTTPserverDict[NAME]=HTTPreturn_dict.get("httplistener")
+                    HTTPListenersDict[NAME][3] = str(HTTPreturn_dict.get("status"))
+                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("host"))
+                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("port"))
+                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("name"))
+
+
+    HTTPthread = Thread(target = HTTPcheck4incoming, args=())
+    HTTPthread.setDaemon(True)
+    HTTPthread.start()
 
 
 
@@ -197,6 +212,7 @@ class Commands(Cmd):
         p = multiprocessing.Process(name=NAME ,target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         HTTPprocesses.append(p)
         print(HTTPprocesses)
+        #p.daemon = True
         p.start()
 
 
@@ -249,6 +265,9 @@ class Commands(Cmd):
 
     def do_listListener(self, inp):
         print(TCPListenersDict)
+
+        print("\n HTTPserverDict: ")
+        print(HTTPserverDict)
 
     def do_listConnections(self, inp):
         print(TCPConnectionsDict)
