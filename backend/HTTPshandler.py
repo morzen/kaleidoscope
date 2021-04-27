@@ -40,7 +40,7 @@ class http_sHandler(http.server.BaseHTTPRequestHandler):
 
         s.send_response(200)
         s.end_headers()
-        #length = int(s.headers['Content-Length']) #
-        postVar = s.rfile.read()
+        length = int(s.headers['Content-Length']) #
+        postVar = s.rfile.read(length)
         #if b'' in postVar == False:
         print(postVar)
