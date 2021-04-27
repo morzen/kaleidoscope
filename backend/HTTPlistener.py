@@ -8,7 +8,7 @@ from flask import render_template
 from flask_sockets import Sockets
 
 from backend.HTTPshandler import http_sHandler
-from API.api import runApi
+#from API.api import runApi
 
 class httplistener():
 

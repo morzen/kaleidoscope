@@ -212,7 +212,7 @@ class Commands(Cmd):
         p = multiprocessing.Process(name=NAME ,target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         HTTPprocesses.append(p)
         print(HTTPprocesses)
-        #p.daemon = True
+        p.daemon = True
         p.start()
 
 
