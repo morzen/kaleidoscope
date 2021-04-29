@@ -18,19 +18,25 @@ def home():
 
 
     elif flask.request.method == 'POST':
-        r = requests.post("http://192.168.0.10:5000")
+        data = api_get_data(flask.request)
+        print(data)
+        #r = requests.post("http://192.168.0.10:5000")
         #r.send_response(200)
         #r.end_headers()
         #length = int(s.headers['Content-Length']) #
         #postVar = r.rfile.read()
-        print(r.text)
-        return str(r.text)
+        #print(r.text)
+        return data
 
 
     else:
         print("else")
 
-
+def api_get_data(request):
+    if not request.json:
+        return request.form
+    else:
+        return request.json
 
 # @app.route('/<HTTPlistenerID>/')
 # def CommandPage():
