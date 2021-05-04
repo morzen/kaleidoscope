@@ -4,6 +4,8 @@ import http.server
 import socketserver
 import atexit
 import os
+import shutil
+import curses
 import readline
 import rlcompleter
 import datetime
@@ -12,15 +14,19 @@ import multiprocessing
 import logging
 import sys
 import sqlite3
+import queue
 from cmd import Cmd
 from termcolor import colored
 from threading import Thread
+
+
 
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 
 from backend.Interact import interacting
-from backend.HTTPshandler import http_sHandler
+#from backend.HTTPshandler import http_sHandler
+
 
 
 TCPListenersDict = {}
@@ -74,6 +80,7 @@ class Commands(Cmd):
     intro = intro.replace('%', termcolor.colored('%', 'red'))
     intro = intro.replace('.', termcolor.colored('.', 'blue'))
 
+
     Datetime = datetime.datetime.now()
     Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
@@ -83,6 +90,11 @@ class Commands(Cmd):
     prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
     prompt = prompt.replace('>>>', termcolor.colored('>>>', 'blue'))
     prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
+
+    #print(dataandtime[0])
+
+
+
 
 
     #part responsible for command history and autoComplete
@@ -99,27 +111,27 @@ class Commands(Cmd):
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
-    #this if loop verify if the database already exist if it doesn't it create one
-    #as well as a table
-    if os.path.exists("database/HTTPlistener.db") == False:
-        conn = sqlite3.connect('database/HTTPlistener.db')
-        c = conn.cursor()
-        logging.debug("HTTPlistener.db has been created")
-
-        c.execute("""CREATE TABLE HTTPlistener (
-                    hostIP text,
-                    hostPORT text,
-                    name text,
-                    targetIP,
-                    targetPORT,
-                    targetHOSTNAME,
-                    ItemUniqueID
-                    )""")
-    #if it exist then it just connect to it and create a cursor
-    else:
-        logging.debug("HTTPlistener.db exist \n")
-        conn = sqlite3.connect('HTTPlistener.db')
-        c = conn.cursor()
+    # #this if loop verify if the database already exist if it doesn't it create one
+    # #as well as a table
+    # if os.path.exists("database/HTTPlistener.db") == False:
+    #     conn = sqlite3.connect('database/HTTPlistener.db')
+    #     c = conn.cursor()
+    #     logging.debug("HTTPlistener.db has been created")
+    #
+    #     c.execute("""CREATE TABLE HTTPlistener (
+    #                 hostIP text,
+    #                 hostPORT text,
+    #                 name text,
+    #                 targetIP,
+    #                 targetPORT,
+    #                 targetHOSTNAME,
+    #                 ItemUniqueID
+    #                 )""")
+    # #if it exist then it just connect to it and create a cursor
+    # else:
+    #     logging.debug("HTTPlistener.db exist \n")
+    #     conn = sqlite3.connect('HTTPlistener.db')
+    #     c = conn.cursor()
 
     # reguraly check if TCPlistener received a connection
     def TCPcheck4incoming():
@@ -212,7 +224,7 @@ class Commands(Cmd):
         p = multiprocessing.Process(name=NAME ,target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         HTTPprocesses.append(p)
         print(HTTPprocesses)
-        p.daemon = True
+        #p.daemon = True
         p.start()
 
 
@@ -308,6 +320,33 @@ class Commands(Cmd):
         TCPListenersDict.pop(NAME)
         TCPConnectionsDict.pop(NAME)
         p.terminate()
+
+    def do_close_HTTPlistener(self, inp):
+        path  = os.getcwd()
+        argList = []
+        argList = inp.split()
+        NAME = argList[0]
+        i = 0
+        j = None
+        LenHTTPprocesses = len(HTTPprocesses)
+        while i < LenHTTPprocesses:
+            if NAME in str(HTTPprocesses[i]):
+                logging.debug(NAME+" is in "+str(HTTPprocesses[i]))
+                j = str(i)
+            else:
+                logging.debug(NAME+" is not in "+str(HTTPprocesses[i]))
+            i = i + 1
+        logging.debug("j= %s", j)
+        p = HTTPprocesses[int(j)]
+        del HTTPprocesses[int(j)]
+        HTTPListenersDict.pop(NAME)
+        try:
+            HTTPConnectionsDict.pop(NAME)
+        except:
+            print('error http delete item in HTTPConnectionsDict' )
+            print(HTTPConnectionsDict)
+        p.terminate()
+        os.unlink(path+'/API/templates/'+NAME+'.html')
 
     def do_clear(self, inp):
         clear = lambda: os.system('clear')
