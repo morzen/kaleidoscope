@@ -25,7 +25,7 @@ class httplistener():
     def listenerhttp(self, return_dict):
         #print(path)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
-        runApi(self.HOST, self.PORT)
+        runApi(self.HOST, self.PORT) # star the flask server
         return_dict["name"]=self.NAME
         return_dict["status"]="connected"
         return_dict["host"]=self.HOST

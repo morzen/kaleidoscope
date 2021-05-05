@@ -272,7 +272,48 @@ class Commands(Cmd):
             else:
                 continue
 
-    #def do_HTTPinteract(self, inp):
+    def do_HTTPinteract(self, inp):
+        argList = []
+        argList = inp.split()
+        name = argList[0]
+
+        info = HTTPConnectionsDict.get(name)
+        print(HTTPserverDict)
+
+        HOST = info[3]
+        PORT = info[4]
+        NAME = info[2]
+        Conn = HTTPSocketDict[NAME]
+
+        InteractWith = HTTPinteracting(HOST, int(PORT), NAME, Conn)
+        while True:
+            try1 = InteractWith.Shell()
+            if try1 == False:
+                break
+
+            elif try1 == "Close Connection":
+                i = 0
+                print(NAME)
+                j = None
+                LenHTTPprocesses = len(HTTPprocesses)
+                while i < LenHTTPprocesses:
+                    if NAME in str(HTTPprocesses[i]):
+                        print(NAME+" is in "+str(HTTPprocesses[i]))
+                        j = str(i)
+                    else:
+                        print(NAME+" is not in "+str(HTTPprocesses[i]))
+
+                    i = i + 1
+                print("j="+j)
+                p = HTTPprocesses[int(j)]
+                del HTTPprocesses[int(j)]
+                HTTPListenersDict.pop(NAME)
+                p.terminate()
+
+                break
+
+            else:
+                continue
 
 
     def do_listListener(self, inp):

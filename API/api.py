@@ -9,12 +9,12 @@ app = flask.Flask(__name__)
 #app.config["DEBUG"] = True
 #app.debug = True
 
-@app.route('/', methods=['POST', 'GET'])
-def home():
+@app.route('/<namelistener>', methods=['POST', 'GET'])
+def home(namelistener):
     #return render_template('basicTemplates.html')
 
     if flask.request.method == 'GET':
-        return render_template('basicTemplates.html')
+        return render_template(namelistener+'.html')
 
 
 

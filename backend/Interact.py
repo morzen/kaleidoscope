@@ -95,6 +95,8 @@ class HTTPinteracting(Cmd):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
+        path  = os.getcwd()
+        self.path = path+'/API/templates/'+self.NAME+'.html'
 
 
 
@@ -134,4 +136,6 @@ class HTTPinteracting(Cmd):
             clear()
 
         else:
+            #try:
+            index = open(self.path).read().format(TextCommand=command)
             return command
