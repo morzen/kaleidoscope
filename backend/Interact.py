@@ -110,7 +110,7 @@ class HTTPinteracting(Cmd):
         prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
         prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
         prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
-        prompt = prompt.replace('>>', termcolor.colored('_', 'orange'))
+        prompt = prompt.replace('_', termcolor.colored('_', 'yellow'))
         prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
         command = input(prompt)
         #part responsible for command history and autoComplete
@@ -136,7 +136,11 @@ class HTTPinteracting(Cmd):
             clear = lambda: os.system('clear')
             clear()
 
+        elif command == "exit":
+            return False
+
         else:
             #try:
-            index = open(self.path).read().format(TextCommand=command)
+            index = open(self.path, 'w')
+            index.write(command)
             return command
