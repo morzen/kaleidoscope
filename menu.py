@@ -24,7 +24,7 @@ from threading import Thread
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 
-from backend.Interact import interacting
+from backend.Interact import interacting, HTTPinteracting
 #from backend.HTTPshandler import http_sHandler
 
 
@@ -46,8 +46,10 @@ manager = multiprocessing.Manager()
 TCPreturn_dict = manager.dict()
 TCPSocketDict = manager.dict()
 
-HTTPreturn_dict = manager.dict()
-HTTPserverDict = manager.dict()
+HTTPmanager = multiprocessing.Manager()
+
+HTTPreturn_dict = HTTPmanager.dict()
+HTTPserverDict = HTTPmanager.dict()
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
@@ -154,7 +156,7 @@ class Commands(Cmd):
     T.setDaemon(True)
     T.start()
 
-    # reguraly check if TCPlistener received a connection
+
     def HTTPcheck4incoming():
         while True:
             if len(HTTPreturn_dict) != 0 :
@@ -162,16 +164,20 @@ class Commands(Cmd):
                 if  NAME in HTTPserverDict:
                     continue
                 else:
-                    HTTPserverDict[NAME]=HTTPreturn_dict.get("httplistener")
                     HTTPListenersDict[NAME][3] = str(HTTPreturn_dict.get("status"))
-                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("host"))
-                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("port"))
-                    HTTPConnectionsDict.setdefault(NAME, []).append(HTTPreturn_dict.get("name"))
+                    host = HTTPreturn_dict.get("host")
+                    port = HTTPreturn_dict.get("port")
+                    name = HTTPreturn_dict.get("name")
+                    status = HTTPreturn_dict.get("status")
+                    HTTPserverDict[NAME]=[host, port, name, status]
 
+                    print("dict: ")
+                    print(HTTPserverDict)
 
     HTTPthread = Thread(target = HTTPcheck4incoming, args=())
     HTTPthread.setDaemon(True)
     HTTPthread.start()
+
 
 
 
@@ -221,13 +227,16 @@ class Commands(Cmd):
 
         HTTPListenerCreation = httplistener(HOST, PORT, NAME)
 
-        p = multiprocessing.Process(name=NAME ,target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
+        p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         HTTPprocesses.append(p)
         print(HTTPprocesses)
+
         #p.daemon = True
         p.start()
 
-
+    def do_printList(self, inp):
+        print(HTTPreturn_dict)
+        print(HTTPserverDict)
 
     def do_interact(self, inp):
         argList = []
@@ -276,16 +285,18 @@ class Commands(Cmd):
         argList = []
         argList = inp.split()
         name = argList[0]
+        info = []
 
-        info = HTTPConnectionsDict.get(name)
+        info = HTTPserverDict.get(name)
         print(HTTPserverDict)
+        print(info)
 
-        HOST = info[3]
-        PORT = info[4]
+        HOST = info[0]
+        PORT = info[1]
         NAME = info[2]
-        Conn = HTTPSocketDict[NAME]
+        print(HOST, PORT, NAME)
 
-        InteractWith = HTTPinteracting(HOST, int(PORT), NAME, Conn)
+        InteractWith = HTTPinteracting(HOST, int(PORT), NAME)
         while True:
             try1 = InteractWith.Shell()
             if try1 == False:

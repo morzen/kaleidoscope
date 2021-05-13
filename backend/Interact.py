@@ -110,6 +110,7 @@ class HTTPinteracting(Cmd):
         prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
         prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
         prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
+        prompt = prompt.replace('>>', termcolor.colored('_', 'orange'))
         prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
         command = input(prompt)
         #part responsible for command history and autoComplete
