@@ -142,5 +142,6 @@ class HTTPinteracting(Cmd):
         else:
             #try:
             index = open(self.path, 'w')
-            index.write(command)
+            index.write(str(datetime.datetime.now())+"||"+command)
+            index.close()
             return command

@@ -5,6 +5,7 @@ from flask import request
 import requests
 
 app = flask.Flask(__name__)
+
 #CAREFULL DEBUGGER MAKE THE MENU BUG
 #app.config["DEBUG"] = True
 #app.debug = True
@@ -38,6 +39,7 @@ def api_get_data(request):
 #
 
 def runApi(x, y):
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(host=x,port=y)
 
 #runApi("192.168.0.10", 5000)
