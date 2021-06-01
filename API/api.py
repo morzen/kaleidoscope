@@ -50,5 +50,5 @@ def runApi(x, y, *z):
         zPathCert = str(z[0])
         zPathKey = str(z[1])
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        context.load_cert_chain(zPathCert, zPathKey)
+        context.load_cert_chain(zPathCert, zPathKey, password='test')
         app.run(host=x,port=y, ssl_context=context)
