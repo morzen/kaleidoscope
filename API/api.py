@@ -1,8 +1,11 @@
 import flask
-from flask import Flask, render_template
 import http.server
-from flask import request
 import requests
+import ssl
+from flask import Flask, render_template
+from OpenSSL import SSL
+from flask import request
+
 
 app = flask.Flask(__name__)
 
@@ -38,8 +41,14 @@ def api_get_data(request):
 # def CommandPage():
 #
 
-def runApi(x, y):
+def runApi(x, y, *z):
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(host=x,port=y)
-
-#runApi("192.168.0.10", 5000)
+    if z == None :
+        app.run(host=x,port=y)
+    else :
+        z = z[0]
+        zPathCert = str(z[0])
+        zPathKey = str(z[1])
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(zPathCert, zPathKey)
+        app.run(host=x,port=y, ssl_context=context)

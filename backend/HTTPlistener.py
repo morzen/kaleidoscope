@@ -16,10 +16,12 @@ path  = os.getcwd()
 
 class httplistener():
 
-    def __init__(self, hostip, port, name):
+    def __init__(self, hostip, port, name, *certnkey):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
+        self.CERTnKeyPath = (certnkey)
+
 
 
     def listenerhttp(self, HTTPreturn_dict):
@@ -31,3 +33,13 @@ class httplistener():
         HTTPreturn_dict["port"]=self.PORT
         print(HTTPreturn_dict)
         runApi(self.HOST, self.PORT) # star the flask server
+
+    def listenerhttps(self, HTTPreturn_dict):
+        #print(path)
+        shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
+        HTTPreturn_dict["name"]=self.NAME
+        HTTPreturn_dict["status"]="online"
+        HTTPreturn_dict["host"]=self.HOST
+        HTTPreturn_dict["port"]=self.PORT
+
+        runApi(self.HOST, self.PORT, self.CERTnKeyPath) # start the flask server

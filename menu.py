@@ -37,6 +37,10 @@ HTTPListenersDict = {}
 HTTPConnectionsDict = {}
 HTTPprocesses = []
 
+HTTPSListenersDict = {}
+HTTPSConnectionsDict = {}
+HTTPSprocesses = []
+
 
 #sockets = []
 #TCPSocketDict = {}
@@ -50,6 +54,11 @@ HTTPmanager = multiprocessing.Manager()
 
 HTTPreturn_dict = HTTPmanager.dict()
 HTTPserverDict = HTTPmanager.dict()
+
+HTTPSmanager = multiprocessing.Manager()
+
+HTTPSreturn_dict = HTTPSmanager.dict()
+HTTPSserverDict = HTTPSmanager.dict()
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
@@ -230,6 +239,32 @@ class Commands(Cmd):
         p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         HTTPprocesses.append(p)
         print(HTTPprocesses)
+
+        #p.daemon = True
+        p.start()
+
+    def do_HTTPSlistener(self, inp):
+        argList = []
+        argList = inp.split()
+        HOST = argList[0]
+        PORT = int(argList[1])
+        NAME = argList[2]
+        STATUS = "listening"
+        CertPath = argList[3]
+        KeyPath = argList[4]
+        print(argList)
+        HTTPSListenersDict.setdefault(NAME, []).append(HOST)
+        HTTPSListenersDict.setdefault(NAME, []).append(PORT)
+        HTTPSListenersDict.setdefault(NAME, []).append(NAME)
+        HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
+        HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
+        HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
+
+        HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
+
+        p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps, args=[HTTPSreturn_dict])
+        HTTPSprocesses.append(p)
+        print(HTTPSprocesses)
 
         #p.daemon = True
         p.start()
