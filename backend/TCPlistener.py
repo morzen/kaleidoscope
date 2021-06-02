@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 
 class tcplistener:
-
+    # init is basically the blue print for our obecjt essential data will be avaible here
     def __init__(self, hostip, port, name):
         self.HOST = hostip
         self.PORT = port
@@ -37,18 +37,14 @@ class tcplistener:
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 
-
-
     def listenertcp(self, return_dict):
-        #print("I am a tcp listener")
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
         conn, addr = self.sock.accept()
-        #SocketDict.add(1, self.sock)
-        #rint(SocketDict)
         with conn:
             logging.debug('\nconn: %s', conn)
             print(colored("\n"+self.NAME+"("+self.HOST+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
+            #return data when connection is made in TCPreturn_dict see menu.py
             return_dict["conn"]=conn
             return_dict["name"]=self.NAME
             return_dict["status"]="connected"
@@ -62,7 +58,7 @@ class tcplistener:
         logging.debug("closing listener")
 
 
-
+    #need to be added when in menu when creating TCP listener
     def checkPortNIPfree(self, hostip, port):
         HOST = hostip
         PORT = port

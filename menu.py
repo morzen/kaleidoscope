@@ -18,20 +18,17 @@ import queue
 from cmd import Cmd
 from termcolor import colored
 from threading import Thread
-
-
-
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
-
 from backend.Interact import interacting, HTTPinteracting
 #from backend.HTTPshandler import http_sHandler
 
 
-
-TCPListenersDict = {}
-TCPConnectionsDict = {}
-TCPprocesses = []
+#list related to TCP
+TCPListenersDict = {}#stores TCP listener with info
+TCPConnectionsDict = {}#store info when listener get a connection
+TCPprocesses = []#store processes related to TCP such a lsitener
+#(keep listener active when connection)
 
 HTTPListenersDict = {}
 HTTPConnectionsDict = {}
@@ -42,13 +39,12 @@ HTTPSConnectionsDict = {}
 HTTPSprocesses = []
 
 
-#sockets = []
-#TCPSocketDict = {}
+
 
 manager = multiprocessing.Manager()
-
+#return info in a dict for a given listener
 TCPreturn_dict = manager.dict()
-TCPSocketDict = manager.dict()
+TCPSocketDict = manager.dict()#store the socket when connection for later interaction
 
 HTTPmanager = multiprocessing.Manager()
 
@@ -94,7 +90,7 @@ class Commands(Cmd):
 
     Datetime = datetime.datetime.now()
     Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-
+    #the prompt variable used this way seem to block the clock need to be fixed (trying to in menu2)
 
     prompt = Datetime+":kaleidoscope"+">>>"
     prompt = prompt.replace('kaleidoscope', termcolor.colored('kaleidoscope', 'red'))
@@ -102,26 +98,22 @@ class Commands(Cmd):
     prompt = prompt.replace('>>>', termcolor.colored('>>>', 'blue'))
     prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
 
-    #print(dataandtime[0])
-
-
-
-
-
     #part responsible for command history and autoComplete
-    #work only on unix
+    #work only on unix !!
+    #historic stored at the given path here
     storeCommandPath = os.path.expanduser("./history/k_Command_history")
 
     if os.path.exists(storeCommandPath):
         readline.read_history_file(storeCommandPath)
-    #save command history at close
     def saveCommand(storeCommandPath=storeCommandPath):
         readline.write_history_file(storeCommandPath)
 
+    #save command history at close
     atexit.register(saveCommand)
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
+    #might use the databse to be able to reconnect every listner in case of crash
     # #this if loop verify if the database already exist if it doesn't it create one
     # #as well as a table
     # if os.path.exists("database/HTTPlistener.db") == False:
@@ -145,13 +137,19 @@ class Commands(Cmd):
     #     c = conn.cursor()
 
     # reguraly check if TCPlistener received a connection
+
+
+    # endless thread that check for info when a connection is made
     def TCPcheck4incoming():
         while True:
+            #check if TCPlistener is not empty
             if len(TCPreturn_dict) != 0 :
                 NAME = TCPreturn_dict.get("name")
+                #if not empty then check name if name is already store go back at start of loop
                 if  NAME in TCPSocketDict:
                     continue
-                else:
+                else:#if the name isn't in all the information linked to that listener namelistener
+                    #get stored in TCPConnectionsDict
                     TCPSocketDict[NAME]=TCPreturn_dict.get("conn")
                     TCPListenersDict[NAME][3] = str(TCPreturn_dict.get("status"))
                     TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("host"))
@@ -165,7 +163,7 @@ class Commands(Cmd):
     T.setDaemon(True)
     T.start()
 
-
+    # endless thread that check for info when a connection is made
     def HTTPcheck4incoming():
         while True:
             if len(HTTPreturn_dict) != 0 :
@@ -187,31 +185,57 @@ class Commands(Cmd):
     HTTPthread.setDaemon(True)
     HTTPthread.start()
 
+    # endless thread that check for info when a connection is made
+    def HTTPScheck4incoming():
+        while True:
+            if len(HTTPSreturn_dict) != 0 :
+                NAME = HTTPSreturn_dict.get("name")
+                if  NAME in HTTPSserverDict:
+                    continue
+                else:
+                    HTTPSListenersDict[NAME][3] = str(HTTPSreturn_dict.get("status"))
+                    host = HTTPSreturn_dict.get("host")
+                    port = HTTPSreturn_dict.get("port")
+                    name = HTTPSreturn_dict.get("name")
+                    status = HTTPSreturn_dict.get("status")
+                    HTTPSserverDict[NAME]=[host, port, name, status]
+
+                    print("dict: ")
+                    print(HTTPSserverDict)
+
+    HTTPSthread = Thread(target = HTTPScheck4incoming, args=())
+    HTTPSthread.setDaemon(True)
+    HTTPSthread.start()
 
 
-
-
+    #when nothing is enter insure that the prompt reapear
     def emptyline(self):
         pass
 
     #command part
 
+    #comand to created TCP listener
     def do_tcplistener(self, inp):
         #try:
-
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
+        #after spliting the list the argument are assigned to variables
         HOST = argList[0]
         PORT = int(argList[1])
         NAME = argList[2]
         STATUS = "listening"
+        #for tracability the information are then stored into a dictionnary
+        #regrouping all tcp listener
         TCPListenersDict.setdefault(NAME, []).append(HOST)
         TCPListenersDict.setdefault(NAME, []).append(PORT)
         TCPListenersDict.setdefault(NAME, []).append(NAME)
         TCPListenersDict.setdefault(NAME, []).append(STATUS)
+        #creating object an object tcplistener
         ListenerCreation = tcplistener(HOST, PORT, NAME)
-
+        # calling funtion listenertcp from tcplistener in a process
         p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
+        #store the process in a list
         TCPprocesses.append(p)
         print(TCPprocesses)
         p.start()
@@ -277,21 +301,25 @@ class Commands(Cmd):
         argList = []
         argList = inp.split()
         name = argList[0]
-
+        #using name getting the rest of the information in the dictionnary
         info = TCPConnectionsDict.get(name)
-        print(TCPSocketDict)
-
+        logging.debug("%s", TCPSocketDict)
+        #asssigning the information to variables
         HOST = info[3]
         PORT = info[4]
         NAME = info[2]
+        #get the socket using NAME from the Socket dictionnary
         Conn = TCPSocketDict[NAME]
-
+        #creating a new object
         InteractWith = interacting(HOST, int(PORT), NAME, Conn)
         while True:
+            #calling shell() from interacting class in while loop
             try1 = InteractWith.Shell()
+            #allow to quit the menu
             if try1 == False:
                 break
-
+            #quit and close the conection
+            #similar bit of code to the do_close_listener() function
             elif try1 == "Close Connection":
                 i = 0
                 print(NAME)
@@ -385,13 +413,16 @@ class Commands(Cmd):
         HOST = infoSplitList[0]
         PORT = infoSplitList[1]
         NAME = infoSplitList[2]
-        ListenerClose = listener(HOST,int(PORT), NAME)
-
+        #recreate object
+        ListenerClose = tcplistener(HOST,int(PORT), NAME)
+        # then call the closing function
         ListenerClose.closetcpListener()
+
+        #erase all data realated to this listener/connection
         i = 0
-        print(NAME)
         j = None
         LenTCPprocesses = len(TCPprocesses)
+        # in case the socket doesn't close properly the entire process is killed
         while i < LenTCPprocesses:
             if NAME in str(TCPprocesses[i]):
                 #print(NAME+" is in "+str(TCPprocesses[i]))
@@ -402,8 +433,10 @@ class Commands(Cmd):
                 logging.debug(NAME+" is not in "+str(TCPprocesses[i]))
             i = i + 1
         logging.debug("j= %s", j)
+        #we delete the information in the list and use p to terminate the process
         p = TCPprocesses[int(j)]
         del TCPprocesses[int(j)]
+        #we delete the informationmm using the name for the Dictionnaries
         TCPListenersDict.pop(NAME)
         TCPConnectionsDict.pop(NAME)
         p.terminate()

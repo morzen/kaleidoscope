@@ -37,9 +37,7 @@ def api_get_data(request):
     else:
         return request.json
 
-# @app.route('/<HTTPlistenerID>/')
-# def CommandPage():
-#
+
 
 def runApi(x, y, *z):
     app.config['TEMPLATES_AUTO_RELOAD'] = True

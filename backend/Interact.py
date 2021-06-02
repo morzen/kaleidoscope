@@ -34,12 +34,12 @@ class interacting(Cmd):
         self.PORT = port
         self.NAME = name
         self.conn = Conn
-        print(self.conn)
+        logging.debug("%s",self.conn)
 
 
 
     def Shell(self):
-
+        #being in a hile loop the date isn't stuck here
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
@@ -81,7 +81,7 @@ class interacting(Cmd):
 
         elif command == "exit":
             return False
-
+        #all command that aren't listed above are sent to the target
         else:
             self.conn.send(command.encode())
             print("send "+command)
