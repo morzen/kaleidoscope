@@ -1,5 +1,6 @@
 import flask
 import http.server
+import logging
 import requests
 import ssl
 from flask import Flask, render_template
@@ -8,10 +9,12 @@ from flask import request
 
 
 app = flask.Flask(__name__)
-
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 #CAREFULL DEBUGGER MAKE THE MAIN MENU BUG
 #app.config["DEBUG"] = True
 #app.debug = True
+ips = []
 
 @app.route('/<namelistener>', methods=['POST', 'GET'])
 #route is dinamicall since the pages are generated dynamically
@@ -20,6 +23,10 @@ def home(namelistener):
     #return render_template('basicTemplates.html')
     #GET wil display the asked page if it exist
     if flask.request.method == 'GET':
+        if request.remote_addr not in ips:
+            print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
+            ips.append(request.remote_addr)
+
         return render_template(namelistener+'.html')
 
 
