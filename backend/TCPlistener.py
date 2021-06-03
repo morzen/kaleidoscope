@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.DEBUG)
 Datetime = datetime.datetime.now()
 Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 
 class tcplistener:

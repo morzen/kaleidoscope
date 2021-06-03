@@ -235,9 +235,9 @@ class Commands(Cmd):
         ListenerCreation = tcplistener(HOST, PORT, NAME)
         # calling funtion listenertcp from tcplistener in a process
         p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
-        #store the process in a list
+        #store the process in a list TCPprocesses
         TCPprocesses.append(p)
-        print(TCPprocesses)
+        logging.debug(TCPprocesses)
         p.start()
 
 
@@ -246,25 +246,29 @@ class Commands(Cmd):
         #     print(colored("example: tcplistener hostip port", "yellow"))
         #     print(colored("example: tcplistener 127.0.0.1 8080", "yellow"))
 
+    #command to create http server that'll listen for incoming connections
     def do_HTTPlistener(self, inp):
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
+        #after spliting the list the argument are assigned to variables
         HOST = argList[0]
         PORT = int(argList[1])
         NAME = argList[2]
         STATUS = "listening"
+        #for tracability the information are then stored into a dictionnary
+        #regrouping all http listener
         HTTPListenersDict.setdefault(NAME, []).append(HOST)
         HTTPListenersDict.setdefault(NAME, []).append(PORT)
         HTTPListenersDict.setdefault(NAME, []).append(NAME)
         HTTPListenersDict.setdefault(NAME, []).append(STATUS)
-
+        #creating object an object httplistener
         HTTPListenerCreation = httplistener(HOST, PORT, NAME)
-
+        # calling funtion listenerhttp from httplistener in a process
         p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
+        #store the process in a list HTTPprocesses
         HTTPprocesses.append(p)
-        print(HTTPprocesses)
-
-        #p.daemon = True
+        logging.debug(HTTPprocesses)
         p.start()
 
     def do_HTTPSlistener(self, inp):
@@ -349,36 +353,39 @@ class Commands(Cmd):
         argList = inp.split()
         name = argList[0]
         info = []
-
+        #using name getting the rest of the information in the dictionnary
         info = HTTPserverDict.get(name)
-        print(HTTPserverDict)
-        print(info)
-
+        #print(HTTPserverDict)
+        #print(info)
+        #asssigning the information to variables
         HOST = info[0]
         PORT = info[1]
         NAME = info[2]
-        print(HOST, PORT, NAME)
-
+        #print(HOST, PORT, NAME)
+        #creating a new object from class HTTPinteracting
         InteractWith = HTTPinteracting(HOST, int(PORT), NAME)
         while True:
+            #calling shell() from interacting class in while loop
             try1 = InteractWith.Shell()
+            #allow to quit the menu
             if try1 == False:
                 break
-
+            #quit and close the conection
+            #similar bit of code to the do_close_listener() function
             elif try1 == "Close Connection":
                 i = 0
-                print(NAME)
+                #print(NAME)
                 j = None
                 LenHTTPprocesses = len(HTTPprocesses)
                 while i < LenHTTPprocesses:
                     if NAME in str(HTTPprocesses[i]):
-                        print(NAME+" is in "+str(HTTPprocesses[i]))
+                        print(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
                         j = str(i)
                     else:
                         print(NAME+" is not in "+str(HTTPprocesses[i]))
 
                     i = i + 1
-                print("j="+j)
+                #print("j="+j)
                 p = HTTPprocesses[int(j)]
                 del HTTPprocesses[int(j)]
                 HTTPListenersDict.pop(NAME)
@@ -393,8 +400,6 @@ class Commands(Cmd):
     def do_listListener(self, inp):
         print(TCPListenersDict)
 
-        print("\n HTTPserverDict: ")
-        print(HTTPserverDict)
 
     def do_listConnections(self, inp):
         print(TCPConnectionsDict)
@@ -426,7 +431,7 @@ class Commands(Cmd):
         while i < LenTCPprocesses:
             if NAME in str(TCPprocesses[i]):
                 #print(NAME+" is in "+str(TCPprocesses[i]))
-                logging.debug(NAME+" is in "+str(TCPprocesses[i]))
+                logging.debug(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
                 j = str(i)
             else:
                 #print(NAME+" is not in "+str(TCPprocesses[i]))
@@ -451,7 +456,7 @@ class Commands(Cmd):
         LenHTTPprocesses = len(HTTPprocesses)
         while i < LenHTTPprocesses:
             if NAME in str(HTTPprocesses[i]):
-                logging.debug(NAME+" is in "+str(HTTPprocesses[i]))
+                logging.debug(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
                 j = str(i)
             else:
                 logging.debug(NAME+" is not in "+str(HTTPprocesses[i]))
@@ -472,6 +477,7 @@ class Commands(Cmd):
         clear = lambda: os.system('clear')
         clear()
 
+    #function to quit the program
     def do_exit(self, inp):
         #exit()
         #T.close()

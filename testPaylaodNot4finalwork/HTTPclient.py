@@ -9,6 +9,11 @@ while True:
     req = requests.get(urltosearch)
     command = req.text
     print(command)
+
+    if command == "{TextCommand:}!":
+        time.sleep(3)
+        continue
+
     command2 = command.split("||")
     print(command2)
 

