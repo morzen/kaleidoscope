@@ -28,10 +28,10 @@ Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p'
 
 class tcplistener:
     # init is basically the blue print for our obecjt essential data will be avaible here
-    def __init__(self, hostip, port, name):
+    def __init__(self, hostip, port, name, ID):
         self.HOST = hostip
         self.PORT = port
-        self.NAME = name
+        self.NAME = name x
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.sock.setblocking(False)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -51,6 +51,13 @@ class tcplistener:
             return_dict["addr"]=addr
             return_dict["host"]=self.HOST
             return_dict["port"]=self.PORT
+
+            conn = sqlite3.connect('listener.db')
+
+            c = conn.cursor()
+            c.execute("UPDATE HTTP/Slistener SET status=? targetIP=? targetPORT=? socketconn=? WHERE ItemUniqueID=?", ("connected", addr[0], addr[1], conn, ID)))
+
+            conn.commit()
 
 
     def closetcpListener(self):

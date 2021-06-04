@@ -26,6 +26,10 @@ def home(namelistener):
         if request.remote_addr not in ips:
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
+            conn = sqlite3.connect('listener.db')
+            c = conn.cursor()
+            c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", (ips, ID))
+            conn.commit()
 
         return render_template(namelistener+'.html')
 

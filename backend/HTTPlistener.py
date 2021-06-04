@@ -21,7 +21,7 @@ logging.basicConfig(level=logging.DEBUG)
 class httplistener():
     #init create the object it is composed of all the variable that would be
     #needed for this object
-    def __init__(self, hostip, port, name, *certnkey):
+    def __init__(self, hostip, port, name, ID, *certnkey):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
@@ -40,6 +40,10 @@ class httplistener():
         HTTPreturn_dict["status"]="online"
         HTTPreturn_dict["host"]=self.HOST
         HTTPreturn_dict["port"]=self.PORT
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
+        c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", ("online", ID))
+        conn.commit()
         #logging.debug(HTTPreturn_dict)
         runApi(self.HOST, self.PORT) # star the flask server
 
@@ -50,5 +54,10 @@ class httplistener():
         HTTPreturn_dict["status"]="online"
         HTTPreturn_dict["host"]=self.HOST
         HTTPreturn_dict["port"]=self.PORT
+
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
+        c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", ("online", ID))
+        conn.commit()
 
         runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath) # start the flask server

@@ -15,6 +15,7 @@ import logging
 import sys
 import sqlite3
 import queue
+import uuid
 from cmd import Cmd
 from termcolor import colored
 from threading import Thread
@@ -113,32 +114,58 @@ class Commands(Cmd):
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
-    #might use the databse to be able to reconnect every listner in case of crash
-    # #this if loop verify if the database already exist if it doesn't it create one
-    # #as well as a table
-    # if os.path.exists("database/HTTPlistener.db") == False:
-    #     conn = sqlite3.connect('database/HTTPlistener.db')
-    #     c = conn.cursor()
-    #     logging.debug("HTTPlistener.db has been created")
-    #
-    #     c.execute("""CREATE TABLE HTTPlistener (
-    #                 hostIP text,
-    #                 hostPORT text,
-    #                 name text,
-    #                 targetIP,
-    #                 targetPORT,
-    #                 targetHOSTNAME,
-    #                 ItemUniqueID
-    #                 )""")
-    # #if it exist then it just connect to it and create a cursor
-    # else:
-    #     logging.debug("HTTPlistener.db exist \n")
-    #     conn = sqlite3.connect('HTTPlistener.db')
-    #     c = conn.cursor()
+    def MakeNcheckID():
+        while True:
+            ID = str(uuid.uuid4().fields[-1])[:5]
+            conn = sqlite3.connect('database/listener.db')
+            c = conn.cursor()
+            c.execute("SELECT ItemUniqueID FROM TCPlistener, HTTP/Slistener")
+            IDs = c.fetchall()
+            if ID in IDs:
+                continue
+            else:
+                return ID
+
+
+    #this if loop verify if the database already exist if it doesn't it create one
+    #as well as a table
+    if os.path.exists("database/listener.db") == False:
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+        logging.debug("listener.db has been created")
+
+        c.execute("""CREATE TABLE TCPlistener (
+                    ItemUniqueID,
+                    hostIP text,
+                    hostPORT text,
+                    name text,
+                    status text,
+                    targetIP text,
+                    targetPORT text,
+                    targetHOSTNAME text,
+                    socketconn
+                    )""")
+
+        c.execute("""CREATE TABLE HTTP/Slistener (
+                    ItemUniqueID,
+                    hostIP text,
+                    hostPORT text,
+                    name text,
+                    status text,
+                    targetIP text,
+                    targetPORT text,
+                    targetHOSTNAME text,
+                    SSLcertPath text,
+                    SSLkeyPath text
+                    )""")
+        conn.commit()
+    #if it exist then it just connect to it and create a cursor
+    else:
+        logging.debug("listener.db exist \n")
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
 
     # reguraly check if TCPlistener received a connection
-
-
     # endless thread that check for info when a connection is made
     def TCPcheck4incoming():
         while True:
@@ -223,14 +250,20 @@ class Commands(Cmd):
         #after spliting the list the argument are assigned to variables
         HOST = argList[0]
         PORT = int(argList[1])
-        NAME = argList[2]
+        NAME = "TCP_"+argList[2]
         STATUS = "listening"
+        ID = MakeNcheckID()
         #for tracability the information are then stored into a dictionnary
         #regrouping all tcp listener
         TCPListenersDict.setdefault(NAME, []).append(HOST)
         TCPListenersDict.setdefault(NAME, []).append(PORT)
         TCPListenersDict.setdefault(NAME, []).append(NAME)
         TCPListenersDict.setdefault(NAME, []).append(STATUS)
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS))
+        conn.commit()
         #creating object an object tcplistener
         ListenerCreation = tcplistener(HOST, PORT, NAME)
         # calling funtion listenertcp from tcplistener in a process
@@ -254,14 +287,20 @@ class Commands(Cmd):
         #after spliting the list the argument are assigned to variables
         HOST = argList[0]
         PORT = int(argList[1])
-        NAME = argList[2]
+        NAME = "HTTP_"+argList[2]
         STATUS = "listening"
+        ID = MakeNcheckID()
         #for tracability the information are then stored into a dictionnary
         #regrouping all http listener
         HTTPListenersDict.setdefault(NAME, []).append(HOST)
         HTTPListenersDict.setdefault(NAME, []).append(PORT)
         HTTPListenersDict.setdefault(NAME, []).append(NAME)
         HTTPListenersDict.setdefault(NAME, []).append(STATUS)
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO HTTP/Slistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS))
+        conn.commit()
         #creating object an object httplistener
         HTTPListenerCreation = httplistener(HOST, PORT, NAME)
         # calling funtion listenerhttp from httplistener in a process
@@ -276,17 +315,23 @@ class Commands(Cmd):
         argList = inp.split()
         HOST = argList[0]
         PORT = int(argList[1])
-        NAME = argList[2]
+        NAME = "HTTPS_"argList[2]
         STATUS = "listening"
         CertPath = argList[3]
         KeyPath = argList[4]
-        print(argList)
+        ID = MakeNcheckID()
+        #print(argList)
         HTTPSListenersDict.setdefault(NAME, []).append(HOST)
         HTTPSListenersDict.setdefault(NAME, []).append(PORT)
         HTTPSListenersDict.setdefault(NAME, []).append(NAME)
         HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
         HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
         HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
+        conn = sqlite3.connect('listener.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO HTTP/Slistener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
+        conn.commit()
 
         HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
 
