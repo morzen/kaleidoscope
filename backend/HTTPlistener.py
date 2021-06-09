@@ -3,6 +3,7 @@ import socketserver
 import os
 import ctypes
 import logging
+import sqlite3
 import shutil
 from http.server import HTTPServer
 from flask import Flask
@@ -26,6 +27,7 @@ class httplistener():
         self.PORT = port
         self.NAME = name
         self.CERTnKeyPath = (certnkey)
+        self.ID = ID
 
 
 
@@ -40,12 +42,12 @@ class httplistener():
         HTTPreturn_dict["status"]="online"
         HTTPreturn_dict["host"]=self.HOST
         HTTPreturn_dict["port"]=self.PORT
-        conn = sqlite3.connect('listener.db')
+        conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
-        c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", ("online", ID))
+        c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
         conn.commit()
         #logging.debug(HTTPreturn_dict)
-        runApi(self.HOST, self.PORT) # star the flask server
+        runApi(self.HOST, self.PORT, self.ID) # star the flask server
 
     def listenerhttps(self, HTTPreturn_dict):
         #logging.debug(path)
@@ -55,9 +57,9 @@ class httplistener():
         HTTPreturn_dict["host"]=self.HOST
         HTTPreturn_dict["port"]=self.PORT
 
-        conn = sqlite3.connect('listener.db')
+        conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
-        c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", ("online", ID))
+        c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
         conn.commit()
 
-        runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath) # start the flask server
+        runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath, self.ID) # start the flask server

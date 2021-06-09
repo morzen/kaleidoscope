@@ -61,6 +61,18 @@ HTTPSserverDict = HTTPSmanager.dict()
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
 
+def MakeNcheckID():
+    while True:
+        ID = str(uuid.uuid4().fields[-1])[:5]
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+        c.execute("SELECT ItemUniqueID FROM TCPlistener UNION SELECT ItemUniqueID from HTTPsListener")
+        IDs = c.fetchall()
+        if ID in IDs:
+            continue
+        else:
+            return ID
+
 class Commands(Cmd):
 
     #presentation part
@@ -114,56 +126,44 @@ class Commands(Cmd):
     #link tab for auto complete
     readline.parse_and_bind('tab: complete')
 
-    def MakeNcheckID():
-        while True:
-            ID = str(uuid.uuid4().fields[-1])[:5]
-            conn = sqlite3.connect('database/listener.db')
-            c = conn.cursor()
-            c.execute("SELECT ItemUniqueID FROM TCPlistener, HTTP/Slistener")
-            IDs = c.fetchall()
-            if ID in IDs:
-                continue
-            else:
-                return ID
-
 
     #this if loop verify if the database already exist if it doesn't it create one
     #as well as a table
-    if os.path.exists("database/listener.db") == False:
+    if os.path.exists("database/listener.db") == True:
+        logging.debug("listener.db exist \n")
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+    #if it exist then it just connect to it and create a cursor
+    else:
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         logging.debug("listener.db has been created")
 
         c.execute("""CREATE TABLE TCPlistener (
-                    ItemUniqueID,
+                    ItemUniqueID int,
                     hostIP text,
                     hostPORT text,
                     name text,
                     status text,
-                    targetIP text,
+                    targetIP,
                     targetPORT text,
                     targetHOSTNAME text,
                     socketconn
                     )""")
 
-        c.execute("""CREATE TABLE HTTP/Slistener (
-                    ItemUniqueID,
+        c.execute("""CREATE TABLE HTTPsListener (
+                    ItemUniqueID int,
                     hostIP text,
                     hostPORT text,
                     name text,
                     status text,
-                    targetIP text,
+                    targetIP,
                     targetPORT text,
                     targetHOSTNAME text,
                     SSLcertPath text,
                     SSLkeyPath text
                     )""")
         conn.commit()
-    #if it exist then it just connect to it and create a cursor
-    else:
-        logging.debug("listener.db exist \n")
-        conn = sqlite3.connect('listener.db')
-        c = conn.cursor()
 
     # reguraly check if TCPlistener received a connection
     # endless thread that check for info when a connection is made
@@ -259,7 +259,7 @@ class Commands(Cmd):
         TCPListenersDict.setdefault(NAME, []).append(PORT)
         TCPListenersDict.setdefault(NAME, []).append(NAME)
         TCPListenersDict.setdefault(NAME, []).append(STATUS)
-        conn = sqlite3.connect('listener.db')
+        conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
                                       (ID, HOST, PORT, NAME, STATUS))
@@ -296,13 +296,13 @@ class Commands(Cmd):
         HTTPListenersDict.setdefault(NAME, []).append(PORT)
         HTTPListenersDict.setdefault(NAME, []).append(NAME)
         HTTPListenersDict.setdefault(NAME, []).append(STATUS)
-        conn = sqlite3.connect('listener.db')
+        conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
-        c.execute("INSERT INTO HTTP/Slistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+        c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
                                       (ID, HOST, PORT, NAME, STATUS))
         conn.commit()
         #creating object an object httplistener
-        HTTPListenerCreation = httplistener(HOST, PORT, NAME)
+        HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
         # calling funtion listenerhttp from httplistener in a process
         p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
         #store the process in a list HTTPprocesses
@@ -315,7 +315,7 @@ class Commands(Cmd):
         argList = inp.split()
         HOST = argList[0]
         PORT = int(argList[1])
-        NAME = "HTTPS_"argList[2]
+        NAME = "HTTPS_"+argList[2]
         STATUS = "listening"
         CertPath = argList[3]
         KeyPath = argList[4]
@@ -327,9 +327,9 @@ class Commands(Cmd):
         HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
         HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
         HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
-        conn = sqlite3.connect('listener.db')
+        conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
-        c.execute("INSERT INTO HTTP/Slistener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
+        c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
                                       (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
         conn.commit()
 
@@ -345,6 +345,16 @@ class Commands(Cmd):
     def do_printList(self, inp):
         print(HTTPreturn_dict)
         print(HTTPserverDict)
+
+    def do_printDatabase(self, inp):
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM TCPlistener")
+        print("TCPlistener")
+        print(c.fetchall())
+        c.execute("SELECT * FROM HTTPsListener")
+        print("HTTPsListener")
+        print(c.fetchall())
 
     def do_interact(self, inp):
         argList = []

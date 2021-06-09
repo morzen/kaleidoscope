@@ -3,6 +3,7 @@ import http.server
 import socketserver
 import logging
 import termcolor
+import sqlite3
 import atexit
 import os
 import readline

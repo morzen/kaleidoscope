@@ -1,6 +1,7 @@
 import flask
 import http.server
 import logging
+import sqlite3
 import requests
 import ssl
 from flask import Flask, render_template
@@ -15,6 +16,7 @@ log.setLevel(logging.ERROR)
 #app.config["DEBUG"] = True
 #app.debug = True
 ips = []
+uniqueID = [None]
 
 @app.route('/<namelistener>', methods=['POST', 'GET'])
 #route is dinamicall since the pages are generated dynamically
@@ -26,9 +28,10 @@ def home(namelistener):
         if request.remote_addr not in ips:
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
-            conn = sqlite3.connect('listener.db')
+            conn = sqlite3.connect('database/listener.db')
             c = conn.cursor()
-            c.execute("UPDATE HTTP/Slistener SET targetIP=? WHERE ItemUniqueID=?", (ips, ID))
+            ID = int(uniqueID[0])
+            c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (ips, ID))
             conn.commit()
 
         return render_template(namelistener+'.html')
@@ -55,14 +58,15 @@ def api_get_data(request):
 
 
 
-def runApi(x, y):
+def runApi(x, y, ID):
     #this line make sure the page is realoaded everytime
     #in order to display new comands
     app.config['TEMPLATES_AUTO_RELOAD'] = True
+    uniqueID[0] = ID
     #start the server for given host and port
     app.run(host=x,port=y)
 
-def runApiSSL(x, y, z):
+def runApiSSL(x, y, z, ID):
     #this line make sure the page is realoaded everytime
     #in order to display new comands
     app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -73,5 +77,6 @@ def runApiSSL(x, y, z):
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     #for now enter PEM passphrase here (later make user enter it with input)
     context.load_cert_chain(zPathCert, zPathKey, password='test')
+    uniqueID[0] = ID
     #start the server for given host and port and SSL cert
     app.run(host=x,port=y, ssl_context=context)

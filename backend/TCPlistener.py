@@ -31,7 +31,7 @@ class tcplistener:
     def __init__(self, hostip, port, name, ID):
         self.HOST = hostip
         self.PORT = port
-        self.NAME = name x
+        self.NAME = name
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.sock.setblocking(False)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -52,10 +52,10 @@ class tcplistener:
             return_dict["host"]=self.HOST
             return_dict["port"]=self.PORT
 
-            conn = sqlite3.connect('listener.db')
+            conn = sqlite3.connect('database/listener.db')
 
             c = conn.cursor()
-            c.execute("UPDATE HTTP/Slistener SET status=? targetIP=? targetPORT=? socketconn=? WHERE ItemUniqueID=?", ("connected", addr[0], addr[1], conn, ID)))
+            c.execute("UPDATE HTTPsListener SET status=? targetIP=? targetPORT=? socketconn=? WHERE ItemUniqueID=?", ("connected", addr[0], addr[1], conn, ID))
 
             conn.commit()
 
