@@ -8,7 +8,7 @@ from flask import Flask, render_template
 from flask import request
 from OpenSSL import SSL
 from flask import request
-
+from flask import abort
 
 app = flask.Flask(__name__)
 log = logging.getLogger('werkzeug')
@@ -26,18 +26,26 @@ def home(namelistener):
     #return render_template('basicTemplates.html')
     #GET wil display the asked page if it exist
     if flask.request.method == 'GET':
+        ID = int(uniqueID[0])
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
         if len(ips) == 0:
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
-            conn = sqlite3.connect('database/listener.db')
-            c = conn.cursor()
-            ID = int(uniqueID[0])
+
             c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (ips[0], ID))
             c.execute("UPDATE HTTPsListener SET targetPORT=? WHERE ItemUniqueID=?", (str(request.environ['REMOTE_PORT']), ID))
             conn.commit()
 
-        return render_template(namelistener+'.html')
+        elif request.remote_addr != ips[0]:
+            # c.execute("SELECT name FROM HTTPsListener WHERE ItemUniqueID=?", (ID))
+            # namelis = c.fetchall()
+            print(ID)
+            currentname = c.execute('SELECT name FROM HTTPsListener WHERE ItemUniqueID=?', (ID,)).fetchall()
+            print(request.remote_addr+" tried to connect on "+ str(currentname))
+            abort(404)
 
+        return render_template(namelistener+'.html')
 
     #the server will post the data given by the target back to me
     elif flask.request.method == 'POST':
