@@ -35,6 +35,7 @@ class tcplistener:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.sock.setblocking(False)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.ID = ID
 
 
     def listenertcp(self, return_dict):
@@ -43,7 +44,7 @@ class tcplistener:
         conn, addr = self.sock.accept()
         with conn:
             logging.debug('\nconn: %s', conn)
-            print(colored("\n"+self.NAME+"("+self.HOST+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
+            print(colored("\n"+self.NAME+"("+self.HOST+":"+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
             #return data when connection is made in TCPreturn_dict see menu.py
             return_dict["conn"]=conn
             return_dict["name"]=self.NAME
@@ -51,13 +52,16 @@ class tcplistener:
             return_dict["addr"]=addr
             return_dict["host"]=self.HOST
             return_dict["port"]=self.PORT
+            targetip = str(addr[0])
+            targetport = str(addr[1])
 
-            conn = sqlite3.connect('database/listener.db')
+            conndb = sqlite3.connect('database/listener.db')
 
-            c = conn.cursor()
-            c.execute("UPDATE HTTPsListener SET status=? targetIP=? targetPORT=? socketconn=? WHERE ItemUniqueID=?", ("connected", addr[0], addr[1], conn, ID))
+            c = conndb.cursor()
+            print(conn)
+            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?, socketconn=? WHERE ItemUniqueID=?", ("connected", targetip, targetport, str(conn), self.ID))
 
-            conn.commit()
+            conndb.commit()
 
 
     def closetcpListener(self):

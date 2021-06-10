@@ -46,6 +46,7 @@ class httplistener():
         c = conn.cursor()
         c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
         conn.commit()
+        print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         #logging.debug(HTTPreturn_dict)
         runApi(self.HOST, self.PORT, self.ID) # star the flask server
 
@@ -61,5 +62,5 @@ class httplistener():
         c = conn.cursor()
         c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
         conn.commit()
-
+        print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath, self.ID) # start the flask server

@@ -5,6 +5,7 @@ import sqlite3
 import requests
 import ssl
 from flask import Flask, render_template
+from flask import request
 from OpenSSL import SSL
 from flask import request
 
@@ -25,13 +26,14 @@ def home(namelistener):
     #return render_template('basicTemplates.html')
     #GET wil display the asked page if it exist
     if flask.request.method == 'GET':
-        if request.remote_addr not in ips:
+        if len(ips) == 0:
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
             conn = sqlite3.connect('database/listener.db')
             c = conn.cursor()
             ID = int(uniqueID[0])
-            c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (ips, ID))
+            c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (ips[0], ID))
+            c.execute("UPDATE HTTPsListener SET targetPORT=? WHERE ItemUniqueID=?", (str(request.environ['REMOTE_PORT']), ID))
             conn.commit()
 
         return render_template(namelistener+'.html')

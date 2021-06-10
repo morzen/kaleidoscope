@@ -145,7 +145,7 @@ class Commands(Cmd):
                     hostPORT text,
                     name text,
                     status text,
-                    targetIP,
+                    targetIP text,
                     targetPORT text,
                     targetHOSTNAME text,
                     socketconn
@@ -265,7 +265,7 @@ class Commands(Cmd):
                                       (ID, HOST, PORT, NAME, STATUS))
         conn.commit()
         #creating object an object tcplistener
-        ListenerCreation = tcplistener(HOST, PORT, NAME)
+        ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
         # calling funtion listenertcp from tcplistener in a process
         p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
         #store the process in a list TCPprocesses
