@@ -47,7 +47,7 @@ class tcplistener:
             print(colored("\n"+self.NAME+"("+self.HOST+":"+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
             #return data when connection is made in TCPreturn_dict see menu.py
             return_dict["conn"] = conn
-            return_dict["selfID"] = self.ID
+            return_dict["selfID"] = str(self.ID)
             targetip = str(addr[0])
             targetport = str(addr[1])
 
