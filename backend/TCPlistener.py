@@ -30,7 +30,7 @@ class tcplistener:
     # init is basically the blue print for our obecjt essential data will be avaible here
     def __init__(self, hostip, port, name, ID):
         self.HOST = hostip
-        self.PORT = port
+        self.PORT = int(port)
         self.NAME = name
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.sock.setblocking(False)
@@ -46,20 +46,14 @@ class tcplistener:
             logging.debug('\nconn: %s', conn)
             print(colored("\n"+self.NAME+"("+self.HOST+":"+str(self.PORT)+")"+" received and answer from "+str(addr), "red"))
             #return data when connection is made in TCPreturn_dict see menu.py
-            return_dict["conn"]=conn
-            return_dict["name"]=self.NAME
-            return_dict["status"]="connected"
-            return_dict["addr"]=addr
-            return_dict["host"]=self.HOST
-            return_dict["port"]=self.PORT
+            return_dict["conn"] = conn
+            return_dict["selfID"] = self.ID
             targetip = str(addr[0])
             targetport = str(addr[1])
 
             conndb = sqlite3.connect('database/listener.db')
-
             c = conndb.cursor()
-            print(conn)
-            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?, socketconn=? WHERE ItemUniqueID=?", ("connected", targetip, targetport, str(conn), self.ID))
+            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=? WHERE ItemUniqueID=?", ("connected", targetip, targetport, self.ID))
 
             conndb.commit()
 

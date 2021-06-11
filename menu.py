@@ -171,69 +171,18 @@ class Commands(Cmd):
         while True:
             #check if TCPlistener is not empty
             if len(TCPreturn_dict) != 0 :
-                NAME = TCPreturn_dict.get("name")
-                #if not empty then check name if name is already store go back at start of loop
-                if  NAME in TCPSocketDict:
+                conn = TCPreturn_dict.get("conn")
+                ID = TCPreturn_dict.get("selfID")
+                if ID not in TCPSocketDict:
+                    TCPSocketDict[ID]=conn
+                else:
                     continue
-                else:#if the name isn't in all the information linked to that listener namelistener
-                    #get stored in TCPConnectionsDict
-                    TCPSocketDict[NAME]=TCPreturn_dict.get("conn")
-                    TCPListenersDict[NAME][3] = str(TCPreturn_dict.get("status"))
-                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("host"))
-                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("port"))
-                    TCPConnectionsDict.setdefault(NAME, []).append(TCPreturn_dict.get("name"))
-                    addr = TCPreturn_dict.get("addr")
-                    TCPConnectionsDict.setdefault(NAME, []).append(addr[0])
-                    TCPConnectionsDict.setdefault(NAME, []).append(addr[1])
+
+
 
     T = Thread(target = TCPcheck4incoming, args=())
     T.setDaemon(True)
     T.start()
-
-    # endless thread that check for info when a connection is made
-    def HTTPcheck4incoming():
-        while True:
-            if len(HTTPreturn_dict) != 0 :
-                NAME = HTTPreturn_dict.get("name")
-                if  NAME in HTTPserverDict:
-                    continue
-                else:
-                    HTTPListenersDict[NAME][3] = str(HTTPreturn_dict.get("status"))
-                    host = HTTPreturn_dict.get("host")
-                    port = HTTPreturn_dict.get("port")
-                    name = HTTPreturn_dict.get("name")
-                    status = HTTPreturn_dict.get("status")
-                    HTTPserverDict[NAME]=[host, port, name, status]
-
-                    print("dict: ")
-                    print(HTTPserverDict)
-
-    HTTPthread = Thread(target = HTTPcheck4incoming, args=())
-    HTTPthread.setDaemon(True)
-    HTTPthread.start()
-
-    # endless thread that check for info when a connection is made
-    def HTTPScheck4incoming():
-        while True:
-            if len(HTTPSreturn_dict) != 0 :
-                NAME = HTTPSreturn_dict.get("name")
-                if  NAME in HTTPSserverDict:
-                    continue
-                else:
-                    HTTPSListenersDict[NAME][3] = str(HTTPSreturn_dict.get("status"))
-                    host = HTTPSreturn_dict.get("host")
-                    port = HTTPSreturn_dict.get("port")
-                    name = HTTPSreturn_dict.get("name")
-                    status = HTTPSreturn_dict.get("status")
-                    HTTPSserverDict[NAME]=[host, port, name, status]
-
-                    print("dict: ")
-                    print(HTTPSserverDict)
-
-    HTTPSthread = Thread(target = HTTPScheck4incoming, args=())
-    HTTPSthread.setDaemon(True)
-    HTTPSthread.start()
-
 
     #when nothing is enter insure that the prompt reapear
     def emptyline(self):
@@ -253,12 +202,6 @@ class Commands(Cmd):
         NAME = "TCP_"+argList[2]
         STATUS = "listening"
         ID = MakeNcheckID()
-        #for tracability the information are then stored into a dictionnary
-        #regrouping all tcp listener
-        TCPListenersDict.setdefault(NAME, []).append(HOST)
-        TCPListenersDict.setdefault(NAME, []).append(PORT)
-        TCPListenersDict.setdefault(NAME, []).append(NAME)
-        TCPListenersDict.setdefault(NAME, []).append(STATUS)
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
@@ -357,20 +300,30 @@ class Commands(Cmd):
         print(c.fetchall())
 
     def do_interact(self, inp):
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+
         argList = []
         argList = inp.split()
-        name = argList[0]
+        argu = argList[0]
         #using name getting the rest of the information in the dictionnary
-        info = TCPConnectionsDict.get(name)
-        logging.debug("%s", TCPSocketDict)
+        info = []
+        info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall()
+        info = info[0]
+        ID = str(info[0])
         #asssigning the information to variables
-        HOST = info[3]
-        PORT = info[4]
-        NAME = info[2]
+        HOST = info[1]
+        PORT = info[2]
+        NAME = info[3]
         #get the socket using NAME from the Socket dictionnary
-        Conn = TCPSocketDict[NAME]
+        TargetIp = info[5]
+        TargetPort = info[6]
+        Conn = TCPSocketDict[ID]
+        print(info[0])
+        print(TCPSocketDict)
+        print(Conn)
         #creating a new object
-        InteractWith = interacting(HOST, int(PORT), NAME, Conn)
+        InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
         while True:
             #calling shell() from interacting class in while loop
             try1 = InteractWith.Shell()
@@ -404,18 +357,24 @@ class Commands(Cmd):
                 continue
 
     def do_HTTPinteract(self, inp):
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+
         argList = []
         argList = inp.split()
-        name = argList[0]
+        argu = argList[0]
         info = []
+        info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall()
         #using name getting the rest of the information in the dictionnary
-        info = HTTPserverDict.get(name)
+        info = info[0]
+        print(info)
+        print(info[0])
         #print(HTTPserverDict)
         #print(info)
         #asssigning the information to variables
-        HOST = info[0]
-        PORT = info[1]
-        NAME = info[2]
+        HOST = info[1]
+        PORT = info[2]
+        NAME = info[3]
         #print(HOST, PORT, NAME)
         #creating a new object from class HTTPinteracting
         InteractWith = HTTPinteracting(HOST, int(PORT), NAME)
@@ -458,6 +417,7 @@ class Commands(Cmd):
 
     def do_listConnections(self, inp):
         print(TCPConnectionsDict)
+        print(TCPSocketDict)
         print(TCPreturn_dict)
         # conn = TCPreturn_dict.get("conn")
         # msg = conn.recv(1024).decode()

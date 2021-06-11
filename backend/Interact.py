@@ -30,10 +30,12 @@ logging.basicConfig(level=logging.DEBUG)
 
 class interacting(Cmd):
 
-    def __init__(self, hostip, port, name, Conn):
+    def __init__(self, hostip, port, name, targetip, targetport, Conn):
         self.HOST = hostip
         self.PORT = port
         self.NAME = name
+        self.TargetIP = targetip
+        self.TargetPORT = targetport
         self.conn = Conn
         logging.debug("%s",self.conn)
 
