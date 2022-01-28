@@ -60,6 +60,7 @@ class tcplistener:
 
     def closetcpListener(self):
         self.sock.close()
+        print("closed")
         logging.debug("closing listener")
 
 
@@ -69,10 +70,10 @@ class tcplistener:
         PORT = port
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((HOST, PORT))
-        # try:
-        #     s.bind((HOST, PORT))
-        #     return True
-        # except:
-        #     return False
-        s.close()
+        #s.bind((HOST, PORT))
+        try:
+            s.bind((HOST, PORT))
+            s.close()
+            return True
+        except:
+            return False
