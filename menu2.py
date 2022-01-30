@@ -326,6 +326,7 @@ class Commands(cmd2.Cmd):
         p.start()
 
     def do_printList(self, inp):
+        #reutrn dict get over written at every new connection
         print(HTTPreturn_dict)
         print(HTTPserverDict)
 
@@ -544,15 +545,30 @@ class Commands(cmd2.Cmd):
         #TCPListenersDict.pop(ID)
 
 
-
-
-
-
-
-
-
-
     def do_close_HTTPlistener(self, inp):
+
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+
+        argList = []
+        argList = inp.split()
+        argu = argList[0]
+
+        info = str(c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall())
+        info = info.replace("'", "")
+        info = info.replace(",", "")
+        info = info.replace("[", "")
+        info = info.replace("]", "")
+        info = info.replace("(", "")
+        info = info.replace(")", "")
+        print("info: "+ info)
+        infoSplitList = info.split()
+        infoSplitList = info.split()
+        ID = infoSplitList[0]
+        HOST = infoSplitList[1]
+        PORT = infoSplitList[2]
+        NAME = infoSplitList[3]
+
         path  = os.getcwd()
         argList = []
         argList = inp.split()
@@ -561,7 +577,7 @@ class Commands(cmd2.Cmd):
         j = None
         LenHTTPprocesses = len(HTTPprocesses)
         while i < LenHTTPprocesses:
-            if NAME in str(HTTPprocesses[i]):
+            if ID or NAME in str(HTTPprocesses[i]):
                 logging.debug(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
                 j = str(i)
             else:
@@ -571,13 +587,22 @@ class Commands(cmd2.Cmd):
         p = HTTPprocesses[int(j)]
         del HTTPprocesses[int(j)]
         HTTPListenersDict.pop(NAME)
-        try:
-            HTTPConnectionsDict.pop(NAME)
-        except:
-            print('error http delete item in HTTPConnectionsDict' )
-            print(HTTPConnectionsDict)
+        #try:
         p.terminate()
         os.unlink(path+'/API/templates/'+NAME+'.html')
+
+        if len(HTTPConnectionsDict) != 0 and ID in HTTPConnectionsDict:
+            HTTPConnectionsDict.pop(ID)
+
+        c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+        conn.commit()
+        c.close()
+        print("WENT HERE")
+
+        # except:
+        #     print('error http delete item in HTTPConnectionsDict' )
+        #     print(HTTPConnectionsDict)
+
 
     def do_clear(self, inp):
         clear = lambda: os.system('clear')
