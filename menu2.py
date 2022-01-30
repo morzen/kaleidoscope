@@ -54,15 +54,13 @@ TCPSocketDict = manager.dict()#store the socket when connection for later intera
 
 
 
-HTTPmanager = multiprocessing.Manager()
-
+#HTTPmanager = multiprocessing.Manager()
 #HTTPreturn_dict = HTTPmanager.dict()
-HTTPserverDict = HTTPmanager.dict()
+#HTTPserverDict = HTTPmanager.dict()
 
-HTTPSmanager = multiprocessing.Manager()
-
+#HTTPSmanager = multiprocessing.Manager()
 #HTTPSreturn_dict = HTTPSmanager.dict()
-HTTPSserverDict = HTTPSmanager.dict()
+#HTTPSserverDict = HTTPSmanager.dict()
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
@@ -106,8 +104,8 @@ def Namecheck(x):
     names = c.fetchall()
     if len(names) != 0:
         names = names[0]
-        print(name)
-        print(names)
+        #print(name)
+        #print(names)
         if name in names:
             return True
         else:
@@ -329,7 +327,7 @@ class Commands(cmd2.Cmd):
 
         p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)#, args=[HTTPSreturn_dict])
         HTTPSprocesses.append(p)
-        print(HTTPSprocesses)
+        #print(HTTPSprocesses)
 
         #p.daemon = True
         p.start()
@@ -343,7 +341,7 @@ class Commands(cmd2.Cmd):
         argu = argList[0]
         #using name getting the rest of the information in the dictionnary
         info = []
-        info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall()
+        info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         info = info[0]
         ID = str(info[0])
         #asssigning the information to variables
@@ -354,9 +352,9 @@ class Commands(cmd2.Cmd):
         TargetIp = info[5]
         TargetPort = info[6]
         Conn = TCPSocketDict[ID]
-        print(info[0])
-        print(TCPSocketDict)
-        print(Conn)
+        #print(info[0])
+        #print(TCPSocketDict)
+        #print(Conn)
         #creating a new object
         InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
         while True:
@@ -369,7 +367,7 @@ class Commands(cmd2.Cmd):
             #similar bit of code to the do_close_listener() function
             elif try1 == "Close Connection":
                 i = 0
-                print(NAME)
+                #print(NAME)
                 j = None
                 LenTCPprocesses = len(TCPprocesses)
                 while i < LenTCPprocesses:
@@ -380,11 +378,14 @@ class Commands(cmd2.Cmd):
                         print(NAME+" is not in "+str(TCPprocesses[i]))
 
                     i = i + 1
-                print("j="+j)
+                #print("j="+j)
                 p = TCPprocesses[int(j)]
                 del TCPprocesses[int(j)]
-                TCPListenersDict.pop(NAME)
+                #TCPListenersDict.pop(NAME)
                 p.terminate()
+                c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+                conn.commit()
+                c.close()
 
                 break
 
@@ -398,12 +399,13 @@ class Commands(cmd2.Cmd):
         argList = []
         argList = inp.split()
         argu = argList[0]
+        print(str(argu))
         info = []
-        info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall()
+        info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         #using name getting the rest of the information in the dictionnary
         info = info[0]
         print(info)
-        print(info[0])
+        #print(info[0])
         #print(HTTPserverDict)
         #print(info)
         #asssigning the information to variables
@@ -437,8 +439,12 @@ class Commands(cmd2.Cmd):
                 #print("j="+j)
                 p = HTTPprocesses[int(j)]
                 del HTTPprocesses[int(j)]
-                HTTPListenersDict.pop(NAME)
+                #HTTPListenersDict.pop(NAME)
                 p.terminate()
+                c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+                conn.commit()
+                c.close()
+
 
                 break
 
@@ -449,8 +455,9 @@ class Commands(cmd2.Cmd):
     def do_printDatabase(self, inp):
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM TCPlistener")
+        t = c.execute("SELECT * FROM TCPlistener")
         print("TCPlistener")
+        print(t)
         print(c.fetchall())
         c.execute("SELECT * FROM HTTPsListener")
         print("HTTPsListener")
@@ -474,14 +481,14 @@ class Commands(cmd2.Cmd):
         #print("HTTPConnectionsDict: "+str(HTTPConnectionsDict))#store info when listener get a connection
         print("HTTPprocesses: "+str(HTTPprocesses))#store processes related to HTTP IE listeners (keep listener active when connection)
         #print("HTTPreturn_dict: "+str(HTTPreturn_dict))# store information about the  HTTP server when put online
-        print("HTTPserverDict: "+str(HTTPserverDict))#store the info of return_dict because it get overwritten at every server creation IE HTTP listeners
+        #print("HTTPserverDict: "+str(HTTPserverDict))#store the info of return_dict because it get overwritten at every server creation IE HTTP listeners
         print("\n")
         #list related to HTTPs
         #print("HTTPSListenersDict: "+str(HTTPSListenersDict))
         #print("HTTPSConnectionsDict: "+str(HTTPSConnectionsDict))
         print("HTTPSprocesses: "+str(HTTPSprocesses))
         #print("HTTPSreturn_dict: "+str(HTTPSreturn_dict))
-        print("HTTPSserverDict: "+str(HTTPSserverDict))
+        #print("HTTPSserverDict: "+str(HTTPSserverDict))
 
 
 
@@ -500,7 +507,7 @@ class Commands(cmd2.Cmd):
         info = info.replace("]", "")
         info = info.replace("(", "")
         info = info.replace(")", "")
-        print("info: "+ info)
+        #print("info: "+ info)
         infoSplitList = info.split()
         ID = infoSplitList[0]
         HOST = infoSplitList[1]
@@ -512,7 +519,7 @@ class Commands(cmd2.Cmd):
         ListenerClose.closetcpListener()
 
         #erase all data realated to this listener/connection
-        print("process: "+str(TCPprocesses))
+        #print("process: "+str(TCPprocesses))
         i = 0
         j = None
         LenTCPprocesses = len(TCPprocesses)
@@ -533,7 +540,7 @@ class Commands(cmd2.Cmd):
         logging.debug("j= %s", j)
         try:
             del TCPprocesses[int(j)]
-            print("WENT HERE")
+            #print("WENT HERE")
             p.terminate()
 
             if len(TCPConnectionsDict) != 0 and ID in TCPConnectionsDict:
@@ -548,7 +555,7 @@ class Commands(cmd2.Cmd):
             print(f"Unexpected {err=}, {type(err)=}")
             raise
 
-        print("process: "+str(TCPprocesses))
+        #print("process: "+str(TCPprocesses))
         #we delete the informationmm using the name for the Dictionnaries
         #TCPListenersDict.pop(ID)
 
@@ -569,7 +576,7 @@ class Commands(cmd2.Cmd):
         info = info.replace("]", "")
         info = info.replace("(", "")
         info = info.replace(")", "")
-        print("info: "+ info)
+        #print("info: "+ info)
         infoSplitList = info.split()
         infoSplitList = info.split()
         ID = infoSplitList[0]
@@ -605,7 +612,6 @@ class Commands(cmd2.Cmd):
         c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
         conn.commit()
         c.close()
-        print("WENT HERE")
 
         # except:
         #     print('error http delete item in HTTPConnectionsDict' )
