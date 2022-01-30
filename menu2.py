@@ -24,21 +24,22 @@ from threading import Thread
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 from backend.Interact import interacting, HTTPinteracting
-#from backend.HTTPshandler import http_sHandler
+
 
 
 #list related to TCP
-TCPListenersDict = {}#stores TCP listener with info
-TCPConnectionsDict = {}#store info when listener get a connection
-TCPprocesses = []#store processes related to TCP such a lsitener
+#TCPListenersDict = {}#stores TCP listener with info
+#TCPConnectionsDict = {}#store info when listener get a connection
+TCPprocesses = []#store processes related to TCP IE listeners
 #(keep listener active when connection)
 
-HTTPListenersDict = {}
-HTTPConnectionsDict = {}
-HTTPprocesses = []
+#list related to HTTP
+#HTTPListenersDict = {}#stores HTTP listener with info
+#HTTPConnectionsDict = {}#store info when listener get a connection
+HTTPprocesses = []#store processes related to HTTP IE the listeners
 
-HTTPSListenersDict = {}
-HTTPSConnectionsDict = {}
+#HTTPSListenersDict = {}
+#HTTPSConnectionsDict = {}
 HTTPSprocesses = []
 
 
@@ -46,17 +47,21 @@ HTTPSprocesses = []
 
 manager = multiprocessing.Manager()
 #return info in a dict for a given listener
-TCPreturn_dict = manager.dict()
+TCPreturn_dict = manager.dict()# store information about the socket when a connection occur
+#given the fact that the return dict is overwritten at every new conenction
+#the data are transfered into TCPSocket (see TCPcheck4incoming())
 TCPSocketDict = manager.dict()#store the socket when connection for later interaction
+
+
 
 HTTPmanager = multiprocessing.Manager()
 
-HTTPreturn_dict = HTTPmanager.dict()
+#HTTPreturn_dict = HTTPmanager.dict()
 HTTPserverDict = HTTPmanager.dict()
 
 HTTPSmanager = multiprocessing.Manager()
 
-HTTPSreturn_dict = HTTPSmanager.dict()
+#HTTPSreturn_dict = HTTPSmanager.dict()
 HTTPSserverDict = HTTPSmanager.dict()
 
 
@@ -64,7 +69,7 @@ HTTPSserverDict = HTTPSmanager.dict()
 logging.basicConfig(level=logging.DEBUG)
 
 
-
+#function responsable for the date and time in the prompt
 def promptdateetc():
     Datetime = datetime.datetime.now()
     Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
@@ -78,6 +83,7 @@ def promptdateetc():
 
     return prompt
 
+#function responsible of creatin gUNique ID and check if it doesn't already exist
 def MakeNcheckID():
     while True:
         ID = str(uuid.uuid4().fields[-1])[:5]
@@ -89,6 +95,9 @@ def MakeNcheckID():
             continue
         else:
             return ID
+
+
+#Function resposnible to very a name is not already in use
 def Namecheck(x):
     name = x
     conn = sqlite3.connect('database/listener.db')
@@ -273,12 +282,12 @@ class Commands(cmd2.Cmd):
         NAME = "HTTP_"+argList[2]
         STATUS = "listening"
         ID = MakeNcheckID()
-        #for tracability the information are then stored into a dictionnary
-        #regrouping all http listener
-        HTTPListenersDict.setdefault(NAME, []).append(HOST)
-        HTTPListenersDict.setdefault(NAME, []).append(PORT)
-        HTTPListenersDict.setdefault(NAME, []).append(NAME)
-        HTTPListenersDict.setdefault(NAME, []).append(STATUS)
+        # #for tracability the information are then stored into a dictionnary
+        # #regrouping all http listener
+        # HTTPListenersDict.setdefault(NAME, []).append(HOST)
+        # HTTPListenersDict.setdefault(NAME, []).append(PORT)
+        # HTTPListenersDict.setdefault(NAME, []).append(NAME)
+        # HTTPListenersDict.setdefault(NAME, []).append(STATUS)
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
@@ -287,7 +296,7 @@ class Commands(cmd2.Cmd):
         #creating object an object httplistener
         HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
         # calling funtion listenerhttp from httplistener in a process
-        p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp, args=[HTTPreturn_dict])
+        p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp)#, args=[HTTPreturn_dict])
         #store the process in a list HTTPprocesses
         HTTPprocesses.append(p)
         logging.debug(HTTPprocesses)
@@ -304,12 +313,12 @@ class Commands(cmd2.Cmd):
         KeyPath = argList[4]
         ID = MakeNcheckID()
         #print(argList)
-        HTTPSListenersDict.setdefault(NAME, []).append(HOST)
-        HTTPSListenersDict.setdefault(NAME, []).append(PORT)
-        HTTPSListenersDict.setdefault(NAME, []).append(NAME)
-        HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
-        HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
-        HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
+        # HTTPSListenersDict.setdefault(NAME, []).append(HOST)
+        # HTTPSListenersDict.setdefault(NAME, []).append(PORT)
+        # HTTPSListenersDict.setdefault(NAME, []).append(NAME)
+        # HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
+        # HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
+        # HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
@@ -318,27 +327,12 @@ class Commands(cmd2.Cmd):
 
         HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
 
-        p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps, args=[HTTPSreturn_dict])
+        p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)#, args=[HTTPSreturn_dict])
         HTTPSprocesses.append(p)
         print(HTTPSprocesses)
 
         #p.daemon = True
         p.start()
-
-    def do_printList(self, inp):
-        #reutrn dict get over written at every new connection
-        print(HTTPreturn_dict)
-        print(HTTPserverDict)
-
-    def do_printDatabase(self, inp):
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("SELECT * FROM TCPlistener")
-        print("TCPlistener")
-        print(c.fetchall())
-        c.execute("SELECT * FROM HTTPsListener")
-        print("HTTPsListener")
-        print(c.fetchall())
 
     def do_interact(self, inp):
         conn = sqlite3.connect('database/listener.db')
@@ -452,30 +446,44 @@ class Commands(cmd2.Cmd):
                 continue
 
 
-    def do_listListener(self, inp):
-        print(TCPListenersDict)
-
-
-    def do_listConnections(self, inp):
-        print(TCPConnectionsDict)
-        print(TCPSocketDict)
-        #get overwritten for every new connecction
-        print(TCPreturn_dict)
-        # conn = TCPreturn_dict.get("conn")
-        # msg = conn.recv(1024).decode()
-        # print("\nmessage: "+msg)
-
-    def do_TempFunctionFIndStuffInDB4delete(self, inp):
+    def do_printDatabase(self, inp):
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
+        c.execute("SELECT * FROM TCPlistener")
+        print("TCPlistener")
+        print(c.fetchall())
+        c.execute("SELECT * FROM HTTPsListener")
+        print("HTTPsListener")
+        print(c.fetchall())
 
-        argList = []
-        argList = inp.split()
-        argu = argList[0]
+    def do_TempFunctionPrintAllList(self, inp):
 
-        stuff2find = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall()
+        #list related to TCP
+        #print("TCPListenersDict: "+str(TCPListenersDict))#stores TCP listener with info
+        #print("TCPConnectionsDict: "+str(TCPConnectionsDict))#store info when listener get a connection
+        print("TCPprocesses: "+str(TCPprocesses))#store processes related to TCP IE listeners (keep listener active when connection)
+        print("TCPreturn_dict: "+str(TCPreturn_dict))# store information about the socket when a connection occur
+        #given the fact that the return dict is overwritten at every new conenction
+        #the data are transfered into TCPSocket (see TCPcheck4incoming())
+        print("TCPSocketDict: "+str(TCPSocketDict))#store the socket when connection for later interaction
 
-        print(str(stuff2find))
+        print("\n")
+
+        #list related to HTTP
+        #print("HTTPListenersDict: "+str(HTTPListenersDict))#stores HTTP listener with info
+        #print("HTTPConnectionsDict: "+str(HTTPConnectionsDict))#store info when listener get a connection
+        print("HTTPprocesses: "+str(HTTPprocesses))#store processes related to HTTP IE listeners (keep listener active when connection)
+        #print("HTTPreturn_dict: "+str(HTTPreturn_dict))# store information about the  HTTP server when put online
+        print("HTTPserverDict: "+str(HTTPserverDict))#store the info of return_dict because it get overwritten at every server creation IE HTTP listeners
+        print("\n")
+        #list related to HTTPs
+        #print("HTTPSListenersDict: "+str(HTTPSListenersDict))
+        #print("HTTPSConnectionsDict: "+str(HTTPSConnectionsDict))
+        print("HTTPSprocesses: "+str(HTTPSprocesses))
+        #print("HTTPSreturn_dict: "+str(HTTPSreturn_dict))
+        print("HTTPSserverDict: "+str(HTTPSserverDict))
+
+
 
     def do_close_listener(self, inp):
         conn = sqlite3.connect('database/listener.db')
@@ -586,13 +594,13 @@ class Commands(cmd2.Cmd):
         logging.debug("j= %s", j)
         p = HTTPprocesses[int(j)]
         del HTTPprocesses[int(j)]
-        HTTPListenersDict.pop(NAME)
+        #HTTPListenersDict.pop(NAME)
         #try:
         p.terminate()
         os.unlink(path+'/API/templates/'+NAME+'.html')
 
-        if len(HTTPConnectionsDict) != 0 and ID in HTTPConnectionsDict:
-            HTTPConnectionsDict.pop(ID)
+        # if len(HTTPConnectionsDict) != 0 and ID in HTTPConnectionsDict:
+        #     HTTPConnectionsDict.pop(ID)
 
         c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
         conn.commit()

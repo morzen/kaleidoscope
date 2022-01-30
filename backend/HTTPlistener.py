@@ -31,17 +31,17 @@ class httplistener():
 
 
 
-    def listenerhttp(self, HTTPreturn_dict):
+    def listenerhttp(self):#, HTTPreturn_dict):
         #logging.debug(path)
         #create a new html file PAGES ARE DYNAMICALLY GENERATED HERE (uses /basicTemplates.html)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
         # since we are creating a server the data is returned straight away
         #status is online since in all likelyhood no connection has been made
         #we just started the server
-        HTTPreturn_dict["name"]=self.NAME
-        HTTPreturn_dict["status"]="online"
-        HTTPreturn_dict["host"]=self.HOST
-        HTTPreturn_dict["port"]=self.PORT
+        # HTTPreturn_dict["name"]=self.NAME
+        # HTTPreturn_dict["status"]="online"
+        # HTTPreturn_dict["host"]=self.HOST
+        # HTTPreturn_dict["port"]=self.PORT
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
         c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
@@ -50,13 +50,13 @@ class httplistener():
         #logging.debug(HTTPreturn_dict)
         runApi(self.HOST, self.PORT, self.ID) # star the flask server
 
-    def listenerhttps(self, HTTPreturn_dict):
+    def listenerhttps(self):#, HTTPreturn_dict):
         #logging.debug(path)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
-        HTTPreturn_dict["name"]=self.NAME
-        HTTPreturn_dict["status"]="online"
-        HTTPreturn_dict["host"]=self.HOST
-        HTTPreturn_dict["port"]=self.PORT
+        # HTTPreturn_dict["name"]=self.NAME
+        # HTTPreturn_dict["status"]="online"
+        # HTTPreturn_dict["host"]=self.HOST
+        # HTTPreturn_dict["port"]=self.PORT
 
         conn = sqlite3.connect('database/listener.db')
         c = conn.cursor()
