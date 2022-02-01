@@ -136,9 +136,8 @@ class Commands(cmd2.Cmd):
                     status text,
                     targetIP text,
                     targetPORT text,
-                    targetHOSTNAME text,
-                    socketconn
-                    )""")
+                    targetHOSTNAME text
+                    )""")# don't forget impossible to store socket in database for socket are different type and unstockable as static data
 
         c.execute("""CREATE TABLE HTTPsListener (
                     ItemUniqueID int,
@@ -344,6 +343,7 @@ class Commands(cmd2.Cmd):
         info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         info = info[0]
         ID = str(info[0])
+        print(info)
         #asssigning the information to variables
         HOST = info[1]
         PORT = info[2]
@@ -353,8 +353,10 @@ class Commands(cmd2.Cmd):
         TargetPort = info[6]
         Conn = TCPSocketDict[ID]
         #print(info[0])
-        #print(TCPSocketDict)
-        #print(Conn)
+        print("TCPsocket")
+        print(TCPSocketDict)
+        print("Conn In DO Interact")
+        print(Conn)
         #creating a new object
         InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
         while True:
@@ -457,7 +459,6 @@ class Commands(cmd2.Cmd):
         c = conn.cursor()
         t = c.execute("SELECT * FROM TCPlistener")
         print("TCPlistener")
-        print(t)
         print(c.fetchall())
         c.execute("SELECT * FROM HTTPsListener")
         print("HTTPsListener")
@@ -489,6 +490,35 @@ class Commands(cmd2.Cmd):
         print("HTTPSprocesses: "+str(HTTPSprocesses))
         #print("HTTPSreturn_dict: "+str(HTTPSreturn_dict))
         #print("HTTPSserverDict: "+str(HTTPSserverDict))
+
+        conn = sqlite3.connect('database/listener.db')
+        c = conn.cursor()
+
+        # argList = ["TCP_listener2"]
+        # argList = inp.split()
+        argu = str("TCP_listener2")
+        #using name getting the rest of the information in the dictionnary
+        info = []
+        info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        info = info[0]
+        ID = str(info[0])
+        print(info)
+        #asssigning the information to variables
+        HOST = info[1]
+        PORT = info[2]
+        NAME = info[3]
+        #get the socket using NAME from the Socket dictionnary
+        TargetIp = info[5]
+        TargetPort = info[6]
+        Conn = TCPSocketDict[ID]
+        #print(info[0])
+        print("TCPsocketDict:")
+        print(TCPSocketDict)
+        print("ID: "+ID)
+        print("TCPsocketDict[ID]: ")
+        print(TCPSocketDict[ID])
+        print("Conn In DO Interact")
+        print(Conn)
 
 
 
@@ -543,8 +573,8 @@ class Commands(cmd2.Cmd):
             #print("WENT HERE")
             p.terminate()
 
-            if len(TCPConnectionsDict) != 0 and ID in TCPConnectionsDict:
-                TCPConnectionsDict.pop(ID)
+            # if len(TCPConnectionsDict) != 0 and ID in TCPConnectionsDict:
+            #     TCPConnectionsDict.pop(ID)
             if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
                 TCPSocketDict.pop(ID)
 

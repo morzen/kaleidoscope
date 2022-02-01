@@ -37,7 +37,7 @@ class interacting(Cmd):
         self.TargetIP = targetip
         self.TargetPORT = targetport
         self.conn = Conn
-        logging.debug("%s",self.conn)
+        logging.debug("Conn In Interact: "+"%s",self.conn)
 
 
 
@@ -45,7 +45,10 @@ class interacting(Cmd):
         #being in a hile loop the date isn't stuck here
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-
+        #try:
+        print("you are connected to: "+self.TargetIP+" on Port: "+self.TargetPORT)
+        #except:
+            #print("the ip and port of target could not be resolved")
 
         prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
         prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
