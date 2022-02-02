@@ -53,7 +53,7 @@ class tcplistener:
 
             conndb = sqlite3.connect('database/listener.db')
             c = conndb.cursor()
-            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=? WHERE ItemUniqueID=?", ("connected", targetip, targetport, self.ID))
+            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?  WHERE ItemUniqueID=?", ("connected", targetip, targetport, self.ID))
 
             conndb.commit()
 

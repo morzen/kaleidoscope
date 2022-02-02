@@ -57,7 +57,7 @@ class interacting(Cmd):
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix
-        storeCommandPath = os.path.expanduser("./history/k_Command_history")
+        storeCommandPath = os.path.expanduser("./history/commandHistory")
 
         if os.path.exists(storeCommandPath):
             readline.read_history_file(storeCommandPath)
@@ -121,7 +121,7 @@ class HTTPinteracting(Cmd):
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix
-        storeCommandPath = os.path.expanduser("./history/k_Command_history")
+        storeCommandPath = os.path.expanduser("./history/commandHistory")
 
         if os.path.exists(storeCommandPath):
             readline.read_history_file(storeCommandPath)

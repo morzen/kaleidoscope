@@ -157,7 +157,7 @@ class Commands(cmd2.Cmd):
     def __init__(self):
         super().__init__(
                         multiline_commands=[],#in case needed for commands that have multiline place the name of command in the list like so ['ls','cd',...]
-                        persistent_history_file='./history/commandHistory.txt',
+                        persistent_history_file='./history/commandHistory',
                         include_ipy=True
                         )
         self.register_cmdfinalization_hook(self.updateprompt)
@@ -351,7 +351,38 @@ class Commands(cmd2.Cmd):
         #get the socket using NAME from the Socket dictionnary
         TargetIp = info[5]
         TargetPort = info[6]
+
+
         Conn = TCPSocketDict[ID]
+        print("////////")
+        print(TCPSocketDict)
+        print(ID)
+        print("////////")
+        conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        conn2 = str(conn2[1])
+        conn2 = conn2.replace(">","")
+        conn2 = conn2.replace("'","")
+        conn2 = conn2.replace(",","")
+        conn2 = conn2.replace("(","")
+        conn2 = conn2.replace(")","")
+
+        conn2 = conn2.split(" ")
+        print(conn2)
+        # if conn2[0] != TargetIp or conn2[1] != TargetPort:
+        #     Conn = TCPSocketDict[ID]
+        #     conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        #     conn2 = str(conn2[1])
+        #     conn2 = conn2.replace(">","")
+        #     conn2 = conn2.replace("'","")
+        #     conn2 = conn2.replace(",","")
+        #     conn2 = conn2.replace("(","")
+        #     conn2 = conn2.replace(")","")
+        #
+        #     conn2 = conn2.split(" ")
+        #     print("conn2[0]: "+conn2[0]+"THOST: "+TargetIp+"conn2[1]:"+conn2[1]+"TPORT: "+TargetPort)
+        #     print(ID)
+
+
         #print(info[0])
         print("TCPsocket")
         print(TCPSocketDict)
@@ -511,6 +542,28 @@ class Commands(cmd2.Cmd):
         TargetIp = info[5]
         TargetPort = info[6]
         Conn = TCPSocketDict[ID]
+        conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        conn2 = str(conn2[1])
+        conn2 = conn2.replace(">","")
+        conn2 = conn2.replace("'","")
+        conn2 = conn2.replace(",","")
+        conn2 = conn2.replace("(","")
+        conn2 = conn2.replace(")","")
+
+        conn2 = conn2.split(" ")
+        print(conn2)
+        while  conn2[0] != HOST or conn2[1] != PORT:
+            Conn = TCPSocketDict[ID]
+            conn2 = str(TCPSocketDict[ID]).split("raddr=")
+            conn2 = str(conn2[1])
+            conn2 = conn2.replace(">","")
+            conn2 = conn2.replace("'","")
+            conn2 = conn2.replace(",","")
+            conn2 = conn2.replace("(","")
+            conn2 = conn2.replace(")","")
+
+            conn2 = conn2.split(" ")
+            print("conn2[0]: "+conn2[0]+"HOST: "+HOST+"conn2[1]:"+conn2[1]+"PORT: "+PORT)
         #print(info[0])
         print("TCPsocketDict:")
         print(TCPSocketDict)
