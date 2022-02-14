@@ -113,6 +113,39 @@ def Namecheck(x):
     else:
         return False
 
+#check if a port is already in use
+def checkPortNIPfree(hostip, port):
+    HOST = hostip
+    PORT = port
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    #s.bind((HOST, PORT))
+    try:
+        s.bind((HOST, PORT))
+        s.close()
+        return True
+    except:
+        return False
+
+
+# reguraly check if TCPlistener received a connection
+# endless thread that check for info when a connection is made
+def TCPcheck4incoming():
+    while True:
+        #check if TCPlistener is not empty
+        if len(TCPreturn_dict) != 0 :
+            conn = TCPreturn_dict.get("conn")
+            ID = TCPreturn_dict.get("selfID")
+            if ID not in TCPSocketDict:
+                TCPSocketDict[ID]=conn
+            else:
+                continue
+
+
+
+T = Thread(target = TCPcheck4incoming, args=())
+T.setDaemon(True)
+T.start()
 
 class Commands(cmd2.Cmd):
 
@@ -204,29 +237,6 @@ class Commands(cmd2.Cmd):
         # #link tab for auto complete
         # readline.parse_and_bind('tab: complete')
 
-
-
-
-
-    # reguraly check if TCPlistener received a connection
-    # endless thread that check for info when a connection is made
-    def TCPcheck4incoming():
-        while True:
-            #check if TCPlistener is not empty
-            if len(TCPreturn_dict) != 0 :
-                conn = TCPreturn_dict.get("conn")
-                ID = TCPreturn_dict.get("selfID")
-                if ID not in TCPSocketDict:
-                    TCPSocketDict[ID]=conn
-                else:
-                    continue
-
-
-
-    T = Thread(target = TCPcheck4incoming, args=())
-    T.setDaemon(True)
-    T.start()
-
     #comand to created TCP listener
     def do_tcplistener(self, inp):
         #try:
@@ -245,7 +255,7 @@ class Commands(cmd2.Cmd):
 
         if NameCheck == True:
             print("the name chosen already exist")
-        elif ListenerCreation.checkPortNIPfree(HOST, PORT) == False:
+        elif checkPortNIPfree(HOST, PORT) == False:
             print("the port you have choosen is already in use")
 
         else:
@@ -285,19 +295,26 @@ class Commands(cmd2.Cmd):
         # HTTPListenersDict.setdefault(NAME, []).append(PORT)
         # HTTPListenersDict.setdefault(NAME, []).append(NAME)
         # HTTPListenersDict.setdefault(NAME, []).append(STATUS)
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
-                                      (ID, HOST, PORT, NAME, STATUS))
-        conn.commit()
-        #creating object an object httplistener
-        HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
-        # calling funtion listenerhttp from httplistener in a process
-        p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp)#, args=[HTTPreturn_dict])
-        #store the process in a list HTTPprocesses
-        HTTPprocesses.append(p)
-        logging.debug(HTTPprocesses)
-        p.start()
+        NameCheck = Namecheck(NAME)
+        if NameCheck == True:
+            print("the name chosen already exist")
+        elif checkPortNIPfree(HOST, PORT) == False:
+            print("the port you have choosen is already in use")
+
+        else:
+            conn = sqlite3.connect('database/listener.db')
+            c = conn.cursor()
+            c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+                                          (ID, HOST, PORT, NAME, STATUS))
+            conn.commit()
+            #creating object an object httplistener
+            HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
+            # calling funtion listenerhttp from httplistener in a process
+            p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp)#, args=[HTTPreturn_dict])
+            #store the process in a list HTTPprocesses
+            HTTPprocesses.append(p)
+            logging.debug(HTTPprocesses)
+            p.start()
 
     def do_HTTPSlistener(self, inp):
         argList = []
@@ -316,20 +333,27 @@ class Commands(cmd2.Cmd):
         # HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
         # HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
         # HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                                      (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
-        conn.commit()
+        NameCheck = Namecheck(NAME)
+        if NameCheck == True:
+            print("the name chosen already exist")
+        elif checkPortNIPfree(HOST, PORT) == False:
+            print("the port you have choosen is already in use")
 
-        HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
+        else:
+            conn = sqlite3.connect('database/listener.db')
+            c = conn.cursor()
+            c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                                          (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
+            conn.commit()
 
-        p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)#, args=[HTTPSreturn_dict])
-        HTTPSprocesses.append(p)
-        #print(HTTPSprocesses)
+            HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
 
-        #p.daemon = True
-        p.start()
+            p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)#, args=[HTTPSreturn_dict])
+            HTTPSprocesses.append(p)
+            #print(HTTPSprocesses)
+
+            #p.daemon = True
+            p.start()
 
     def do_interact(self, inp):
         conn = sqlite3.connect('database/listener.db')
@@ -501,10 +525,10 @@ class Commands(cmd2.Cmd):
         #print("TCPListenersDict: "+str(TCPListenersDict))#stores TCP listener with info
         #print("TCPConnectionsDict: "+str(TCPConnectionsDict))#store info when listener get a connection
         print("TCPprocesses: "+str(TCPprocesses))#store processes related to TCP IE listeners (keep listener active when connection)
-        print("TCPreturn_dict: "+str(TCPreturn_dict))# store information about the socket when a connection occur
+        #print("TCPreturn_dict: "+str(TCPreturn_dict))# store information about the socket when a connection occur
         #given the fact that the return dict is overwritten at every new conenction
         #the data are transfered into TCPSocket (see TCPcheck4incoming())
-        print("TCPSocketDict: "+str(TCPSocketDict))#store the socket when connection for later interaction
+        #print("TCPSocketDict: "+str(TCPSocketDict))#store the socket when connection for later interaction
 
         print("\n")
 
@@ -529,49 +553,49 @@ class Commands(cmd2.Cmd):
         # argList = inp.split()
         argu = str("TCP_listener2")
         #using name getting the rest of the information in the dictionnary
-        info = []
-        info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
-        info = info[0]
-        ID = str(info[0])
-        print(info)
-        #asssigning the information to variables
-        HOST = info[1]
-        PORT = info[2]
-        NAME = info[3]
-        #get the socket using NAME from the Socket dictionnary
-        TargetIp = info[5]
-        TargetPort = info[6]
-        Conn = TCPSocketDict[ID]
-        conn2 = str(TCPSocketDict[ID]).split("raddr=")
-        conn2 = str(conn2[1])
-        conn2 = conn2.replace(">","")
-        conn2 = conn2.replace("'","")
-        conn2 = conn2.replace(",","")
-        conn2 = conn2.replace("(","")
-        conn2 = conn2.replace(")","")
-
-        conn2 = conn2.split(" ")
-        print(conn2)
-        while  conn2[0] != HOST or conn2[1] != PORT:
-            Conn = TCPSocketDict[ID]
-            conn2 = str(TCPSocketDict[ID]).split("raddr=")
-            conn2 = str(conn2[1])
-            conn2 = conn2.replace(">","")
-            conn2 = conn2.replace("'","")
-            conn2 = conn2.replace(",","")
-            conn2 = conn2.replace("(","")
-            conn2 = conn2.replace(")","")
-
-            conn2 = conn2.split(" ")
-            print("conn2[0]: "+conn2[0]+"HOST: "+HOST+"conn2[1]:"+conn2[1]+"PORT: "+PORT)
-        #print(info[0])
-        print("TCPsocketDict:")
-        print(TCPSocketDict)
-        print("ID: "+ID)
-        print("TCPsocketDict[ID]: ")
-        print(TCPSocketDict[ID])
-        print("Conn In DO Interact")
-        print(Conn)
+        # info = []
+        # info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        # info = info[0]
+        # ID = str(info[0])
+        # print(info)
+        # #asssigning the information to variables
+        # HOST = info[1]
+        # PORT = info[2]
+        # NAME = info[3]
+        # #get the socket using NAME from the Socket dictionnary
+        # TargetIp = info[5]
+        # TargetPort = info[6]
+        # Conn = TCPSocketDict[ID]
+        # conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        # conn2 = str(conn2[1])
+        # conn2 = conn2.replace(">","")
+        # conn2 = conn2.replace("'","")
+        # conn2 = conn2.replace(",","")
+        # conn2 = conn2.replace("(","")
+        # conn2 = conn2.replace(")","")
+        #
+        # conn2 = conn2.split(" ")
+        # print(conn2)
+        # while  conn2[0] != HOST or conn2[1] != PORT:
+        #     Conn = TCPSocketDict[ID]
+        #     conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        #     conn2 = str(conn2[1])
+        #     conn2 = conn2.replace(">","")
+        #     conn2 = conn2.replace("'","")
+        #     conn2 = conn2.replace(",","")
+        #     conn2 = conn2.replace("(","")
+        #     conn2 = conn2.replace(")","")
+        #
+        #     conn2 = conn2.split(" ")
+        #     print("conn2[0]: "+conn2[0]+"HOST: "+HOST+"conn2[1]:"+conn2[1]+"PORT: "+PORT)
+        # #print(info[0])
+        # print("TCPsocketDict:")
+        # print(TCPSocketDict)
+        # print("ID: "+ID)
+        # print("TCPsocketDict[ID]: ")
+        # print(TCPSocketDict[ID])
+        # print("Conn In DO Interact")
+        # print(Conn)
 
 
 
@@ -583,7 +607,8 @@ class Commands(cmd2.Cmd):
         argList = inp.split()
         argu = argList[0]
 
-        info = str(c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall())
+        info = str(c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID  = ? OR name = ?', (argu, argu)).fetchall())
+        print(info)
         info = info.replace("'", "")
         info = info.replace(",", "")
         info = info.replace("[", "")
@@ -608,7 +633,7 @@ class Commands(cmd2.Cmd):
         LenTCPprocesses = len(TCPprocesses)
         # in case the socket doesn't close properly the entire process is killed
         while i < LenTCPprocesses:
-            if ID or NAME in str(TCPprocesses[i]):
+            if NAME in str(TCPprocesses[i]):
                 #print(NAME+" is in "+str(TCPprocesses[i]))
                 #logging.debug(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
                 j = str(i)
@@ -652,30 +677,36 @@ class Commands(cmd2.Cmd):
         argList = inp.split()
         argu = argList[0]
 
-        info = str(c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID OR name LIKE ?', (argu,)).fetchall())
+        info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        print(info)
+        info = str(info)
         info = info.replace("'", "")
         info = info.replace(",", "")
         info = info.replace("[", "")
         info = info.replace("]", "")
         info = info.replace("(", "")
         info = info.replace(")", "")
-        #print("info: "+ info)
-        infoSplitList = info.split()
+        print("info: "+ info)
         infoSplitList = info.split()
         ID = infoSplitList[0]
         HOST = infoSplitList[1]
         PORT = infoSplitList[2]
         NAME = infoSplitList[3]
 
+
+
+
+
+
         path  = os.getcwd()
-        argList = []
-        argList = inp.split()
-        NAME = argList[0]
+        #argList = []
+        #argList = inp.split()
+        #NAME = argList[0]
         i = 0
         j = None
         LenHTTPprocesses = len(HTTPprocesses)
         while i < LenHTTPprocesses:
-            if ID or NAME in str(HTTPprocesses[i]):
+            if NAME in str(HTTPprocesses[i]):
                 logging.debug(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
                 j = str(i)
             else:
@@ -710,7 +741,7 @@ class Commands(cmd2.Cmd):
     #     print("new prompt: "+promptdateetc())
     #     pass
 
-
+    #responsible of updating the prompt everytime a command or emptyline is made
     def updateprompt(self, data: cmd2.plugin.CommandFinalizationData) -> cmd2.plugin.CommandFinalizationData:
         if promptdateetc() != self.prompt:
             self.async_update_prompt(promptdateetc())

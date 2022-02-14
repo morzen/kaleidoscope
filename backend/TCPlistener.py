@@ -62,18 +62,3 @@ class tcplistener:
         self.sock.close()
         print("closed")
         logging.debug("closing listener")
-
-
-    #need to be added when in menu when creating TCP listener
-    def checkPortNIPfree(self, hostip, port):
-        HOST = hostip
-        PORT = port
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        #s.bind((HOST, PORT))
-        try:
-            s.bind((HOST, PORT))
-            s.close()
-            return True
-        except:
-            return False
