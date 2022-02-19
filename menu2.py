@@ -136,7 +136,7 @@ def TCPcheck4incoming():
         if len(TCPreturn_dict) != 0 :
             conn = TCPreturn_dict.get("conn")
             ID = TCPreturn_dict.get("selfID")
-            if ID not in TCPSocketDict:
+            if ID not in TCPSocketDict or conn not in TCPSocketDict:
                 TCPSocketDict[ID]=conn
             else:
                 continue
@@ -379,19 +379,25 @@ class Commands(cmd2.Cmd):
 
         Conn = TCPSocketDict[ID]
         print("////////")
+        print("info")
+        print(info)
+        print("TCPSocketDict")
         print(TCPSocketDict)
+        print("ID")
         print(ID)
+        print("TCPSocketDict[ID]")
+        print(str(TCPSocketDict[ID]))
         print("////////")
-        conn2 = str(TCPSocketDict[ID]).split("raddr=")
-        conn2 = str(conn2[1])
-        conn2 = conn2.replace(">","")
-        conn2 = conn2.replace("'","")
-        conn2 = conn2.replace(",","")
-        conn2 = conn2.replace("(","")
-        conn2 = conn2.replace(")","")
-
-        conn2 = conn2.split(" ")
-        print(conn2)
+        # conn2 = str(TCPSocketDict[ID]).split("raddr=")
+        # conn2 = str(conn2[1])
+        # conn2 = conn2.replace(">","")
+        # conn2 = conn2.replace("'","")
+        # conn2 = conn2.replace(",","")
+        # conn2 = conn2.replace("(","")
+        # conn2 = conn2.replace(")","")
+        #
+        # conn2 = conn2.split(" ")
+        # print(conn2)
         # if conn2[0] != TargetIp or conn2[1] != TargetPort:
         #     Conn = TCPSocketDict[ID]
         #     conn2 = str(TCPSocketDict[ID]).split("raddr=")
@@ -407,11 +413,6 @@ class Commands(cmd2.Cmd):
         #     print(ID)
 
 
-        #print(info[0])
-        print("TCPsocket")
-        print(TCPSocketDict)
-        print("Conn In DO Interact")
-        print(Conn)
         #creating a new object
         InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
         while True:
