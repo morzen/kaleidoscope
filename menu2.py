@@ -203,6 +203,7 @@ T = Thread(target = TCPcheck4incoming, args=())
 T.setDaemon(True)
 T.start()
 
+
 class Commands(cmd2.Cmd):
 
     def __init__(self):
@@ -757,8 +758,7 @@ class Commands(cmd2.Cmd):
 
 
     def do_clear(self, inp):
-        clear = lambda: os.system('clear')
-        clear()
+        os.system('clear')
 
 
     # def do_checkprompt(self, inp):
