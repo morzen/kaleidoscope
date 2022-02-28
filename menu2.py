@@ -22,9 +22,11 @@ import uuid
 from cmd2 import Cmd
 from termcolor import colored
 from threading import Thread
+
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 from backend.Interact import interacting, HTTPinteracting
+
 from db_controller import DBcontroller
 from CheckingFunctions import FunctionCheck
 from alertmessages import messagealert
@@ -55,26 +57,6 @@ TCPreturn_dict = manager.dict()# store information about the socket when a conne
 TCPSocketDict = manager.dict()#store the socket when connection for later interaction
 
 
-
-# reguraly check if TCPlistener received a connection
-# endless thread that check for info when a connection is made
-print("BEFORE START")
-def TCPcheck4incoming(TCPSocketDict):
-    lentcpretdic=len(TCPreturn_dict)
-    while True:
-        #check if TCPlistener is not empty
-        if lentcpretdic != 0 :
-            conn = TCPreturn_dict.get("conn")
-            ID = TCPreturn_dict.get("selfID")
-            if ID not in TCPSocketDict or conn not in TCPSocketDict:
-                TCPSocketDict[ID]=conn
-                #TCPSocketDict[ID].append(conn)
-            else:
-                continue
-
-T = Thread(target = TCPcheck4incoming, args=())
-T.setDaemon(True)
-T.start()
 
 
 class Commands(cmd2.Cmd):
@@ -241,6 +223,7 @@ class Commands(cmd2.Cmd):
 
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.interactalert()
+
 
         else:
             argu = argList[0]
@@ -531,6 +514,9 @@ def main():
 
     DBcontroller()
 
+    T = Thread(target = FunctionCheck.TCPcheck4incoming, args=(TCPreturn_dict, TCPSocketDict))
+    T.setDaemon(True)
+    T.start()
 
 
 if __name__ == "__main__":

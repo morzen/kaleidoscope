@@ -73,7 +73,7 @@ class DBcontroller():
         self.conn.commit()
 
     def HTTPinteractDBfetch(self, argu):
-        data = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        data = self.c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         return data
 
     def HTTPinteractDBcall(self, ID, NAME):

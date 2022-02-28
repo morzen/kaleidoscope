@@ -49,10 +49,10 @@ class messagealert():
 
         return prompt
 
-    def interactpromp(self):
+    def interactpromp(self, HOST, PORT):
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-        prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
+        prompt = Datetime+"_"+HOST+":"+str(PORT)+">> "
         prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
         prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
         prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))

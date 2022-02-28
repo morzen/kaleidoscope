@@ -65,17 +65,17 @@ class FunctionCheck():
                 return False
 
 
-    # # reguraly check if TCPlistener received a connection
-    # # endless thread that check for info when a connection is made
-    # def TCPcheck4incoming(self, TCPreturn_dict, TCPSocketDict):
-    #     from menu2 import TCPSocketDict
-    #     lentcpretdic=len(TCPreturn_dict)
-    #     while True:
-    #         #check if TCPlistener is not empty
-    #         if lentcpretdic != 0 :
-    #             conn = TCPreturn_dict.get("conn")
-    #             ID = TCPreturn_dict.get("selfID")
-    #             if ID not in TCPSocketDict or conn not in TCPSocketDict:
-    #                 TCPSocketDict[ID] = conn
-    #             else:
-    #                 continue
+    # reguraly check if TCPlistener received a connection
+    # endless thread that check for info when a connection is made
+    def TCPcheck4incoming(TCPreturn_dict, TCPSocketDict):
+        while True:
+            lentcpretdic=len(TCPreturn_dict)
+            #check if TCPlistener is not empty
+            if lentcpretdic != 0 :
+                conn = TCPreturn_dict.get("conn")
+                ID = TCPreturn_dict.get("selfID")
+                if ID not in TCPSocketDict or conn not in TCPSocketDict:
+                    TCPSocketDict[ID] = conn
+                    #TCPSocketDict[ID].append(conn)
+                else:
+                    continue
