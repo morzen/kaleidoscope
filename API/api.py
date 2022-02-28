@@ -10,6 +10,8 @@ from OpenSSL import SSL
 from flask import request
 from flask import abort
 
+from db_controller import DBcontroller
+
 app = flask.Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
@@ -33,15 +35,14 @@ def home(namelistener):
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
 
-            c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (ips[0], ID))
-            c.execute("UPDATE HTTPsListener SET targetPORT=? WHERE ItemUniqueID=?", (str(request.environ['REMOTE_PORT']), ID))
-            conn.commit()
+            DBcontroller.APIhomeDBupdate(ips[0], str(request.environ['REMOTE_PORT']), ID)
 
         elif request.remote_addr != ips[0]:
             # c.execute("SELECT name FROM HTTPsListener WHERE ItemUniqueID=?", (ID))
             # namelis = c.fetchall()
             print(ID)
-            currentname = c.execute('SELECT name FROM HTTPsListener WHERE ItemUniqueID=?', (ID,)).fetchall()
+            currentname = DBcontroller.APIhomeDBcurrentname(ID)
+
             print(request.remote_addr+" tried to connect on "+ str(currentname))
             abort(404)
 

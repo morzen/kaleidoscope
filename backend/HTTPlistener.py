@@ -14,6 +14,9 @@ from flask_sockets import Sockets
 #from backend.HTTPshandler import http_sHandler
 from API.api import runApi
 from API.api import runApiSSL
+
+from db_controller import DBcontroller
+
 path  = os.getcwd()
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
@@ -38,14 +41,9 @@ class httplistener():
         # since we are creating a server the data is returned straight away
         #status is online since in all likelyhood no connection has been made
         #we just started the server
-        # HTTPreturn_dict["name"]=self.NAME
-        # HTTPreturn_dict["status"]="online"
-        # HTTPreturn_dict["host"]=self.HOST
-        # HTTPreturn_dict["port"]=self.PORT
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
-        conn.commit()
+
+        db_controller.listenerHTTPDBupdate("online", self.ID)
+
         print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         #logging.debug(HTTPreturn_dict)
         runApi(self.HOST, self.PORT, self.ID) # star the flask server
@@ -53,14 +51,8 @@ class httplistener():
     def listenerhttps(self):#, HTTPreturn_dict):
         #logging.debug(path)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
-        # HTTPreturn_dict["name"]=self.NAME
-        # HTTPreturn_dict["status"]="online"
-        # HTTPreturn_dict["host"]=self.HOST
-        # HTTPreturn_dict["port"]=self.PORT
 
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", ("online", self.ID))
-        conn.commit()
+        db_controller.listenerHTTPDBupdate("online", self.ID)
+
         print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath, self.ID) # start the flask server

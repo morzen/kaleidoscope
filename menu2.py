@@ -25,22 +25,17 @@ from threading import Thread
 from backend.TCPlistener import tcplistener
 from backend.HTTPlistener import httplistener
 from backend.Interact import interacting, HTTPinteracting
-
-
+from db_controller import DBcontroller
+from CheckingFunctions import FunctionCheck
+from alertmessages import messagealert
 
 #list related to TCP
-#TCPListenersDict = {}#stores TCP listener with info
-#TCPConnectionsDict = {}#store info when listener get a connection
 TCPprocesses = []#store processes related to TCP IE listeners
 #(keep listener active when connection)
 
 #list related to HTTP
-#HTTPListenersDict = {}#stores HTTP listener with info
-#HTTPConnectionsDict = {}#store info when listener get a connection
 HTTPprocesses = []#store processes related to HTTP IE the listeners
 
-#HTTPSListenersDict = {}
-#HTTPSConnectionsDict = {}
 HTTPSprocesses = []
 
 
@@ -55,153 +50,12 @@ TCPSocketDict = manager.dict()#store the socket when connection for later intera
 
 
 
-#HTTPmanager = multiprocessing.Manager()
-#HTTPreturn_dict = HTTPmanager.dict()
-#HTTPserverDict = HTTPmanager.dict()
-
-#HTTPSmanager = multiprocessing.Manager()
-#HTTPSreturn_dict = HTTPSmanager.dict()
-#HTTPSserverDict = HTTPSmanager.dict()
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
 
-#this if loop verify if the database already exist if it doesn't it create one
-#as well as a table
-if os.path.exists("database/listener.db") == True:
-    logging.debug("listener.db exist \n")
-    conn = sqlite3.connect('database/listener.db')
-    c = conn.cursor()
-#if it exist then it just connect to it and create a cursor
-else:
-    conn = sqlite3.connect('database/listener.db')
-    c = conn.cursor()
-    logging.debug("listener.db has been created")
 
-    c.execute("""CREATE TABLE TCPlistener (
-                ItemUniqueID int,
-                hostIP text,
-                hostPORT text,
-                name text,
-                status text,
-                targetIP text,
-                targetPORT text,
-                targetHOSTNAME text
-                )""")# don't forget impossible to store socket in database for socket are different type and unstockable as static data
-
-    c.execute("""CREATE TABLE HTTPsListener (
-                ItemUniqueID int,
-                hostIP text,
-                hostPORT text,
-                name text,
-                status text,
-                targetIP,
-                targetPORT text,
-                targetHOSTNAME text,
-                SSLcertPath text,
-                SSLkeyPath text
-                )""")
-    conn.commit()
-
-#function responsable for the date and time in the prompt
-def promptdateetc():
-    Datetime = datetime.datetime.now()
-    Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-    #the prompt variable used this way seem to block the clock need to be fixed (trying to in menu2)
-
-    prompt = Datetime+":kaleidoscope"+">>>"
-    prompt = prompt.replace('kaleidoscope', termcolor.colored('kaleidoscope', 'red'))
-    prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
-    prompt = prompt.replace('>>>', termcolor.colored('>>>', 'blue'))
-    prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
-
-    return prompt
-
-#function responsible of creatin gUNique ID and check if it doesn't already exist
-def MakeNcheckID():
-    while True:
-        ID = str(uuid.uuid4().fields[-1])[:5]
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        c.execute("SELECT ItemUniqueID FROM TCPlistener UNION SELECT ItemUniqueID from HTTPsListener")
-        IDs = c.fetchall()
-        if ID in IDs:
-            continue
-        else:
-            return ID
-
-
-#Function resposnible to very a name is not already in use
-def Namecheck(x):
-    name = x
-    conn = sqlite3.connect('database/listener.db')
-    c = conn.cursor()
-    c.execute("SELECT name FROM TCPlistener UNION SELECT name from HTTPsListener")
-    names = c.fetchall()
-    if len(names) != 0:
-        names = names[0]
-        #print(name)
-        #print(names)
-        if name in names:
-            return True
-        else:
-            return False
-    else:
-        return False
-
-#check if a port is already in use
-def checkPortNIPfree(hostip, port):
-    conn = sqlite3.connect('database/listener.db')
-    c = conn.cursor()
-    c.execute("SELECT hostPORT FROM TCPlistener UNION SELECT hostPORT from HTTPsListener")
-    ports = c.fetchall()
-    ports = str(ports)
-    ports = ports.replace("[","")
-    ports = ports.replace("]","")
-    ports = ports.replace(",","")
-    ports = ports.replace("(","")
-    ports = ports.replace(")","")
-    ports = str(ports.replace("'",""))
-    ports = ports.split()
-    # print("port: "+str(port))
-    # print("ports:")
-    # print(ports)
-    if str(port) in ports:
-        return False
-    else:
-        HOST = hostip
-        PORT = port
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        #s.bind((HOST, PORT))
-        try:
-            s.bind((HOST, PORT))
-            s.close()
-            return True
-        except:
-            return False
-
-
-# reguraly check if TCPlistener received a connection
-# endless thread that check for info when a connection is made
-def TCPcheck4incoming():
-    lentcpretdic=len(TCPreturn_dict)
-    while True:
-        #check if TCPlistener is not empty
-        if lentcpretdic != 0 :
-            conn = TCPreturn_dict.get("conn")
-            ID = TCPreturn_dict.get("selfID")
-            if ID not in TCPSocketDict or conn not in TCPSocketDict:
-                TCPSocketDict[ID]=conn
-            else:
-                continue
-
-
-
-T = Thread(target = TCPcheck4incoming, args=())
-T.setDaemon(True)
-T.start()
 
 
 class Commands(cmd2.Cmd):
@@ -214,47 +68,10 @@ class Commands(cmd2.Cmd):
                         )
         self.register_cmdfinalization_hook(self.updateprompt)
 
-        self.prompt = promptdateetc()
+        self.prompt = messagealert.promptdateetc()
 
-        intro = """
-        &@@
-          #@@@@,
-              @@@@@%
-                  @@@@@@@/
-                       @@@@@@@@@@
-                                @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                                   @@@@@@@@@@@@@@@@@.      ..     .@@@@
-                                      @@@@@@@@@@@@@.    %##[]##%    .@@@@
-                                         @@@@@@@@@.    %.%&[]&%.%   .@@@@@@
-                                            &@@@@@.     %##[]##%    .@@@@@@@@@
-                                               %@@@.       ..      .@@@@@@@@@@@@&
-                                                  &@@.           .@@@@@@@@@@@@@@@@@
-                                                      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                                                                                  @@@@@@@%
-                                                                                        /@@@@
-                                                                                             &@#
-                    """
-        intro = intro.replace('#', termcolor.colored('#', 'red'))
-        intro = intro.replace('[]', termcolor.colored('[]', 'grey'))
-        intro = intro.replace('&', termcolor.colored('&', 'red'))
-        intro = intro.replace('%', termcolor.colored('%', 'red'))
-        intro = intro.replace('.', termcolor.colored('.', 'blue'))
-        self.intro =  intro
+        self.intro =  messagealert.intro()
 
-        # #part responsible for command history and autoComplete
-        # #work only on unix !!
-        # #historic stored at the given path here
-        # storeCommandPath = os.path.expanduser("./history/k_Command_history")
-        #
-        # if os.path.exists(storeCommandPath):
-        #     readline.read_history_file(storeCommandPath)
-        # def saveCommand(storeCommandPath=storeCommandPath):
-        #     readline.write_history_file(storeCommandPath)
-        #
-        # #save command history at close
-        # atexit.register(saveCommand)
-        # #link tab for auto complete
-        # readline.parse_and_bind('tab: complete')
 
     #comand to created TCP listener
     def do_tcplistener(self, inp):
@@ -263,14 +80,10 @@ class Commands(cmd2.Cmd):
         argList = inp.split()
 
         if len(argList) == 0:
-            print(colored("you need to add arguments 3 expected", "green"))
-            print(colored("example: tcplistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: tcplistener 127.0.0.1 8080 Listener1", "yellow"))
+            tcpListenerAlert()
 
         elif len(argList) < 3 or len(argList) > 3:
-            print(colored("you need to add arguments 3 expected", "green"))
-            print(colored("example: tcplistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: tcplistener 127.0.0.1 8080 Listener1", "yellow"))
+            tcpListenerAlert()
 
         else:
             #after spliting the list the argument are assigned to variables
@@ -278,22 +91,19 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "TCP_"+argList[2]
             STATUS = "listening"
-            ID = MakeNcheckID()
-            NameCheck = Namecheck(NAME)
+            ID = FunctionCheck.MakeNcheckID()
+            NameCheck = FunctionCheck.Namecheck(NAME)
             #creating object an object tcplistener
             ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
 
             if NameCheck == True:
                 print("the name chosen already exist")
-            elif checkPortNIPfree(HOST, PORT) == False:
+            elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
                 print("the port you have choosen is already in use")
 
             else:
-                conn = sqlite3.connect('database/listener.db')
-                c = conn.cursor()
-                c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
-                                              (ID, HOST, PORT, NAME, STATUS))
-                conn.commit()
+
+                DBcontroller.tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS)
 
                 # calling funtion listenertcp from tcplistener in a process
                 p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
@@ -303,10 +113,6 @@ class Commands(cmd2.Cmd):
                 p.start()
 
 
-        # except:
-        #     print(colored("-error: did you corretly enter the argument?", "red"))
-        #     print(colored("example: tcplistener hostip port NameOfTheListener", "yellow"))
-        #     print(colored("example: tcplistener 127.0.0.1 8080 Listener1", "yellow"))
 
     #command to create http server that'll listen for incoming connections
     def do_HTTPlistener(self, inp):
@@ -314,14 +120,10 @@ class Commands(cmd2.Cmd):
         argList = []
         argList = inp.split()
         if len(argList) == 0:
-            print(colored("you need to add arguments  3 expected", "green"))
-            print(colored("example: HTTPlistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: HTTPlistener 127.0.0.1 8080 Listener1", "yellow"))
+            HTTPlistenerAlert()
 
         elif len(argList) < 3 or len(argList) > 3:
-            print(colored("you need to add arguments 3 expected", "green"))
-            print(colored("example: HTTPlistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: HTTPlistener 127.0.0.1 8080 Listener1", "yellow"))
+            HTTPlistenerAlert()
 
         else:
             #after spliting the list the argument are assigned to variables
@@ -329,26 +131,17 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "HTTP_"+argList[2]
             STATUS = "listening"
-            ID = MakeNcheckID()
-            # #for tracability the information are then stored into a dictionnary
-            # #regrouping all http listener
-            # HTTPListenersDict.setdefault(NAME, []).append(HOST)
-            # HTTPListenersDict.setdefault(NAME, []).append(PORT)
-            # HTTPListenersDict.setdefault(NAME, []).append(NAME)
-            # HTTPListenersDict.setdefault(NAME, []).append(STATUS)
-            NameCheck = Namecheck(NAME)
+            ID = FunctionCheck.MakeNcheckID()
+            NameCheck = FunctionCheck.Namecheck(NAME)
             if NameCheck == True:
                 print("the name chosen already exist")
 
-            elif checkPortNIPfree(HOST, PORT) == False:
+            elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
                 print("the port you have choosen is already in use")
 
             else:
-                conn = sqlite3.connect('database/listener.db')
-                c = conn.cursor()
-                c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
-                                              (ID, HOST, PORT, NAME, STATUS))
-                conn.commit()
+                DBcontroller.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
+
                 #creating object an object httplistener
                 HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
                 # calling funtion listenerhttp from httplistener in a process
@@ -362,14 +155,10 @@ class Commands(cmd2.Cmd):
         argList = []
         argList = inp.split()
         if len(argList) == 0:
-            print(colored("you need to add arguments 3 expected", "green"))
-            print(colored("example: HTTPlistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: HTTPlistener 127.0.0.1 8080 Listener1", "yellow"))
+            HTTPSlistener()
 
         elif len(argList) < 3 or len(argList) > 3:
-            print(colored("you need to add arguments 3 expected", "green"))
-            print(colored("example: HTTPSlistener hostip    port NameOfTheListener", "yellow"))
-            print(colored("example: HTTPSlistener 127.0.0.1 8080 Listener1", "yellow"))
+            HTTPSlistener()
 
         else:
             HOST = argList[0]
@@ -378,57 +167,39 @@ class Commands(cmd2.Cmd):
             STATUS = "listening"
             CertPath = argList[3]
             KeyPath = argList[4]
-            ID = MakeNcheckID()
-            #print(argList)
-            # HTTPSListenersDict.setdefault(NAME, []).append(HOST)
-            # HTTPSListenersDict.setdefault(NAME, []).append(PORT)
-            # HTTPSListenersDict.setdefault(NAME, []).append(NAME)
-            # HTTPSListenersDict.setdefault(NAME, []).append(STATUS)
-            # HTTPSListenersDict.setdefault(NAME, []).append(CertPath)
-            # HTTPSListenersDict.setdefault(NAME, []).append(KeyPath)
-            NameCheck = Namecheck(NAME)
+            ID = FunctionCheck.MakeNcheckID()
+            NameCheck = FunctionCheck.Namecheck(NAME)
             if NameCheck == True:
                 print("the name chosen already exist")
-            elif checkPortNIPfree(HOST, PORT) == False:
+            elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
                 print("the port you have choosen is already in use")
 
             else:
-                conn = sqlite3.connect('database/listener.db')
-                c = conn.cursor()
-                c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                                              (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
-                conn.commit()
+
+                DBcontroller.HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath)
 
                 HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
 
-                p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)#, args=[HTTPSreturn_dict])
+                p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)
                 HTTPSprocesses.append(p)
-                #print(HTTPSprocesses)
 
-                #p.daemon = True
                 p.start()
 
     def do_interact(self, inp):
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
 
         argList = []
         argList = inp.split()
         if len(argList) == 0:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: interact ID OR Name ", "yellow"))
-            print(colored("example: interact 25625 OR interact TCP_listener1", "yellow"))
+            interactalert()
 
         elif len(argList) < 1 or len(argList) > 1:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: interact ID OR Name ", "yellow"))
-            print(colored("example: interact 25625 OR interact TCP_listener1", "yellow"))
+            interactalert()
 
         else:
             argu = argList[0]
             #using name getting the rest of the information in the dictionnary
             info = []
-            info = c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+            info = DBcontroller.InteractDBfetch(argu, argu)
             info = info[0]
             ID = str(info[0])
             print(info)
@@ -442,39 +213,7 @@ class Commands(cmd2.Cmd):
 
 
             Conn = TCPSocketDict[ID]
-            print("////////")
-            print("info")
-            print(info)
-            print("TCPSocketDict")
-            print(TCPSocketDict)
-            print("ID")
-            print(ID)
-            print("TCPSocketDict[ID]")
-            print(str(TCPSocketDict[ID]))
-            print("////////")
-            # conn2 = str(TCPSocketDict[ID]).split("raddr=")
-            # conn2 = str(conn2[1])
-            # conn2 = conn2.replace(">","")
-            # conn2 = conn2.replace("'","")
-            # conn2 = conn2.replace(",","")
-            # conn2 = conn2.replace("(","")
-            # conn2 = conn2.replace(")","")
-            #
-            # conn2 = conn2.split(" ")
-            # print(conn2)
-            # if conn2[0] != TargetIp or conn2[1] != TargetPort:
-            #     Conn = TCPSocketDict[ID]
-            #     conn2 = str(TCPSocketDict[ID]).split("raddr=")
-            #     conn2 = str(conn2[1])
-            #     conn2 = conn2.replace(">","")
-            #     conn2 = conn2.replace("'","")
-            #     conn2 = conn2.replace(",","")
-            #     conn2 = conn2.replace("(","")
-            #     conn2 = conn2.replace(")","")
-            #
-            #     conn2 = conn2.split(" ")
-            #     print("conn2[0]: "+conn2[0]+"THOST: "+TargetIp+"conn2[1]:"+conn2[1]+"TPORT: "+TargetPort)
-            #     print(ID)
+
 
 
             #creating a new object
@@ -500,53 +239,42 @@ class Commands(cmd2.Cmd):
                             print(NAME+" is not in "+str(TCPprocesses[i]))
 
                         i = i + 1
-                    #print("j="+j)
+
                     p = TCPprocesses[int(j)]
                     del TCPprocesses[int(j)]
-                    #TCPListenersDict.pop(NAME)
                     p.terminate()
-                    c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-                    conn.commit()
-                    c.close()
 
+                    DBcontroller.interactDBcall(ID, NAME)
                     break
 
                 else:
                     continue
 
     def do_HTTPinteract(self, inp):
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
 
         argList = []
         argList = inp.split()
         if len(argList) == 0:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: HTTPinteract ID OR Name ", "yellow"))
-            print(colored("example: HTTPinteract 25625 OR interact TCP_listener1", "yellow"))
+            HTTPinteractalert()
 
         elif len(argList) < 1 or len(argList) > 1:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: HTTPinteract ID OR Name ", "yellow"))
-            print(colored("example: HTTPinteract 25625 OR interact TCP_listener1", "yellow"))
+            HTTPinteractalert()
 
         else:
 
             argu = argList[0]
             print(str(argu))
             info = []
-            info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+            info = DBcontroller.HTTPinteractDBfetch(argu, argu)
             #using name getting the rest of the information in the dictionnary
             info = info[0]
             print(info)
-            #print(info[0])
-            #print(HTTPserverDict)
-            #print(info)
+
             #asssigning the information to variables
             HOST = info[1]
             PORT = info[2]
             NAME = info[3]
-            #print(HOST, PORT, NAME)
+
             #creating a new object from class HTTPinteracting
             InteractWith = HTTPinteracting(HOST, int(PORT), NAME)
             while True:
@@ -559,7 +287,7 @@ class Commands(cmd2.Cmd):
                 #similar bit of code to the do_close_listener() function
                 elif try1 == "Close Connection":
                     i = 0
-                    #print(NAME)
+
                     j = None
                     LenHTTPprocesses = len(HTTPprocesses)
                     while i < LenHTTPprocesses:
@@ -570,14 +298,12 @@ class Commands(cmd2.Cmd):
                             print(NAME+" is not in "+str(HTTPprocesses[i]))
 
                         i = i + 1
-                    #print("j="+j)
+
                     p = HTTPprocesses[int(j)]
                     del HTTPprocesses[int(j)]
-                    #HTTPListenersDict.pop(NAME)
+
                     p.terminate()
-                    c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-                    conn.commit()
-                    c.close()
+                    DBcontroller.HTTPinteractDBcall(ID, NAME)
 
 
                     break
@@ -587,54 +313,33 @@ class Commands(cmd2.Cmd):
 
 
     def do_printDatabase(self, inp):
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-        t = c.execute("SELECT * FROM TCPlistener")
         print("TCPlistener")
-        print(c.fetchall())
-        c.execute("SELECT * FROM HTTPsListener")
+        print(DBcontroller.printDBTCPtable())
+
         print("HTTPsListener")
-        print(c.fetchall())
-
-    def do_TempFunctionPrintAllList(self, inp):
-
-        print("TCPprocesses: "+str(TCPprocesses))
-
-
-        print("HTTPSprocesses: "+str(HTTPSprocesses))
+        print(DBcontroller.printDBHTTPtable())
 
 
 
 
     def do_close_listener(self, inp):
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
 
         argList = []
         argList = inp.split()
         lenarglist = len(argList)
         if lenarglist == 0:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: close_listener ID OR Name ", "yellow"))
-            print(colored("example: close_listener 25625 OR interact TCP_listener1", "yellow"))
+            closeListenerAlert()
 
         elif lenarglist < 1 or lenarglist > 1:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: close_listener ID OR Name ", "yellow"))
-            print(colored("example: close_listener 25625 OR interact TCP_listener1", "yellow"))
+            closeListenerAlert()
 
         else:
             argu = argList[0]
 
-            info = str(c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID  = ? OR name = ?', (argu, argu)).fetchall())
+            info = str(DBcontroller.closelistenerDBfetch(argu, argu))
             print(info)
-            info = info.replace("'", "")
-            info = info.replace(",", "")
-            info = info.replace("[", "")
-            info = info.replace("]", "")
-            info = info.replace("(", "")
-            info = info.replace(")", "")
-            #print("info: "+ info)
+            info = FunctionCheck.charremoval(str(ports), ("[", "]", ",", "(", ")", "'"), "")
+
             infoSplitList = info.split()
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
@@ -646,45 +351,39 @@ class Commands(cmd2.Cmd):
             ListenerClose.closetcpListener()
 
             #erase all data realated to this listener/connection
-            #print("process: "+str(TCPprocesses))
             i = 0
             j = None
             LenTCPprocesses = len(TCPprocesses)
             # in case the socket doesn't close properly the entire process is killed
             while i < LenTCPprocesses:
                 if NAME in str(TCPprocesses[i]):
-                    #print(NAME+" is in "+str(TCPprocesses[i]))
-                    #logging.debug(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
+
+                    logging.debug(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
                     j = str(i)
                     logging.debug("j= %s", j)
                     #we delete the information in the list and use p to terminate the process
                     p = TCPprocesses[int(j)]
 
                 else:
-                    #print(NAME+" is not in "+str(TCPprocesses[i]))
+
                     logging.debug(NAME+" is not in "+str(TCPprocesses[i]))
                 i = i + 1
             logging.debug("j= %s", j)
             try:
                 del TCPprocesses[int(j)]
-                #print("WENT HERE")
+
                 p.terminate()
 
-                # if len(TCPConnectionsDict) != 0 and ID in TCPConnectionsDict:
-                #     TCPConnectionsDict.pop(ID)
+
                 if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
                     TCPSocketDict.pop(ID)
 
-                c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-                conn.commit()
-                c.close()
+                DBcontroller.closelistenerDBdel(ID, NAME)
             except BaseException as err:
                 print(f"Unexpected {err=}, {type(err)=}")
                 raise
 
-            #print("process: "+str(TCPprocesses))
-            #we delete the informationmm using the name for the Dictionnaries
-            #TCPListenersDict.pop(ID)
+
 
 
     def do_close_HTTPlistener(self, inp):
@@ -696,27 +395,18 @@ class Commands(cmd2.Cmd):
         argList = inp.split()
         lenarglist = len(argList)
         if lenarglist == 0:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: close_HTTPlistener ID OR Name ", "yellow"))
-            print(colored("example: close_HTTPlistener 25625 OR interact TCP_listener1", "yellow"))
+            closeHTTPlsitenerAlert()
 
         elif lenarglist < 1 or lenarglist > 1:
-            print(colored("you need to add arguments 1 expected", "green"))
-            print(colored("example: close_HTTPlistener ID OR Name ", "yellow"))
-            print(colored("example: close_HTTPlistener 25625 OR interact TCP_listener1", "yellow"))
+            closeHTTPlsitenerAlert()
 
         else:
             argu = argList[0]
 
-            info = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+            info = DBcontroller.closeHTTPlistenerDBfetch(argu, argu)
             print(info)
             info = str(info)
-            info = info.replace("'", "")
-            info = info.replace(",", "")
-            info = info.replace("[", "")
-            info = info.replace("]", "")
-            info = info.replace("(", "")
-            info = info.replace(")", "")
+            info = FunctionCheck.charremoval(str(ports), ("[", "]", ",", "(", ")", "'"), "")
             print("info: "+ info)
             infoSplitList = info.split()
             ID = infoSplitList[0]
@@ -745,34 +435,34 @@ class Commands(cmd2.Cmd):
             p.terminate()
             os.unlink(path+'/API/templates/'+NAME+'.html')
 
-            # if len(HTTPConnectionsDict) != 0 and ID in HTTPConnectionsDict:
-            #     HTTPConnectionsDict.pop(ID)
+            DBcontroller.closeHTTPlistenerDBdel(ID, NAME)
 
-            c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-            conn.commit()
-            c.close()
 
-        # except:
-        #     print('error http delete item in HTTPConnectionsDict' )
-        #     print(HTTPConnectionsDict)
 
 
     def do_clear(self, inp):
         os.system('clear')
 
 
-    # def do_checkprompt(self, inp):
-    #     print("new prompt: "+promptdateetc())
-    #     pass
+
 
     #responsible of updating the prompt everytime a command or emptyline is made
     def updateprompt(self, data: cmd2.plugin.CommandFinalizationData) -> cmd2.plugin.CommandFinalizationData:
-        if promptdateetc() != self.prompt:
-            self.async_update_prompt(promptdateetc())
+        if messagealert.promptdateetc()!= self.prompt:
+            self.async_update_prompt(messagealert.promptdateetc())
         return data
 
 
 
 
 
-Commands().cmdloop()
+def main():
+
+    T = Thread(target = FunctionCheck.TCPcheck4incoming, args=(TCPreturn_dict, TCPSocketDict))
+    T.setDaemon(True)
+    T.start()
+
+
+if __name__ == "__main__":
+    main()
+    Commands().cmdloop()

