@@ -1,23 +1,23 @@
 import sqlite3
+import os
+import logging
 
 
+logging.basicConfig(level=logging.INFO)
 
 class DBcontroller():
 
-    def __init__():
-        self.conn = sqlite3.connect('database/listener.db')
-        self.c = conn.cursor()
-
-
-
-    def checkNcreation():
+    def __init__(self):
         #this if loop verify if the database already exist if it doesn't it create one
         #as well as a table
         if os.path.exists("database/listener.db") == True:
-            logging.debug("listener.db exist \n")
+            #logging.debug("listener.db exist \n")
+            pass
         #if it exist then it just connect to it and create a cursor
         else:
             logging.debug("listener.db has been created")
+            self.conn = sqlite3.connect('database/listener.db')
+            self.c = self.conn.cursor()
 
             self.c.execute("""CREATE TABLE TCPlistener (
                         ItemUniqueID int,
@@ -43,79 +43,96 @@ class DBcontroller():
                         SSLkeyPath text
                         )""")
             self.conn.commit()
+        self.conn = sqlite3.connect('database/listener.db')
+        self.c = self.conn.cursor()
 
-        #located in menu.py
-        def tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS):
-            self.c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
-                                          (ID, HOST, PORT, NAME, STATUS))
-            self.conn.commit()
 
-        def HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS):
-            self.c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
-                                          (ID, HOST, PORT, NAME, STATUS))
-            self.conn.commit()
 
-        def HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath):
-            self.c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
-                                          (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
-            self.conn.commit()
+    #located in menu.py
+    def tcplistenerDBcall(self, ID, HOST, PORT, NAME, STATUS):
+        self.c.execute("INSERT INTO TCPlistener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS))
+        self.conn.commit()
 
-        def InteractDBfetch(argu, argu):
-            data = self.c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
-            return data
+    def HTTPlistenerDBcall(self, ID, HOST, PORT, NAME, STATUS):
+        self.c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status) VALUES(?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS))
+        self.conn.commit()
 
-        def interactDBcall(ID, NAME):
-            self.c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-            self.conn.commit()
+    def HTTPSlistenerDBcall(self, ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath):
+        self.c.execute("INSERT INTO HTTPsListener (ItemUniqueID, hostIP, hostPort, name, status, SSLcertPath, SSLkeyPath) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                                      (ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath))
+        self.conn.commit()
 
-        def HTTPinteractDBfetch(argu, argu):
-            data = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
-            return data
+    def InteractDBfetch(self, argu):
+        data = self.c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        return data
 
-        def HTTPinteractDBcall(ID, NAME):
-            self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-            self.conn.commit()
+    def interactDBcall(self, ID, NAME):
+        self.c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+        self.conn.commit()
 
-        def printDBTCPtable():
-            data = self.c.execute("SELECT * FROM TCPlistener").fetchall()
-            return data
+    def HTTPinteractDBfetch(self, argu):
+        data = c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        return data
 
-        def printDBHTTPtable():
-            data = self.c.execute("SELECT * FROM HTTPsListener").fetchall()
-            return data
+    def HTTPinteractDBcall(self, ID, NAME):
+        self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+        self.conn.commit()
 
-        def closelistenerDBfetch(argu, argu):
-            data self.c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID  = ? OR name = ?', (argu, argu)).fetchall()
-            return data
+    def printDBTCPtable(self):
+        data = self.c.execute("SELECT * FROM TCPlistener").fetchall()
+        return data
 
-        def closelistenerDBdel(ID, NAME):
-            self.c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-            self.conn.commit()
+    def printDBHTTPtable(self):
+        data = self.c.execute("SELECT * FROM HTTPsListener").fetchall()
+        return data
 
-        def closeHTTPlistenerDBfetch(argu, argu):
-            data = self.c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
-            return data
+    def closelistenerDBfetch(self, argu):
+        data = self.c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID  = ? OR name = ?', (argu, argu)).fetchall()
+        return data
 
-        def closeHTTPlistenerDBdel(ID, NAME):
-            self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
-            self.conn.commit()
+    def closelistenerDBdel(self, ID, NAME):
+        self.c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+        self.conn.commit()
 
-        #located in backedn/TCPlistener.py
-        def tcplistenerDBscriptAdd(status, , targetip, targetport, ID):
-            self.c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?  WHERE ItemUniqueID=?", (status, , targetip, targetport, ID))
-            self.conn.commit()
+    def closeHTTPlistenerDBfetch(self, argu):
+        data = self.c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
+        return data
 
-        #located in HTTPlistener,py
-        def listenerHTTPDBupdate(status, ID):
-            self.c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", (status, ID))
-            self.conn.commit()
+    def closeHTTPlistenerDBdel(self, ID, NAME):
+        self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
+        self.conn.commit()
 
-        #located in /API/api.py
-        def APIhomeDBupdate(targetip, targetport, ID):
-            self.c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (targetip, ID))
-            self.c.execute("UPDATE HTTPsListener SET targetPORT=? WHERE ItemUniqueID=?", (targetport, ID))
-            self.conn.commit()
+    #located in backedn/TCPlistener.py
+    def tcplistenerDBscriptAdd(self, status, targetip, targetport, ID):
+        self.c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?  WHERE ItemUniqueID=?", (status, targetip, targetport, ID))
+        self.conn.commit()
 
-        def APIhomeDBcurrentname(ID):
-            data = self.c.execute('SELECT name FROM HTTPsListener WHERE ItemUniqueID=?', (ID,)).fetchall()
-            return data
+    #located in HTTPlistener,py
+    def listenerHTTPDBupdate(self, status, ID):
+        self.c.execute("UPDATE HTTPsListener SET STATUS=? WHERE ItemUniqueID=?", (status, ID))
+        self.conn.commit()
+
+    #located in /API/api.py
+    def APIhomeDBupdate(self, targetip, targetport, ID):
+        self.c.execute("UPDATE HTTPsListener SET targetIP=? WHERE ItemUniqueID=?", (targetip, ID))
+        self.c.execute("UPDATE HTTPsListener SET targetPORT=? WHERE ItemUniqueID=?", (targetport, ID))
+        self.conn.commit()
+
+    def APIhomeDBcurrentname(self, ID):
+        data = self.c.execute('SELECT name FROM HTTPsListener WHERE ItemUniqueID=?', (ID,)).fetchall()
+        return data
+
+    #located in checkingfunctions.py
+    def makeNcheckIDDBfetch(self):
+        data = self.c.execute("SELECT ItemUniqueID FROM TCPlistener UNION SELECT ItemUniqueID from HTTPsListener").fetchall()
+        return data
+
+    def namecheckDBfetch(self):
+        data = self.c.execute("SELECT name FROM TCPlistener UNION SELECT name from HTTPsListener").fetchall()
+        return data
+
+    def checkPortNIPDBfetch(self):
+        data = self.c.execute("SELECT hostPORT FROM TCPlistener UNION SELECT hostPORT from HTTPsListener").fetchall()
+        return data

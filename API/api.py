@@ -29,19 +29,20 @@ def home(namelistener):
     #GET wil display the asked page if it exist
     if flask.request.method == 'GET':
         ID = int(uniqueID[0])
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
+
+        DBcontrollerobj = DBcontroller()
+
         if len(ips) == 0:
             print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
             ips.append(request.remote_addr)
 
-            DBcontroller.APIhomeDBupdate(ips[0], str(request.environ['REMOTE_PORT']), ID)
+            DBcontrollerobj.APIhomeDBupdate(ips[0], str(request.environ['REMOTE_PORT']), ID)
 
         elif request.remote_addr != ips[0]:
             # c.execute("SELECT name FROM HTTPsListener WHERE ItemUniqueID=?", (ID))
             # namelis = c.fetchall()
             print(ID)
-            currentname = DBcontroller.APIhomeDBcurrentname(ID)
+            currentname = DBcontrollerobj.APIhomeDBcurrentname(ID)
 
             print(request.remote_addr+" tried to connect on "+ str(currentname))
             abort(404)

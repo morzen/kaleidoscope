@@ -43,11 +43,11 @@ class interacting(Cmd):
 
     def Shell(self):
         try:
-        print("you are connected to: "+self.TargetIP+" on Port: "+self.TargetPORT)
+            print("you are connected to: "+self.TargetIP+" on Port: "+self.TargetPORT)
         except:
             print("the ip and port of target could not be resolved")
 
-        prompt = messagealert.interactpromp()
+        prompt = messagealert().interactpromp()
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix
@@ -104,7 +104,7 @@ class HTTPinteracting(Cmd):
     def Shell(self):
 
 
-        prompt = messagealert.interactpromp()
+        prompt = messagealert().interactpromp()
         command = input(prompt)
         #part responsible for command history and autoComplete
         #work only on unix

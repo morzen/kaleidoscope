@@ -29,6 +29,12 @@ from db_controller import DBcontroller
 from CheckingFunctions import FunctionCheck
 from alertmessages import messagealert
 
+
+
+#comment/uncomment the line underneath to have debug log displayed/not displayed
+logging.basicConfig(level=logging.DEBUG)
+
+
 #list related to TCP
 TCPprocesses = []#store processes related to TCP IE listeners
 #(keep listener active when connection)
@@ -50,12 +56,25 @@ TCPSocketDict = manager.dict()#store the socket when connection for later intera
 
 
 
+# reguraly check if TCPlistener received a connection
+# endless thread that check for info when a connection is made
+print("BEFORE START")
+def TCPcheck4incoming(TCPSocketDict):
+    lentcpretdic=len(TCPreturn_dict)
+    while True:
+        #check if TCPlistener is not empty
+        if lentcpretdic != 0 :
+            conn = TCPreturn_dict.get("conn")
+            ID = TCPreturn_dict.get("selfID")
+            if ID not in TCPSocketDict or conn not in TCPSocketDict:
+                TCPSocketDict[ID]=conn
+                #TCPSocketDict[ID].append(conn)
+            else:
+                continue
 
-
-#comment/uncomment the line underneath to have debug log displayed/not displayed
-logging.basicConfig(level=logging.DEBUG)
-
-
+T = Thread(target = TCPcheck4incoming, args=())
+T.setDaemon(True)
+T.start()
 
 
 class Commands(cmd2.Cmd):
@@ -68,9 +87,13 @@ class Commands(cmd2.Cmd):
                         )
         self.register_cmdfinalization_hook(self.updateprompt)
 
-        self.prompt = messagealert.promptdateetc()
+        messagealertobj = messagealert()
 
-        self.intro =  messagealert.intro()
+        self.prompt = messagealertobj.promptdateetc()
+
+        self.intro =  messagealertobj.intro()
+
+
 
 
     #comand to created TCP listener
@@ -79,11 +102,15 @@ class Commands(cmd2.Cmd):
         argList = []
         argList = inp.split()
 
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+        FunctionCheckobj = FunctionCheck()
+
         if len(argList) == 0:
-            tcpListenerAlert()
+            messagealertobj.tcpListenerAlert()
 
         elif len(argList) < 3 or len(argList) > 3:
-            tcpListenerAlert()
+            messagealertobj.tcpListenerAlert()
 
         else:
             #after spliting the list the argument are assigned to variables
@@ -91,19 +118,22 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "TCP_"+argList[2]
             STATUS = "listening"
-            ID = FunctionCheck.MakeNcheckID()
-            NameCheck = FunctionCheck.Namecheck(NAME)
+
+
+
+            ID = FunctionCheckobj.MakeNcheckID()
+            NameCheck = FunctionCheckobj.Namecheck(NAME)
             #creating object an object tcplistener
             ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
 
             if NameCheck == True:
                 print("the name chosen already exist")
-            elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
+            elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
                 print("the port you have choosen is already in use")
 
             else:
 
-                DBcontroller.tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS)
+                DBcontrollerobj.tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS)
 
                 # calling funtion listenertcp from tcplistener in a process
                 p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
@@ -119,11 +149,16 @@ class Commands(cmd2.Cmd):
         #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+        FunctionCheckobj = FunctionCheck()
+
         if len(argList) == 0:
-            HTTPlistenerAlert()
+            messagealertobj.HTTPlistenerAlert()
 
         elif len(argList) < 3 or len(argList) > 3:
-            HTTPlistenerAlert()
+            messagealertobj.HTTPlistenerAlert()
 
         else:
             #after spliting the list the argument are assigned to variables
@@ -131,16 +166,19 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "HTTP_"+argList[2]
             STATUS = "listening"
-            ID = FunctionCheck.MakeNcheckID()
-            NameCheck = FunctionCheck.Namecheck(NAME)
+
+
+
+            ID = FunctionCheckobj.MakeNcheckID()
+            NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
                 print("the name chosen already exist")
 
-            elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
+            elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
                 print("the port you have choosen is already in use")
 
             else:
-                DBcontroller.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
+                DBcontrollerobj.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
 
                 #creating object an object httplistener
                 HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
@@ -154,11 +192,16 @@ class Commands(cmd2.Cmd):
     def do_HTTPSlistener(self, inp):
         argList = []
         argList = inp.split()
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+        FunctionCheckobj = FunctionCheck()
+
         if len(argList) == 0:
-            HTTPSlistener()
+            messagealertobj.HTTPSlistenerAlert()
 
         elif len(argList) < 3 or len(argList) > 3:
-            HTTPSlistener()
+            messagealertobj.HTTPSlistenerAlert()
 
         else:
             HOST = argList[0]
@@ -167,8 +210,8 @@ class Commands(cmd2.Cmd):
             STATUS = "listening"
             CertPath = argList[3]
             KeyPath = argList[4]
-            ID = FunctionCheck.MakeNcheckID()
-            NameCheck = FunctionCheck.Namecheck(NAME)
+            ID = FunctionCheckobj.MakeNcheckID()
+            NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
                 print("the name chosen already exist")
             elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
@@ -176,7 +219,7 @@ class Commands(cmd2.Cmd):
 
             else:
 
-                DBcontroller.HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath)
+                DBcontrollerobj.HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath)
 
                 HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
 
@@ -189,17 +232,21 @@ class Commands(cmd2.Cmd):
 
         argList = []
         argList = inp.split()
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+
         if len(argList) == 0:
-            interactalert()
+            messagealertobj.interactalert()
 
         elif len(argList) < 1 or len(argList) > 1:
-            interactalert()
+            messagealertobj.interactalert()
 
         else:
             argu = argList[0]
             #using name getting the rest of the information in the dictionnary
             info = []
-            info = DBcontroller.InteractDBfetch(argu, argu)
+            info = DBcontrollerobj.InteractDBfetch(argu)
             info = info[0]
             ID = str(info[0])
             print(info)
@@ -211,10 +258,9 @@ class Commands(cmd2.Cmd):
             TargetIp = info[5]
             TargetPort = info[6]
 
-
+            print(str(TCPSocketDict))
+            print(TCPSocketDict[ID])
             Conn = TCPSocketDict[ID]
-
-
 
             #creating a new object
             InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
@@ -244,7 +290,7 @@ class Commands(cmd2.Cmd):
                     del TCPprocesses[int(j)]
                     p.terminate()
 
-                    DBcontroller.interactDBcall(ID, NAME)
+                    DBcontrollerobj.interactDBcall(ID, NAME)
                     break
 
                 else:
@@ -254,18 +300,22 @@ class Commands(cmd2.Cmd):
 
         argList = []
         argList = inp.split()
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+
         if len(argList) == 0:
-            HTTPinteractalert()
+            messagealertobj.HTTPinteractalert()
 
         elif len(argList) < 1 or len(argList) > 1:
-            HTTPinteractalert()
+            messagealertobj.HTTPinteractalert()
 
         else:
 
             argu = argList[0]
             print(str(argu))
             info = []
-            info = DBcontroller.HTTPinteractDBfetch(argu, argu)
+            info = DBcontrollerobj.HTTPinteractDBfetch(argu)
             #using name getting the rest of the information in the dictionnary
             info = info[0]
             print(info)
@@ -303,7 +353,7 @@ class Commands(cmd2.Cmd):
                     del HTTPprocesses[int(j)]
 
                     p.terminate()
-                    DBcontroller.HTTPinteractDBcall(ID, NAME)
+                    DBcontrollerobj.HTTPinteractDBcall(ID, NAME)
 
 
                     break
@@ -313,11 +363,13 @@ class Commands(cmd2.Cmd):
 
 
     def do_printDatabase(self, inp):
+        DBcontrollerObj = DBcontroller()
+
         print("TCPlistener")
-        print(DBcontroller.printDBTCPtable())
+        print(DBcontrollerObj.printDBTCPtable())
 
         print("HTTPsListener")
-        print(DBcontroller.printDBHTTPtable())
+        print(DBcontrollerObj.printDBHTTPtable())
 
 
 
@@ -327,19 +379,23 @@ class Commands(cmd2.Cmd):
         argList = []
         argList = inp.split()
         lenarglist = len(argList)
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+
         if lenarglist == 0:
-            closeListenerAlert()
+            messagealertobj.closeListenerAlert()
 
         elif lenarglist < 1 or lenarglist > 1:
-            closeListenerAlert()
+            messagealertobj.closeListenerAlert()
 
         else:
             argu = argList[0]
 
-            info = str(DBcontroller.closelistenerDBfetch(argu, argu))
+            info = str(DBcontrollerobj.closelistenerDBfetch(argu))
             print(info)
-            info = FunctionCheck.charremoval(str(ports), ("[", "]", ",", "(", ")", "'"), "")
-
+            info = FunctionCheck().charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
+            print("info out: "+info)
             infoSplitList = info.split()
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
@@ -378,7 +434,7 @@ class Commands(cmd2.Cmd):
                 if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
                     TCPSocketDict.pop(ID)
 
-                DBcontroller.closelistenerDBdel(ID, NAME)
+                DBcontrollerobj.closelistenerDBdel(ID, NAME)
             except BaseException as err:
                 print(f"Unexpected {err=}, {type(err)=}")
                 raise
@@ -388,25 +444,26 @@ class Commands(cmd2.Cmd):
 
     def do_close_HTTPlistener(self, inp):
 
-        conn = sqlite3.connect('database/listener.db')
-        c = conn.cursor()
-
         argList = []
         argList = inp.split()
         lenarglist = len(argList)
+
+        messagealertobj = messagealert()
+        DBcontrollerobj = DBcontroller()
+
         if lenarglist == 0:
-            closeHTTPlsitenerAlert()
+            messagealertobj.closeHTTPlsitenerAlert()
 
         elif lenarglist < 1 or lenarglist > 1:
-            closeHTTPlsitenerAlert()
+            messagealertobj.closeHTTPlsitenerAlert()
 
         else:
             argu = argList[0]
 
-            info = DBcontroller.closeHTTPlistenerDBfetch(argu, argu)
+            info = DBcontrollerobj.closeHTTPlistenerDBfetch(argu)
             print(info)
             info = str(info)
-            info = FunctionCheck.charremoval(str(ports), ("[", "]", ",", "(", ")", "'"), "")
+            info = FunctionCheck().charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
             print("info: "+ info)
             infoSplitList = info.split()
             ID = infoSplitList[0]
@@ -435,21 +492,33 @@ class Commands(cmd2.Cmd):
             p.terminate()
             os.unlink(path+'/API/templates/'+NAME+'.html')
 
-            DBcontroller.closeHTTPlistenerDBdel(ID, NAME)
+            DBcontrollerobj.closeHTTPlistenerDBdel(ID, NAME)
 
 
 
+
+    def do_TempFuncChecSockList(self, inp):
+        print(TCPreturn_dict)
+        print(TCPSocketDict)
+        # TCPcheck4incoming()
+        # print(TCPreturn_dict)
+        # print(TCPSocketDict)
 
     def do_clear(self, inp):
         os.system('clear')
 
 
-
+    def do_quit(self, inp):
+        print("shut me down and i will become more \npowerfull than you can possibly imagine.")
+        quit()
 
     #responsible of updating the prompt everytime a command or emptyline is made
     def updateprompt(self, data: cmd2.plugin.CommandFinalizationData) -> cmd2.plugin.CommandFinalizationData:
-        if messagealert.promptdateetc()!= self.prompt:
-            self.async_update_prompt(messagealert.promptdateetc())
+
+        messagealertobj = messagealert()
+
+        if messagealertobj.promptdateetc()!= self.prompt:
+            self.async_update_prompt(messagealertobj.promptdateetc())
         return data
 
 
@@ -458,9 +527,10 @@ class Commands(cmd2.Cmd):
 
 def main():
 
-    T = Thread(target = FunctionCheck.TCPcheck4incoming, args=(TCPreturn_dict, TCPSocketDict))
-    T.setDaemon(True)
-    T.start()
+    print("START")
+
+    DBcontroller()
+
 
 
 if __name__ == "__main__":

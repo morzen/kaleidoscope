@@ -47,7 +47,7 @@ class tcplistener:
             targetip = str(addr[0])
             targetport = str(addr[1])
 
-            DBcontroller.tcplistenerDBscriptAdd("connected", targetip, targetport, self.ID)
+            DBcontroller().tcplistenerDBscriptAdd("connected", targetip, targetport, self.ID)
 
 
     def closetcpListener(self):

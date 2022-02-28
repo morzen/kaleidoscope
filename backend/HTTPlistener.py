@@ -31,7 +31,7 @@ class httplistener():
         self.NAME = name
         self.CERTnKeyPath = (certnkey)
         self.ID = ID
-
+        self.DBcontrollerobj = DBcontroller()
 
 
     def listenerhttp(self):#, HTTPreturn_dict):
@@ -42,7 +42,7 @@ class httplistener():
         #status is online since in all likelyhood no connection has been made
         #we just started the server
 
-        db_controller.listenerHTTPDBupdate("online", self.ID)
+        self.DBcontrollerobj.listenerHTTPDBupdate("online", self.ID)
 
         print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         #logging.debug(HTTPreturn_dict)
@@ -52,7 +52,7 @@ class httplistener():
         #logging.debug(path)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
 
-        db_controller.listenerHTTPDBupdate("online", self.ID)
+        self.DBcontrollerobj.listenerHTTPDBupdate("online", self.ID)
 
         print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         runApiSSL(self.HOST, self.PORT, self.CERTnKeyPath, self.ID) # start the flask server
