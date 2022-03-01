@@ -94,6 +94,10 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 3 or len(argList) > 3:
             messagealertobj.tcpListenerAlert()
 
+        elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
+            messagealertobj.argAlert()
+            messagealertobj.tcpListenerAlert()
+
         else:
             #after spliting the list the argument are assigned to variables
             HOST = argList[0]
@@ -142,6 +146,10 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 3 or len(argList) > 3:
             messagealertobj.HTTPlistenerAlert()
 
+        elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
+            messagealertobj.argAlert()
+            messagealertobj.HTTPlistenerAlert()
+
         else:
             #after spliting the list the argument are assigned to variables
             HOST = argList[0]
@@ -185,6 +193,10 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 3 or len(argList) > 3:
             messagealertobj.HTTPSlistenerAlert()
 
+        elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
+            messagealertobj.argAlert()
+            messagealertobj.HTTPSlistenerAlert()
+
         else:
             HOST = argList[0]
             PORT = int(argList[1])
@@ -224,6 +236,8 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.interactalert()
 
+        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+            messagealertobj.interactWrongIDnameAlert()
 
         else:
             argu = argList[0]
@@ -292,6 +306,9 @@ class Commands(cmd2.Cmd):
 
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.HTTPinteractalert()
+
+        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+            messagealertobj.HTTPinteractWrongIDnameAlert()
 
         else:
 
@@ -372,6 +389,9 @@ class Commands(cmd2.Cmd):
         elif lenarglist < 1 or lenarglist > 1:
             messagealertobj.closeListenerAlert()
 
+        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+            messagealertobj.closeListenerWrongIDnameAlert()
+
         else:
             argu = argList[0]
 
@@ -439,6 +459,9 @@ class Commands(cmd2.Cmd):
 
         elif lenarglist < 1 or lenarglist > 1:
             messagealertobj.closeHTTPlsitenerAlert()
+
+        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+            messagealertobj.closeHTTPlistenerWrongIDnameAlert()
 
         else:
             argu = argList[0]

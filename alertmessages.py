@@ -59,6 +59,9 @@ class messagealert():
 
         return prompt
 
+    def argAlert(self):
+        print("one of the argument entered is not as expected")
+
     def tcpListenerAlert(self):
         print(colored("you need to add arguments 3 expected", "green"))
         print(colored("example: tcplistener hostip    port NameOfTheListener", "yellow"))
@@ -79,17 +82,29 @@ class messagealert():
         print(colored("example: interact ID OR Name ", "yellow"))
         print(colored("example: interact 25625 OR interact TCP_listener1", "yellow"))
 
+    def interactWrongIDnameAlert(self):
+        print("The ID or named entered is not in the TCPlistener ")
+
     def HTTPinteractalert(self):
         print(colored("you need to add arguments 1 expected", "green"))
         print(colored("example: HTTPinteract ID OR Name ", "yellow"))
         print(colored("example: HTTPinteract 25625 OR interact TCP_listener1", "yellow"))
+
+    def HTTPinteractWrongIDnameAlert(self):
+        print("The ID or named entered is not in the HTTPsListener")
 
     def closeListenerAlert(self):
         print(colored("you need to add arguments 1 expected", "green"))
         print(colored("example: close_listener ID OR Name ", "yellow"))
         print(colored("example: close_listener 25625 OR interact TCP_listener1", "yellow"))
 
+    def closeListenerWrongIDnameAlert(self):
+        print("The ID or named entered is not in the TCPlistener ")
+
     def closeHTTPlsitenerAlert(self):
         print(colored("you need to add arguments 1 expected", "green"))
         print(colored("example: close_HTTPlistener ID OR Name ", "yellow"))
         print(colored("example: close_HTTPlistener 25625 OR interact TCP_listener1", "yellow"))
+
+    def closeHTTPlistenerWrongIDnameAlert(self):
+        print("The ID or named entered is not in the HTTPsListener")

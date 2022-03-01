@@ -1,6 +1,6 @@
 import uuid
 import socket
-
+import re
 
 from db_controller import DBcontroller
 
@@ -63,6 +63,35 @@ class FunctionCheck():
                 return True
             except:
                 return False
+
+    def regexIpcheck(self, string):
+        pattern = re.compile(r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}")
+
+        if pattern.match(str(string)):
+            return True
+        else:
+            return False
+
+    def regexPortcheck(self, string):
+        pattern = re.compile(r"[0-9]{1,5}")
+
+        if pattern.match(str(string)):
+            if int(string) > 65535:
+                print("The port entered is superior to 65535")
+                return False
+            else:
+                return True
+
+        else:
+            return False
+
+    def regexNamecheck(self, string):
+        pattern = re.compile(r"[a-zA-Z0-9]{1,30}")
+
+        if pattern.match(str(string)):
+            return True
+        else:
+            return False
 
 
     # reguraly check if TCPlistener received a connection
