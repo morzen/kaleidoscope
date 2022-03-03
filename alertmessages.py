@@ -62,6 +62,12 @@ class messagealert():
     def argAlert(self):
         print("one of the argument entered is not as expected")
 
+    def Namealreadyexistalert(self):
+        print("the name chosen already exist")
+
+    def portalreadyinuseAlert(self):
+        print("the port you have choosen is already in use")
+
     def tcpListenerAlert(self):
         print(colored("you need to add arguments 3 expected", "green"))
         print(colored("example: tcplistener hostip    port NameOfTheListener", "yellow"))
@@ -108,3 +114,6 @@ class messagealert():
 
     def closeHTTPlistenerWrongIDnameAlert(self):
         print("The ID or named entered is not in the HTTPsListener")
+
+    def deletingProcesslistener(self, ID, name):
+        print("process listener "+ID+":"+name+" is deleted")

@@ -104,18 +104,17 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "TCP_"+argList[2]
             STATUS = "listening"
-
-
-
             ID = FunctionCheckobj.MakeNcheckID()
+
+
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             #creating object an object tcplistener
             ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
 
             if NameCheck == True:
-                print("the name chosen already exist")
+                messagealertobj.Namealreadyexistalert()
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
-                print("the port you have choosen is already in use")
+                messagealertobj.portalreadyinuseAlert()
 
             else:
 
@@ -156,16 +155,14 @@ class Commands(cmd2.Cmd):
             PORT = int(argList[1])
             NAME = "HTTP_"+argList[2]
             STATUS = "listening"
-
-
-
             ID = FunctionCheckobj.MakeNcheckID()
+
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
-                print("the name chosen already exist")
+                messagealertobj.Namealreadyexistalert()
 
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
-                print("the port you have choosen is already in use")
+                messagealertobj.portalreadyinuseAlert()
 
             else:
                 DBcontrollerobj.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
@@ -205,11 +202,12 @@ class Commands(cmd2.Cmd):
             CertPath = argList[3]
             KeyPath = argList[4]
             ID = FunctionCheckobj.MakeNcheckID()
+
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
-                print("the name chosen already exist")
+                messagealertobj.Namealreadyexistalert()
             elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
-                print("the port you have choosen is already in use")
+                messagealertobj.portalreadyinuseAlert()
 
             else:
 
@@ -230,13 +228,18 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
 
+        checkData = str(DBcontrollerobj.InteractDBfetch(argList[0]))
+        checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
+        checkData = checkData.split()
+
         if len(argList) == 0:
             messagealertobj.interactalert()
 
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.interactalert()
 
-        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+
+        elif argList[0] not in checkData:
             messagealertobj.interactWrongIDnameAlert()
 
         else:
@@ -246,7 +249,7 @@ class Commands(cmd2.Cmd):
             info = DBcontrollerobj.InteractDBfetch(argu)
             info = info[0]
             ID = str(info[0])
-            print(info)
+
             #asssigning the information to variables
             HOST = info[1]
             PORT = info[2]
@@ -255,8 +258,6 @@ class Commands(cmd2.Cmd):
             TargetIp = info[5]
             TargetPort = info[6]
 
-            print(str(TCPSocketDict))
-            print(TCPSocketDict[ID])
             Conn = TCPSocketDict[ID]
 
             #creating a new object
@@ -276,7 +277,7 @@ class Commands(cmd2.Cmd):
                     LenTCPprocesses = len(TCPprocesses)
                     while i < LenTCPprocesses:
                         if NAME in str(TCPprocesses[i]):
-                            print(NAME+" is in "+str(TCPprocesses[i]))
+                            print(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
                             j = str(i)
                         else:
                             print(NAME+" is not in "+str(TCPprocesses[i]))
@@ -287,7 +288,7 @@ class Commands(cmd2.Cmd):
                     del TCPprocesses[int(j)]
                     p.terminate()
 
-                    DBcontrollerobj.interactDBcall(ID, NAME)
+                    DBcontrollerobj.interactDBdel(ID, NAME)
                     break
 
                 else:
@@ -301,24 +302,28 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
 
+        checkData = str(DBcontrollerobj.HTTPinteractDBfetch(argList[0]))
+        checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
+        checkData = checkData.split()
+
         if len(argList) == 0:
             messagealertobj.HTTPinteractalert()
 
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.HTTPinteractalert()
 
-        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+        elif argList[0] not in checkData:
             messagealertobj.HTTPinteractWrongIDnameAlert()
 
         else:
 
             argu = argList[0]
-            print(str(argu))
+
             info = []
             info = DBcontrollerobj.HTTPinteractDBfetch(argu)
             #using name getting the rest of the information in the dictionnary
             info = info[0]
-            print(info)
+
 
             #asssigning the information to variables
             HOST = info[1]
@@ -353,7 +358,7 @@ class Commands(cmd2.Cmd):
                     del HTTPprocesses[int(j)]
 
                     p.terminate()
-                    DBcontrollerobj.HTTPinteractDBcall(ID, NAME)
+                    DBcontrollerobj.HTTPinteractDBdel(ID, NAME)
 
 
                     break
@@ -382,6 +387,11 @@ class Commands(cmd2.Cmd):
 
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
+        FunctionCheckobj = FunctionCheck()
+
+        data = DBcontrollerobj.InteractDBfetch(argList[0])
+        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+        data = data.split()
 
         if lenarglist == 0:
             messagealertobj.closeListenerAlert()
@@ -389,16 +399,16 @@ class Commands(cmd2.Cmd):
         elif lenarglist < 1 or lenarglist > 1:
             messagealertobj.closeListenerAlert()
 
-        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+        elif argList[0] not in data :
             messagealertobj.closeListenerWrongIDnameAlert()
 
         else:
             argu = argList[0]
 
             info = str(DBcontrollerobj.closelistenerDBfetch(argu))
-            print(info)
-            info = FunctionCheck().charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
-            print("info out: "+info)
+
+            info = FunctionCheckobj.charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
+
             infoSplitList = info.split()
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
@@ -418,6 +428,7 @@ class Commands(cmd2.Cmd):
                 if NAME in str(TCPprocesses[i]):
 
                     logging.debug(NAME+" is in "+str(TCPprocesses[i])+" and will be deleted")
+                    messagealertobj.deletingProcesslistener(ID, NAME)
                     j = str(i)
                     logging.debug("j= %s", j)
                     #we delete the information in the list and use p to terminate the process
@@ -453,6 +464,11 @@ class Commands(cmd2.Cmd):
 
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
+        FunctionCheckobj = FunctionCheck()
+
+        data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
+        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+        data = data.split()
 
         if lenarglist == 0:
             messagealertobj.closeHTTPlsitenerAlert()
@@ -460,17 +476,17 @@ class Commands(cmd2.Cmd):
         elif lenarglist < 1 or lenarglist > 1:
             messagealertobj.closeHTTPlsitenerAlert()
 
-        elif argList[0] not in DBcontrollerobj.InteractDBfetch(argList[0]):
+        elif argList[0] not in data :
             messagealertobj.closeHTTPlistenerWrongIDnameAlert()
 
         else:
             argu = argList[0]
 
             info = DBcontrollerobj.closeHTTPlistenerDBfetch(argu)
-            print(info)
+
             info = str(info)
             info = FunctionCheck().charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
-            print("info: "+ info)
+
             infoSplitList = info.split()
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
@@ -486,6 +502,7 @@ class Commands(cmd2.Cmd):
             while i < LenHTTPprocesses:
                 if NAME in str(HTTPprocesses[i]):
                     logging.debug(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
+                    messagealertobj.deletingProcesslistener(ID, NAME)
                     j = str(i)
                 else:
                     logging.debug(NAME+" is not in "+str(HTTPprocesses[i]))
@@ -500,15 +517,6 @@ class Commands(cmd2.Cmd):
 
             DBcontrollerobj.closeHTTPlistenerDBdel(ID, NAME)
 
-
-
-
-    def do_TempFuncChecSockList(self, inp):
-        print(TCPreturn_dict)
-        print(TCPSocketDict)
-        # TCPcheck4incoming()
-        # print(TCPreturn_dict)
-        # print(TCPSocketDict)
 
     def do_clear(self, inp):
         os.system('clear')

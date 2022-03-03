@@ -68,7 +68,7 @@ class DBcontroller():
         data = self.c.execute('SELECT * FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         return data
 
-    def interactDBcall(self, ID, NAME):
+    def interactDBdel(self, ID, NAME):
         self.c.execute('DELETE FROM TCPlistener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
         self.conn.commit()
 
@@ -76,7 +76,7 @@ class DBcontroller():
         data = self.c.execute('SELECT * FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (argu, argu)).fetchall()
         return data
 
-    def HTTPinteractDBcall(self, ID, NAME):
+    def HTTPinteractDBdel(self, ID, NAME):
         self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
         self.conn.commit()
 

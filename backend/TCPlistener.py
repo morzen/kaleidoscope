@@ -37,6 +37,7 @@ class tcplistener:
     def listenertcp(self, return_dict):
         self.sock.bind((self.HOST, self.PORT))
         self.sock.listen()
+        print(str("\n"+self.NAME)+" listener has beeen created. ID: "+str(self.ID))
         conn, addr = self.sock.accept()
         with conn:
             logging.debug('\nconn: %s', conn)
@@ -52,5 +53,5 @@ class tcplistener:
 
     def closetcpListener(self):
         self.sock.close()
-        print("closed")
+        print("socket closed")
         logging.debug("closing listener")
