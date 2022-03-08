@@ -2,7 +2,10 @@
 
 stty sane
 
-sudo python3 menu2.py
+#python3 -m venv EnvKaleidoscope
+#source EnvKaleidoscope/bin/activate
+#pip3 install -r requirements.txt
+python3 menu2.py
 
-sudo rm ./database/listener.db
-#sudo rm ./history/commandHistory
+rm ./database/listener.db
+#rm ./history/commandHistory
