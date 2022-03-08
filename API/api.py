@@ -9,6 +9,7 @@ from flask import request
 from OpenSSL import SSL
 from flask import request
 from flask import abort
+from termcolor import colored
 
 from db_controller import DBcontroller
 
@@ -33,7 +34,7 @@ def home(namelistener):
         DBcontrollerobj = DBcontroller()
 
         if len(ips) == 0:
-            print("\nnew connection "+request.remote_addr+ " on server "+namelistener)
+            print(colored("\nnew connection "+request.remote_addr+ " on server "+namelistener, "red"))
             ips.append(request.remote_addr)
 
             DBcontrollerobj.APIhomeDBupdate(ips[0], str(request.environ['REMOTE_PORT']), ID)

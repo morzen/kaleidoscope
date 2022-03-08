@@ -46,6 +46,8 @@ HTTPprocesses = []#store processes related to HTTP IE the listeners
 
 HTTPSprocesses = []
 
+thread = []
+
 
 
 
@@ -442,13 +444,13 @@ class Commands(cmd2.Cmd):
             try:
                 del TCPprocesses[int(j)]
 
-                p.terminate()
-
-
                 if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
                     TCPSocketDict.pop(ID)
 
                 DBcontrollerobj.closelistenerDBdel(ID, NAME)
+
+                p.terminate()
+
             except BaseException as err:
                 print(f"Unexpected {err=}, {type(err)=}")
                 raise
@@ -524,6 +526,34 @@ class Commands(cmd2.Cmd):
 
     def do_quit(self, inp):
         print("shut me down and i will become more \npowerfull than you can possibly imagine.")
+
+        for item in TCPprocesses :
+            item.terminate()
+
+        for item in HTTPprocesses :
+            item.terminate()
+
+        for item in HTTPSprocesses :
+            item.terminate()
+
+        # for item in thread :
+        #     print(item)
+        #     item.exit()
+
+        listFile = os.listdir("API/templates")
+        lenlistfile = len(listFile)
+
+        i = 0
+        while i < lenlistfile:
+            listFile = os.listdir("API/templates")
+            lenlistfile = len(listFile)
+            if str(listFile[i]) == "basicTemplates.html":
+                i = i +1
+                continue
+            else:
+                os.remove("API/templates/"+listFile[i])
+
+        sys.exit()
         quit()
 
     #responsible of updating the prompt everytime a command or emptyline is made
@@ -547,6 +577,7 @@ def main():
 
     T = Thread(target = FunctionCheck.TCPcheck4incoming, args=(TCPreturn_dict, TCPSocketDict))
     T.setDaemon(True)
+    thread.append(T)
     T.start()
 
 
