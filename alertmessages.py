@@ -66,7 +66,7 @@ class messagealert():
         print("the name chosen already exist")
 
     def portalreadyinuseAlert(self):
-        print("the port you have choosen is already in use")
+        print("the port you have choosen is already in use or a wrong IP was entered")
 
     def tcpListenerAlert(self):
         print(colored("you need to add arguments 3 expected", "green"))

@@ -69,12 +69,12 @@ class Commands(cmd2.Cmd):
                         persistent_history_file='./history/commandHistory',
                         include_ipy=True
                         )
+        #the next line is reponsible for updating the prompt
         self.register_cmdfinalization_hook(self.updateprompt)
 
+        #tyhe follwing three line are responsible for the banner and prompt
         messagealertobj = messagealert()
-
         self.prompt = messagealertobj.promptdateetc()
-
         self.intro =  messagealertobj.intro()
 
 
@@ -85,11 +85,11 @@ class Commands(cmd2.Cmd):
         #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
-
+        #object creation in the following 3 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-
+        #the if statemetn and elif are checking the number of of argument and types
         if len(argList) == 0:
             messagealertobj.tcpListenerAlert()
 
@@ -99,7 +99,7 @@ class Commands(cmd2.Cmd):
         elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
             messagealertobj.argAlert()
             messagealertobj.tcpListenerAlert()
-
+        #the else statement is responsible for creating the listener
         else:
             #after spliting the list the argument are assigned to variables
             HOST = argList[0]
@@ -107,21 +107,21 @@ class Commands(cmd2.Cmd):
             NAME = "TCP_"+argList[2]
             STATUS = "listening"
             ID = FunctionCheckobj.MakeNcheckID()
-
-
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             #creating object an object tcplistener
             ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
 
             if NameCheck == True:
+                #check if the name is already taken
                 messagealertobj.Namealreadyexistalert()
+
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
+                #check if the port is already in used and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
-
+                #update the database with the new information
                 DBcontrollerobj.tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS)
-
                 # calling funtion listenertcp from tcplistener in a process
                 p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
                 #store the process in a list TCPprocesses
@@ -136,11 +136,11 @@ class Commands(cmd2.Cmd):
         #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
-
+        #object creation in the following 3 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-
+        #the if statemetn and elif are checking the number of of argument and types
         if len(argList) == 0:
             messagealertobj.HTTPlistenerAlert()
 
@@ -150,7 +150,7 @@ class Commands(cmd2.Cmd):
         elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
             messagealertobj.argAlert()
             messagealertobj.HTTPlistenerAlert()
-
+        #the else statement is responsible for creating the listener
         else:
             #after spliting the list the argument are assigned to variables
             HOST = argList[0]
@@ -158,17 +158,19 @@ class Commands(cmd2.Cmd):
             NAME = "HTTP_"+argList[2]
             STATUS = "listening"
             ID = FunctionCheckobj.MakeNcheckID()
-
+            #creating object an object tcplistener
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
+                #check if the name is already taken
                 messagealertobj.Namealreadyexistalert()
 
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
+                #check if the port is already in used and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
+                #update the database with the new information
                 DBcontrollerobj.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
-
                 #creating object an object httplistener
                 HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
                 # calling funtion listenerhttp from httplistener in a process
@@ -179,13 +181,14 @@ class Commands(cmd2.Cmd):
                 p.start()
 
     def do_HTTPSlistener(self, inp):
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
-
+        #object creation in the following 3 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-
+        #the if statemetn and elif are checking the number of of argument and types
         if len(argList) == 0:
             messagealertobj.HTTPSlistenerAlert()
 
@@ -195,8 +198,9 @@ class Commands(cmd2.Cmd):
         elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
             messagealertobj.argAlert()
             messagealertobj.HTTPSlistenerAlert()
-
+        #the else statement is responsible for creating the listener
         else:
+            #after spliting the list the argument are assigned to variables
             HOST = argList[0]
             PORT = int(argList[1])
             NAME = "HTTPS_"+argList[2]
@@ -204,42 +208,46 @@ class Commands(cmd2.Cmd):
             CertPath = argList[3]
             KeyPath = argList[4]
             ID = FunctionCheckobj.MakeNcheckID()
-
+            #creating object an object tcplistener
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
+                #check if the name is already taken
                 messagealertobj.Namealreadyexistalert()
+
             elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
+                #check if the port is already in used and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
-
+                #update the database with the new information
                 DBcontrollerobj.HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath)
-
+                #creating object an object httplistener
                 HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
-
+                # calling funtion listenerhttp from httplistener in a process
                 p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)
+                #store the process in a list HTTPprocesses
                 HTTPSprocesses.append(p)
-
                 p.start()
 
     def do_interact(self, inp):
-
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
-
+        #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-
+        #the following three line are getting data from the database and clean them of unwatnted character
+        #and split them in a list
         checkData = str(DBcontrollerobj.InteractDBfetch(argList[0]))
         checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
         checkData = checkData.split()
-
+        #the if statemetn and elif are checking the number of of argument and types
+        #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
             messagealertobj.interactalert()
 
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.interactalert()
-
 
         elif argList[0] not in checkData:
             messagealertobj.interactWrongIDnameAlert()
@@ -260,6 +268,7 @@ class Commands(cmd2.Cmd):
             TargetIp = info[5]
             TargetPort = info[6]
 
+            #get the connection from the socket dictionnary
             Conn = TCPSocketDict[ID]
 
             #creating a new object
@@ -297,17 +306,19 @@ class Commands(cmd2.Cmd):
                     continue
 
     def do_HTTPinteract(self, inp):
-
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
-
+        #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-
+        #the following three line are getting data from the database and clean them of unwatnted character
+        #and split them in a list
         checkData = str(DBcontrollerobj.HTTPinteractDBfetch(argList[0]))
         checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
         checkData = checkData.split()
-
+        #the if statemetn and elif are checking the number of of argument and types
+        #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
             messagealertobj.HTTPinteractalert()
 
@@ -318,9 +329,8 @@ class Commands(cmd2.Cmd):
             messagealertobj.HTTPinteractWrongIDnameAlert()
 
         else:
-
             argu = argList[0]
-
+            #using name getting the rest of the information in the dictionnary
             info = []
             info = DBcontrollerobj.HTTPinteractDBfetch(argu)
             #using name getting the rest of the information in the dictionnary
@@ -495,8 +505,6 @@ class Commands(cmd2.Cmd):
             PORT = infoSplitList[2]
             NAME = infoSplitList[3]
 
-
-
             path  = os.getcwd()
             i = 0
             j = None
@@ -510,23 +518,28 @@ class Commands(cmd2.Cmd):
                     logging.debug(NAME+" is not in "+str(HTTPprocesses[i]))
                 i = i + 1
             logging.debug("j= %s", j)
-            p = HTTPprocesses[int(j)]
-            del HTTPprocesses[int(j)]
-            #HTTPListenersDict.pop(NAME)
-            #try:
-            p.terminate()
-            os.unlink(path+'/API/templates/'+NAME+'.html')
+            try:
+                p = HTTPprocesses[int(j)]
+                del HTTPprocesses[int(j)]
 
-            DBcontrollerobj.closeHTTPlistenerDBdel(ID, NAME)
+                p.terminate()
+                os.unlink(path+'/API/templates/'+NAME+'.html')
+
+                DBcontrollerobj.closeHTTPlistenerDBdel(ID, NAME)
+            except BaseException as err:
+                print(f"Unexpected {err=}, {type(err)=}")
+                raise
 
 
+    # this function is responsible to clear the shell like in a normal terminal
     def do_clear(self, inp):
         os.system('clear')
 
-
+    #the quit function will close all the processes and threads as well as deleting all html pages
     def do_quit(self, inp):
         print("shut me down and i will become more \npowerfull than you can possibly imagine.")
 
+        #the following for operant are lcosing all processes
         for item in TCPprocesses :
             item.terminate()
 
@@ -536,10 +549,7 @@ class Commands(cmd2.Cmd):
         for item in HTTPSprocesses :
             item.terminate()
 
-        # for item in thread :
-        #     print(item)
-        #     item.exit()
-
+        #the following while loop is responsible for deleting the html pages
         listFile = os.listdir("API/templates")
         lenlistfile = len(listFile)
 
@@ -553,7 +563,9 @@ class Commands(cmd2.Cmd):
             else:
                 os.remove("API/templates/"+listFile[i])
 
+        #the next line is responsibl;e for closing the threads
         sys.exit()
+        #the next line is to close the program
         quit()
 
     #responsible of updating the prompt everytime a command or emptyline is made
@@ -568,7 +580,7 @@ class Commands(cmd2.Cmd):
 
 
 
-
+#the main function is the first function launched in the program
 def main():
 
     print("START")
@@ -580,7 +592,7 @@ def main():
     thread.append(T)
     T.start()
 
-
+#the program start here frist by launching main and then by starting the menu loop
 if __name__ == "__main__":
     main()
     Commands().cmdloop()
