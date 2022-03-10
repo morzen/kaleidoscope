@@ -36,11 +36,10 @@ class messagealert():
         return intro
 
 
-    #function responsable for the date and time in the prompt
+    #function responsible for the date and time in the prompt
     def promptdateetc(self):
         Datetime = datetime.datetime.now()
         Datetime = Datetime.strftime(colored('%d-%b-%Y_%I', "green")+':'+ colored('%M%p', "green"))
-        #the prompt variable used this way seem to block the clock need to be fixed (trying to in menu2)
         prompt = Datetime+":kaleidoscope"+">>>"
         prompt = prompt.replace('kaleidoscope', termcolor.colored('kaleidoscope', 'red'))
         prompt = prompt.replace(':', termcolor.colored(':', 'blue'))
@@ -110,7 +109,7 @@ class messagealert():
     def closeHTTPlsitenerAlert(self):
         print(colored("you need to add arguments 1 expected", "green"))
         print(colored("example: close_HTTPlistener ID OR Name ", "yellow"))
-        print(colored("example: close_HTTPlistener 25625 OR interact TCP_listener1", "yellow"))
+        print(colored("example: close_HTTPlistener 25625 OR interact HTTP_try1", "yellow"))
 
     def closeHTTPlistenerWrongIDnameAlert(self):
         print("The ID or named entered is not in the HTTPsListener")

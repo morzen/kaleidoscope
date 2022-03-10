@@ -23,7 +23,7 @@ path  = os.getcwd()
 logging.basicConfig(level=logging.DEBUG)
 
 class httplistener():
-    #init create the object it is composed of all the variable that would be
+    #init creates the object which is composed of all the variable that would be
     #needed for this object
     def __init__(self, hostip, port, name, ID, *certnkey):
         self.HOST = hostip
@@ -34,7 +34,7 @@ class httplistener():
         self.DBcontrollerobj = DBcontroller()
 
 
-    def listenerhttp(self):#, HTTPreturn_dict):
+    def listenerhttp(self):
         #logging.debug(path)
         #create a new html file PAGES ARE DYNAMICALLY GENERATED HERE (uses /basicTemplates.html)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
@@ -46,9 +46,9 @@ class httplistener():
 
         print("\nhttp://"+str(self.HOST)+":"+str(self.PORT)+"/"+str(self.NAME))
         #logging.debug(HTTPreturn_dict)
-        runApi(self.HOST, self.PORT, self.ID) # star the flask server
+        runApi(self.HOST, self.PORT, self.ID) # start the flask server
 
-    def listenerhttps(self):#, HTTPreturn_dict):
+    def listenerhttps(self):
         #logging.debug(path)
         shutil.copy(path+'/API/templates/basicTemplates.html', path+'/API/templates/'+self.NAME+'.html')
 

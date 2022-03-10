@@ -1,4 +1,4 @@
-#Disclaimer: I do not own or try to appropriated the work down by the Creators of  cmd\/cmd2 or Flask as well as all the library used in this project
+#Disclaimer: I do not own or try to appropriat the work done by the creators of cmd/cmd2 or Flask as well as all the libraries used in this project
 import cmd2
 import termcolor
 import socket
@@ -39,10 +39,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 #list related to TCP
 TCPprocesses = []#store processes related to TCP IE listeners
-#(keep listener active when connection)
+#(keep listeners active when connection is made)
 
 #list related to HTTP
-HTTPprocesses = []#store processes related to HTTP IE the listeners
+HTTPprocesses = []#store processes related to HTTP IE listeners
 
 HTTPSprocesses = []
 
@@ -52,11 +52,11 @@ thread = []
 
 
 manager = multiprocessing.Manager()
-#return info in a dict for a given listener
-TCPreturn_dict = manager.dict()# store information about the socket when a connection occur
-#given the fact that the return dict is overwritten at every new conenction
+#return info in a dictionnaries for a given listener
+TCPreturn_dict = manager.dict()# store information about the socket when a connection occurs
+#given the fact that the return dict is overwritten at every new connection
 #the data are transfered into TCPSocket (see TCPcheck4incoming())
-TCPSocketDict = manager.dict()#store the socket when connection for later interaction
+TCPSocketDict = manager.dict()#store the socket when connection is made for later interaction
 
 
 
@@ -65,14 +65,14 @@ class Commands(cmd2.Cmd):
 
     def __init__(self):
         super().__init__(
-                        multiline_commands=[],#in case needed for commands that have multiline place the name of command in the list like so ['ls','cd',...]
+                        multiline_commands=[],#in case needed for commands that have multiline, place the name of command in the list like so ['ls','cd',...]
                         persistent_history_file='./history/commandHistory',
                         include_ipy=True
                         )
         #the next line is reponsible for updating the prompt
         self.register_cmdfinalization_hook(self.updateprompt)
 
-        #tyhe follwing three line are responsible for the banner and prompt
+        #the following three lines are responsible for the banner and prompt
         messagealertobj = messagealert()
         self.prompt = messagealertobj.promptdateetc()
         self.intro =  messagealertobj.intro()
@@ -80,7 +80,7 @@ class Commands(cmd2.Cmd):
 
 
 
-    #comand to created TCP listener
+    #command to create TCP listener
     def do_tcplistener(self, inp):
         #the arguments from inp are stored in argList
         argList = []
@@ -89,7 +89,7 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-        #the if statemetn and elif are checking the number of of argument and types
+        #the if statement and elif are checking the number of arguments and types
         if len(argList) == 0:
             messagealertobj.tcpListenerAlert()
 
@@ -101,14 +101,14 @@ class Commands(cmd2.Cmd):
             messagealertobj.tcpListenerAlert()
         #the else statement is responsible for creating the listener
         else:
-            #after spliting the list the argument are assigned to variables
+            #after spliting the list the arguments are assigned to variables
             HOST = argList[0]
             PORT = int(argList[1])
             NAME = "TCP_"+argList[2]
             STATUS = "listening"
             ID = FunctionCheckobj.MakeNcheckID()
             NameCheck = FunctionCheckobj.Namecheck(NAME)
-            #creating object an object tcplistener
+            #creating an object tcplistener
             ListenerCreation = tcplistener(HOST, PORT, NAME, ID)
 
             if NameCheck == True:
@@ -116,13 +116,13 @@ class Commands(cmd2.Cmd):
                 messagealertobj.Namealreadyexistalert()
 
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
-                #check if the port is already in used and if the ip is the right one
+                #check if the port is already in use and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
                 #update the database with the new information
                 DBcontrollerobj.tcplistenerDBcall(ID, HOST, PORT, NAME, STATUS)
-                # calling funtion listenertcp from tcplistener in a process
+                # calling function listenertcp from tcplistener in a process
                 p = multiprocessing.Process(name=NAME ,target=ListenerCreation.listenertcp, args=[TCPreturn_dict])
                 #store the process in a list TCPprocesses
                 TCPprocesses.append(p)
@@ -140,7 +140,7 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-        #the if statemetn and elif are checking the number of of argument and types
+        #the if statement and elif are checking the number of arguments and types
         if len(argList) == 0:
             messagealertobj.HTTPlistenerAlert()
 
@@ -152,28 +152,28 @@ class Commands(cmd2.Cmd):
             messagealertobj.HTTPlistenerAlert()
         #the else statement is responsible for creating the listener
         else:
-            #after spliting the list the argument are assigned to variables
+            #after spliting the list, the arguments are assigned to variables
             HOST = argList[0]
             PORT = int(argList[1])
             NAME = "HTTP_"+argList[2]
             STATUS = "listening"
             ID = FunctionCheckobj.MakeNcheckID()
-            #creating object an object tcplistener
+            #creating an object tcplistener
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
                 #check if the name is already taken
                 messagealertobj.Namealreadyexistalert()
 
             elif FunctionCheckobj.checkPortNIPfree(HOST, PORT) == False:
-                #check if the port is already in used and if the ip is the right one
+                #check if the port is already in use and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
                 #update the database with the new information
                 DBcontrollerobj.HTTPlistenerDBcall(ID, HOST, PORT, NAME, STATUS)
-                #creating object an object httplistener
+                #creating an object httplistener
                 HTTPListenerCreation = httplistener(HOST, PORT, NAME, ID)
-                # calling funtion listenerhttp from httplistener in a process
+                # calling function listenerhttp from httplistener in a process
                 p = multiprocessing.Process(name=NAME, target=HTTPListenerCreation.listenerhttp)#, args=[HTTPreturn_dict])
                 #store the process in a list HTTPprocesses
                 HTTPprocesses.append(p)
@@ -188,7 +188,7 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-        #the if statemetn and elif are checking the number of of argument and types
+        #the if statement and elif are checking the number of argument and types
         if len(argList) == 0:
             messagealertobj.HTTPSlistenerAlert()
 
@@ -200,7 +200,7 @@ class Commands(cmd2.Cmd):
             messagealertobj.HTTPSlistenerAlert()
         #the else statement is responsible for creating the listener
         else:
-            #after spliting the list the argument are assigned to variables
+            #after spliting the list, the arguments are assigned to variables
             HOST = argList[0]
             PORT = int(argList[1])
             NAME = "HTTPS_"+argList[2]
@@ -208,22 +208,22 @@ class Commands(cmd2.Cmd):
             CertPath = argList[3]
             KeyPath = argList[4]
             ID = FunctionCheckobj.MakeNcheckID()
-            #creating object an object tcplistener
+            #creating object tcplistener
             NameCheck = FunctionCheckobj.Namecheck(NAME)
             if NameCheck == True:
                 #check if the name is already taken
                 messagealertobj.Namealreadyexistalert()
 
             elif FunctionCheck.checkPortNIPfree(HOST, PORT) == False:
-                #check if the port is already in used and if the ip is the right one
+                #check if the port is already in use and if the ip is the right one
                 messagealertobj.portalreadyinuseAlert()
 
             else:
                 #update the database with the new information
                 DBcontrollerobj.HTTPSlistenerDBcall(ID, HOST, PORT, NAME, STATUS, CertPath, KeyPath)
-                #creating object an object httplistener
+                #creating object httplistener
                 HTTPSListenerCreation = httplistener(HOST, PORT, NAME, CertPath, KeyPath)
-                # calling funtion listenerhttp from httplistener in a process
+                # calling function listenerhttp from httplistener in a process
                 p = multiprocessing.Process(name=NAME, target=HTTPSListenerCreation.listenerhttps)
                 #store the process in a list HTTPprocesses
                 HTTPSprocesses.append(p)
@@ -236,12 +236,12 @@ class Commands(cmd2.Cmd):
         #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-        #the following three line are getting data from the database and clean them of unwatnted character
+        #the following three lines are getting data from the database and clean them of unwanted characters
         #and split them in a list
         checkData = str(DBcontrollerobj.InteractDBfetch(argList[0]))
         checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
         checkData = checkData.split()
-        #the if statemetn and elif are checking the number of of argument and types
+        #the if statement and elif are checking the number of arguments and types
         #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
             messagealertobj.interactalert()
@@ -254,24 +254,23 @@ class Commands(cmd2.Cmd):
 
         else:
             argu = argList[0]
-            #using name getting the rest of the information in the dictionnary
+            #using name or ID getting the rest of the information in the DB
             info = []
             info = DBcontrollerobj.InteractDBfetch(argu)
             info = info[0]
             ID = str(info[0])
 
-            #asssigning the information to variables
+            #assigning the information to variables
             HOST = info[1]
             PORT = info[2]
             NAME = info[3]
-            #get the socket using NAME from the Socket dictionnary
             TargetIp = info[5]
             TargetPort = info[6]
 
             #get the connection from the socket dictionnary
             Conn = TCPSocketDict[ID]
 
-            #creating a new object
+            #creating a new object interacting
             InteractWith = interacting(HOST, int(PORT), NAME, TargetIp, TargetPort, Conn)
             while True:
                 #calling shell() from interacting class in while loop
@@ -279,7 +278,7 @@ class Commands(cmd2.Cmd):
                 #allow to quit the menu
                 if try1 == False:
                     break
-                #quit and close the conection
+                #quit and close the connection
                 #similar bit of code to the do_close_listener() function
                 elif try1 == "Close Connection":
                     i = 0
@@ -312,12 +311,12 @@ class Commands(cmd2.Cmd):
         #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-        #the following three line are getting data from the database and clean them of unwatnted character
+        #the following three lines are getting data from the database and clean them of unwanted characters
         #and split them in a list
         checkData = str(DBcontrollerobj.HTTPinteractDBfetch(argList[0]))
         checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
         checkData = checkData.split()
-        #the if statemetn and elif are checking the number of of argument and types
+        #the if statement and elif are checking the number of arguments and types
         #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
             messagealertobj.HTTPinteractalert()
@@ -330,14 +329,13 @@ class Commands(cmd2.Cmd):
 
         else:
             argu = argList[0]
-            #using name getting the rest of the information in the dictionnary
             info = []
             info = DBcontrollerobj.HTTPinteractDBfetch(argu)
-            #using name getting the rest of the information in the dictionnary
+            #using name ID getting the rest of the information in the DB
             info = info[0]
 
 
-            #asssigning the information to variables
+            #assigning the information to variables
             HOST = info[1]
             PORT = info[2]
             NAME = info[3]
@@ -350,7 +348,7 @@ class Commands(cmd2.Cmd):
                 #allow to quit the menu
                 if try1 == False:
                     break
-                #quit and close the conection
+                #quit and close the connection
                 #similar bit of code to the do_close_listener() function
                 elif try1 == "Close Connection":
                     i = 0
@@ -426,7 +424,7 @@ class Commands(cmd2.Cmd):
             HOST = infoSplitList[1]
             PORT = infoSplitList[2]
             NAME = infoSplitList[3]
-            #recreate object
+            #create object
             ListenerClose = tcplistener(HOST,int(PORT), NAME, ID)
             # then call the closing function
             ListenerClose.closetcpListener()
@@ -539,7 +537,7 @@ class Commands(cmd2.Cmd):
     def do_quit(self, inp):
         print("shut me down and i will become more \npowerfull than you can possibly imagine.")
 
-        #the following for operant are lcosing all processes
+        #the following for operant are closing all processes
         for item in TCPprocesses :
             item.terminate()
 
@@ -563,12 +561,12 @@ class Commands(cmd2.Cmd):
             else:
                 os.remove("API/templates/"+listFile[i])
 
-        #the next line is responsibl;e for closing the threads
+        #the next line is responsible for closing the threads
         sys.exit()
         #the next line is to close the program
         quit()
 
-    #responsible of updating the prompt everytime a command or emptyline is made
+    #responsible for updating the prompt everytime a command or emptyline is made
     def updateprompt(self, data: cmd2.plugin.CommandFinalizationData) -> cmd2.plugin.CommandFinalizationData:
 
         messagealertobj = messagealert()
@@ -592,7 +590,7 @@ def main():
     thread.append(T)
     T.start()
 
-#the program start here frist by launching main and then by starting the menu loop
+#the program starts here first by launching main() and then by starting the menu loop
 if __name__ == "__main__":
     main()
     Commands().cmdloop()

@@ -16,7 +16,7 @@ class FunctionCheck():
             string = string.replace(char, rep)
         return string
 
-    #function responsible of creatin gUNique ID and check if it doesn't already exist
+    #function responsible for creating unique ID and check if it doesn't already exist
     def MakeNcheckID(self):
         while True:
             ID = str(uuid.uuid4().fields[-1])[:5]
@@ -28,7 +28,7 @@ class FunctionCheck():
                 return ID
 
 
-    #Function resposnible to very a name is not already in use
+    #Function responsible to verify that a name is not already in use
     def Namecheck(self, x):
         name = x
 
@@ -94,12 +94,12 @@ class FunctionCheck():
             return False
 
 
-    # reguraly check if TCPlistener received a connection
-    # endless thread that check for info when a connection is made
+    # regularly check if TCPlistener received a connection
+    # endless thread that checks for info when a connection is made
     def TCPcheck4incoming(TCPreturn_dict, TCPSocketDict):
         while True:
             lentcpretdic=len(TCPreturn_dict)
-            #check if TCPlistener is not empty
+            #checks if TCPlistener is not empty
             if lentcpretdic != 0 :
                 conn = TCPreturn_dict.get("conn")
                 ID = TCPreturn_dict.get("selfID")

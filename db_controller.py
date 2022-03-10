@@ -8,12 +8,12 @@ logging.basicConfig(level=logging.INFO)
 class DBcontroller():
 
     def __init__(self):
-        #this if loop verify if the database already exist if it doesn't it create one
-        #as well as a table
+        #this if loop verifies if the database already exists if it doesn't it creates one
+        #as well as the tables
         if os.path.exists("database/listener.db") == True:
             #logging.debug("listener.db exist \n")
             pass
-        #if it exist then it just connect to it and create a cursor
+        #if it exists then it just connects to it and creates a cursor
         else:
             logging.debug("listener.db has been created")
             self.conn = sqlite3.connect('database/listener.db')
@@ -28,7 +28,7 @@ class DBcontroller():
                         targetIP text,
                         targetPORT text,
                         targetHOSTNAME text
-                        )""")# don't forget impossible to store socket in database for socket are different type and unstockable as static data
+                        )""")# don't forget impossible to store sockets in database for sockets are a different type and unstockable as static data
 
             self.c.execute("""CREATE TABLE HTTPsListener (
                         ItemUniqueID int,
@@ -104,7 +104,7 @@ class DBcontroller():
         self.c.execute('DELETE FROM HTTPsListener WHERE ItemUniqueID = ? OR name = ?', (ID, NAME)).fetchall()
         self.conn.commit()
 
-    #located in backedn/TCPlistener.py
+    #located in backend/TCPlistener.py
     def tcplistenerDBscriptAdd(self, status, targetip, targetport, ID):
         self.c.execute("UPDATE TCPlistener SET status=?, targetIP=?, targetPORT=?  WHERE ItemUniqueID=?", (status, targetip, targetport, ID))
         self.conn.commit()
@@ -124,7 +124,7 @@ class DBcontroller():
         data = self.c.execute('SELECT name FROM HTTPsListener WHERE ItemUniqueID=?', (ID,)).fetchall()
         return data
 
-    #located in checkingfunctions.py
+    #located in Checkingfunctions.py
     def makeNcheckIDDBfetch(self):
         data = self.c.execute("SELECT ItemUniqueID FROM TCPlistener UNION SELECT ItemUniqueID from HTTPsListener").fetchall()
         return data

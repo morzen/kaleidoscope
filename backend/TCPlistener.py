@@ -24,7 +24,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class tcplistener:
-    # init is basically the blue print for our obecjt essential data will be avaible here
+    # init is basically the blueprint for our object, essential data will be available here
     def __init__(self, hostip, port, name, ID):
         self.HOST = hostip
         self.PORT = int(port)
