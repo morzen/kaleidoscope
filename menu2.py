@@ -69,13 +69,15 @@ class Commands(cmd2.Cmd):
                         persistent_history_file='./history/commandHistory',
                         include_ipy=True
                         )
-        #the next line is reponsible for updating the prompt
-        self.register_cmdfinalization_hook(self.updateprompt)
-
         #the following three lines are responsible for the banner and prompt
         messagealertobj = messagealert()
         self.prompt = messagealertobj.promptdateetc()
         self.intro =  messagealertobj.intro()
+
+        #the next line is reponsible for updating the prompt
+        self.register_cmdfinalization_hook(self.updateprompt)
+
+
 
 
 
@@ -236,11 +238,14 @@ class Commands(cmd2.Cmd):
         #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-        #the following three lines are getting data from the database and clean them of unwanted characters
-        #and split them in a list
-        checkData = str(DBcontrollerobj.InteractDBfetch(argList[0]))
-        checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
-        checkData = checkData.split()
+        FunctionCheckobj = FunctionCheck()
+        try:
+            data = DBcontrollerobj.InteractDBfetch(argList[0])
+            data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+            data = data.split()
+        except:
+            logging.debug("argument not in DB")
+
         #the if statement and elif are checking the number of arguments and types
         #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
@@ -249,10 +254,11 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.interactalert()
 
-        elif argList[0] not in checkData:
+        elif argList[0] not in data:
             messagealertobj.interactWrongIDnameAlert()
 
         else:
+
             argu = argList[0]
             #using name or ID getting the rest of the information in the DB
             info = []
@@ -293,12 +299,20 @@ class Commands(cmd2.Cmd):
                             print(NAME+" is not in "+str(TCPprocesses[i]))
 
                         i = i + 1
-
+                    #here we close the socket
+                    ListenerClose = tcplistener(HOST,int(PORT), NAME, ID)
+                    ListenerClose.closetcpListener()
+                    #here we remove the information concernning the socket out of
+                    #the socket dict
+                    if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
+                        TCPSocketDict.pop(ID)
+                    #terminate the process and delete inforamtion from
+                    #dictionnaries and database
                     p = TCPprocesses[int(j)]
                     del TCPprocesses[int(j)]
                     p.terminate()
-
                     DBcontrollerobj.interactDBdel(ID, NAME)
+
                     break
 
                 else:
@@ -311,11 +325,17 @@ class Commands(cmd2.Cmd):
         #object creation in the following 2 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
-        #the following three lines are getting data from the database and clean them of unwanted characters
-        #and split them in a list
-        checkData = str(DBcontrollerobj.HTTPinteractDBfetch(argList[0]))
-        checkData = FunctionCheck().charremoval(checkData, ["[", "]", ",", "(", ")", "'"], "")
-        checkData = checkData.split()
+        FunctionCheckobj = FunctionCheck()
+        #try:
+        data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
+        print(data)
+        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+        print(data)
+        data = data.split()
+        print(data)
+        #except:
+            #logging.debug("argument not in DB")
+
         #the if statement and elif are checking the number of arguments and types
         #and if the data is relevant to what is stored in the database
         if len(argList) == 0:
@@ -324,14 +344,15 @@ class Commands(cmd2.Cmd):
         elif len(argList) < 1 or len(argList) > 1:
             messagealertobj.HTTPinteractalert()
 
-        elif argList[0] not in checkData:
+        elif argList[0] not in data:
             messagealertobj.HTTPinteractWrongIDnameAlert()
 
         else:
+
             argu = argList[0]
+            #using name ID getting the rest of the information in the DB
             info = []
             info = DBcontrollerobj.HTTPinteractDBfetch(argu)
-            #using name ID getting the rest of the information in the DB
             info = info[0]
 
 
@@ -364,9 +385,10 @@ class Commands(cmd2.Cmd):
 
                         i = i + 1
 
+                    #terminate the process and delete inforamtion from
+                    #dictionnaries and database
                     p = HTTPprocesses[int(j)]
                     del HTTPprocesses[int(j)]
-
                     p.terminate()
                     DBcontrollerobj.HTTPinteractDBdel(ID, NAME)
 
@@ -390,19 +412,24 @@ class Commands(cmd2.Cmd):
 
 
     def do_close_listener(self, inp):
-
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
         lenarglist = len(argList)
-
+        #object creation in the following 3 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
 
-        data = DBcontrollerobj.InteractDBfetch(argList[0])
-        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
-        data = data.split()
+        try:
+            data = DBcontrollerobj.InteractDBfetch(argList[0])
+            data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+            data = data.split()
+        except:
+            logging.debug("argument not in DB")
 
+        #the if statement and elif are checking the number of arguments and types
+        #and if the data is relevant to what is stored in the database
         if lenarglist == 0:
             messagealertobj.closeListenerAlert()
 
@@ -413,21 +440,22 @@ class Commands(cmd2.Cmd):
             messagealertobj.closeListenerWrongIDnameAlert()
 
         else:
+
+
             argu = argList[0]
+            #using name or ID getting the rest of the information in the DB
+            info = DBcontrollerobj.closelistenerDBfetch(argu)
 
-            info = str(DBcontrollerobj.closelistenerDBfetch(argu))
-
+            info = str(info)
             info = FunctionCheckobj.charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
-
             infoSplitList = info.split()
+
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
             PORT = infoSplitList[2]
             NAME = infoSplitList[3]
-            #create object
+            #create object which will be used later to close the socket
             ListenerClose = tcplistener(HOST,int(PORT), NAME, ID)
-            # then call the closing function
-            ListenerClose.closetcpListener()
 
             #erase all data realated to this listener/connection
             i = 0
@@ -441,22 +469,28 @@ class Commands(cmd2.Cmd):
                     messagealertobj.deletingProcesslistener(ID, NAME)
                     j = str(i)
                     logging.debug("j= %s", j)
-                    #we delete the information in the list and use p to terminate the process
+                    #In order to delete the process we are using j to find its palcemen tinthe list and assign it to p
                     p = TCPprocesses[int(j)]
 
                 else:
-
                     logging.debug(NAME+" is not in "+str(TCPprocesses[i]))
                 i = i + 1
             logging.debug("j= %s", j)
             try:
+                #call the closing function
+                #which close the socket
+                ListenerClose.closetcpListener()
+                #here we delete the process information from the list as well as
+                #terminating the process itself
                 del TCPprocesses[int(j)]
-
+                #here we remove the information concernning the socket out of
+                #the socket dict
                 if len(TCPSocketDict) != 0 and ID in TCPSocketDict:
                     TCPSocketDict.pop(ID)
 
+                #here we remove the information concerning the listener from the database
                 DBcontrollerobj.closelistenerDBdel(ID, NAME)
-
+                #here we termiante the process
                 p.terminate()
 
             except BaseException as err:
@@ -467,19 +501,24 @@ class Commands(cmd2.Cmd):
 
 
     def do_close_HTTPlistener(self, inp):
-
+        #the arguments from inp are stored in argList
         argList = []
         argList = inp.split()
         lenarglist = len(argList)
-
+        #object creation in the following 3 lines
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
 
-        data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
-        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
-        data = data.split()
+        try:
+            data = DBcontrollerobj.InteractDBfetch(argList[0])
+            data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+            data = data.split()
+        except:
+            logging.debug("argument not in DB")
 
+        #the if statement and elif are checking the number of arguments and types
+        #and if the data is relevant to what is stored in the database
         if lenarglist == 0:
             messagealertobj.closeHTTPlsitenerAlert()
 
@@ -490,39 +529,47 @@ class Commands(cmd2.Cmd):
             messagealertobj.closeHTTPlistenerWrongIDnameAlert()
 
         else:
-            argu = argList[0]
 
+            argu = argList[0]
+            #using name or ID getting the rest of the information in the DB
             info = DBcontrollerobj.closeHTTPlistenerDBfetch(argu)
 
             info = str(info)
             info = FunctionCheck().charremoval(info, ["[", "]", ",", "(", ")", "'"], "")
-
             infoSplitList = info.split()
+
             ID = infoSplitList[0]
             HOST = infoSplitList[1]
             PORT = infoSplitList[2]
             NAME = infoSplitList[3]
 
+            #sinc HTTP isn't using socket this part only need to close the process
+            #in order to close the server it also delete the templates
             path  = os.getcwd()
             i = 0
             j = None
             LenHTTPprocesses = len(HTTPprocesses)
             while i < LenHTTPprocesses:
                 if NAME in str(HTTPprocesses[i]):
+
                     logging.debug(NAME+" is in "+str(HTTPprocesses[i])+" and will be deleted")
                     messagealertobj.deletingProcesslistener(ID, NAME)
                     j = str(i)
+                    #In order to delete the process we are using j to find its palcemen tinthe list and assign it to p
+                    p = HTTPprocesses[int(j)]
+
                 else:
                     logging.debug(NAME+" is not in "+str(HTTPprocesses[i]))
                 i = i + 1
             logging.debug("j= %s", j)
             try:
-                p = HTTPprocesses[int(j)]
+                #here we delete the process information from the list as well as
+                #terminating the process itself
                 del HTTPprocesses[int(j)]
-
                 p.terminate()
+                #here we delete the templates
                 os.unlink(path+'/API/templates/'+NAME+'.html')
-
+                #here we remove the information concerning the listener from the database
                 DBcontrollerobj.closeHTTPlistenerDBdel(ID, NAME)
             except BaseException as err:
                 print(f"Unexpected {err=}, {type(err)=}")
