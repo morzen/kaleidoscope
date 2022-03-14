@@ -326,15 +326,15 @@ class Commands(cmd2.Cmd):
         messagealertobj = messagealert()
         DBcontrollerobj = DBcontroller()
         FunctionCheckobj = FunctionCheck()
-        #try:
-        data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
-        print(data)
-        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
-        print(data)
-        data = data.split()
-        print(data)
-        #except:
-            #logging.debug("argument not in DB")
+        try:
+            data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
+            print(data)
+            data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+            print(data)
+            data = data.split()
+            print(data)
+        except:
+            logging.debug("argument not in DB")
 
         #the if statement and elif are checking the number of arguments and types
         #and if the data is relevant to what is stored in the database

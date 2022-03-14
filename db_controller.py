@@ -16,6 +16,7 @@ class DBcontroller():
         #if it exists then it just connects to it and creates a cursor
         else:
             logging.debug("listener.db has been created")
+            os.mkdir("./database")
             self.conn = sqlite3.connect('database/listener.db')
             self.c = self.conn.cursor()
 
