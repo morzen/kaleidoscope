@@ -4,7 +4,7 @@ import time
 
 commandCheck = [None] * 2
 while True:
-    urltosearch = 'http://192.168.0.10:8080/toto'
+    urltosearch = 'http://192.168.0.10:80/listenername'
 
     req = requests.get(urltosearch)
     command = req.text
