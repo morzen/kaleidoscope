@@ -18,36 +18,35 @@ class DBcontroller():
             logging.debug("listener.db has been created")
             if os.path.exists("database") == False:
                 os.mkdir("./database")
-            else:
-                self.conn = sqlite3.connect('database/listener.db')
-                self.c = self.conn.cursor()
-
-                self.c.execute("""CREATE TABLE TCPlistener (
-                            ItemUniqueID int,
-                            hostIP text,
-                            hostPORT text,
-                            name text,
-                            status text,
-                            targetIP text,
-                            targetPORT text,
-                            targetHOSTNAME text
-                            )""")# don't forget impossible to store sockets in database for sockets are a different type and unstockable as static data
-
-                self.c.execute("""CREATE TABLE HTTPsListener (
-                            ItemUniqueID int,
-                            hostIP text,
-                            hostPORT text,
-                            name text,
-                            status text,
-                            targetIP,
-                            targetPORT text,
-                            targetHOSTNAME text,
-                            SSLcertPath text,
-                            SSLkeyPath text
-                            )""")
-                self.conn.commit()
             self.conn = sqlite3.connect('database/listener.db')
             self.c = self.conn.cursor()
+
+            self.c.execute("""CREATE TABLE TCPlistener (
+                        ItemUniqueID int,
+                        hostIP text,
+                        hostPORT text,
+                        name text,
+                        status text,
+                        targetIP text,
+                        targetPORT text,
+                        targetHOSTNAME text
+                        )""")# don't forget impossible to store sockets in database for sockets are a different type and unstockable as static data
+
+            self.c.execute("""CREATE TABLE HTTPsListener (
+                        ItemUniqueID int,
+                        hostIP text,
+                        hostPORT text,
+                        name text,
+                        status text,
+                        targetIP,
+                        targetPORT text,
+                        targetHOSTNAME text,
+                        SSLcertPath text,
+                        SSLkeyPath text
+                        )""")
+            self.conn.commit()
+        self.conn = sqlite3.connect('database/listener.db')
+        self.c = self.conn.cursor()
 
 
 

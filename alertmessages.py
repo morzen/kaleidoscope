@@ -75,7 +75,7 @@ class messagealert():
     def HTTPlistenerAlert(self):
         print(colored("you need to add arguments  3 expected", "green"))
         print(colored("example: HTTPlistener hostip    port NameOfTheListener", "yellow"))
-        print(colored("example: HTTPlistener 127.0.0.1 8080 Listener1", "yellow"))
+        print(colored("example: HTTPlistener 127.0.0.1 80 Listener1", "yellow"))
 
     def HTTPSlistenerAlert(self):
         print(colored("you need to add arguments 5 expected", "green"))
