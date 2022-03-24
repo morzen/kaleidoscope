@@ -72,8 +72,8 @@ class interacting(Cmd):
             clear = lambda: os.system('clear')
             clear()
 
-        #deconnect and quit the interacting shell
-        elif command == "deconnect":
+        #disconnect and quit the interacting shell
+        elif command == "disconnect":
             self.conn.close()
             end = "Close Connection"
             return end
