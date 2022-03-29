@@ -194,7 +194,7 @@ class Commands(cmd2.Cmd):
         if len(argList) == 0:
             messagealertobj.HTTPSlistenerAlert()
 
-        elif len(argList) < 3 or len(argList) > 3:
+        elif len(argList) < 5 or len(argList) > 5:
             messagealertobj.HTTPSlistenerAlert()
 
         elif FunctionCheckobj.regexIpcheck(argList[0]) == False or FunctionCheckobj.regexPortcheck(argList[1]) == False or FunctionCheckobj.regexNamecheck(argList[2]) == False :
