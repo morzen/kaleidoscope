@@ -509,9 +509,9 @@ class Commands(cmd2.Cmd):
         FunctionCheckobj = FunctionCheck()
 
         try:
-        data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
-        data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
-        data = data.split()
+            data = DBcontrollerobj.HTTPinteractDBfetch(argList[0])
+            data =  FunctionCheckobj.charremoval(str(data), ["[", "]", ",", "(", ")", "'"], "")
+            data = data.split()
         except:
             logging.debug("argument not in DB")
 
