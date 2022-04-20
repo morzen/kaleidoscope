@@ -1,0 +1,12 @@
+cmd2
+termcolor
+readline
+datetime
+uuid
+HTTPServer
+flask
+Flask
+flask_sockets
+Sockets
+colored
+requests
